@@ -1,0 +1,41 @@
+<style lang="scss">
+  @import './scss/_theme.scss';
+  page {
+    background-color: $blackBg;
+  }
+  view {
+    box-sizing: border-box;
+  }
+</style>
+
+<script>
+  import wepy from 'wepy';
+  import global from './services/global.js';
+  import 'wepy-async-function';
+
+  export default class extends wepy.app {
+    config = {
+      pages: [
+        'pages/home',
+      ],
+      window: {
+        backgroundTextStyle: 'light',
+        navigationBarBackgroundColor: '#ea5504',
+        navigationBarTitleText: '塔拓',
+        navigationBarTextStyle: '#ffffff',
+      }
+    }
+
+    globalData = global
+
+    constructor() {
+      super()
+      this.use('requestfix')
+    }
+
+    onLaunch() {
+
+    }
+  }
+
+</script>

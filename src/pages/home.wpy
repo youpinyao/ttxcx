@@ -1,0 +1,293 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  .fixed {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    &.no-has-challenge .button {
+      top: 30rpx;
+    }
+    .buttons {
+      position: relative;
+    }
+    .button {
+      width: 88rpx;
+      height: 88rpx;
+      border-radius: 44rpx;
+      background-color: $orange;
+      position: absolute;
+      transition: all 300ms ease;
+      top: 18rpx;
+      &:active {
+        opacity: 0.8;
+      }
+      &.person {
+        left: 16rpx;
+      }
+      &.qrcode {
+        right: 16rpx;
+      }
+      image {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        width: 40rpx;
+        height: 40rpx;
+      }
+    }
+  }
+
+  .ing {
+    background-color: $blackBar;
+    line-height: 73rpx;
+    color: $white;
+    text-align: center;
+    font-size: 28rpx;
+    border-bottom: 1rpx solid $c3;
+    text {
+      color: $orange;
+    }
+  }
+
+  .space {
+    height: 74rpx;
+    &.no-has-challenge {
+      height: 50rpx;
+    }
+  }
+
+  .best-score {
+    color: $orange;
+    text-align: center;
+    padding: 40rpx 0 40rpx 0;
+    margin: 0 auto;
+    > view {
+      position: relative;
+      display: inline-block;
+      min-width: 400rpx;
+      border: 2rpx solid rgba($orange, 0.2);
+      padding: 0 40rpx;
+      .title {
+        font-size: 28rpx;
+        width: 100%;
+        position: absolute;
+        line-height: 40rpx;
+        top: -22rpx;
+        left: 0;
+        width: 100%;
+        view {
+          display: inline-block;
+          background-color: $blackBg;
+          padding: 0 15rpx;
+        }
+      }
+      .date {
+        font-size: 24rpx;
+        position: absolute;
+        line-height: 40rpx;
+        bottom: -22rpx;
+        left: 0;
+        width: 100%;
+        view {
+          background-color: $blackBg;
+          display: inline-block;
+          padding: 0 15rpx;
+        }
+      }
+      .score {
+        padding: 20rpx 0;
+        view {
+          display: inline;
+          text.t1 {
+            font-size: 100rpx;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 0 6rpx;
+          }
+          text.t2 {
+            font-size: 26rpx;
+            font-weight: normal;
+          }
+        }
+      }
+    }
+  }
+
+  .user-info {
+    padding: 40rpx 30rpx 50rpx 30rpx;
+    > view {
+      display: flex;
+    }
+    view.flex {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      &:before {
+        position: absolute;
+        content: "";
+        display: block;
+        width: 1rpx;
+        height: 100rpx;
+        background-color: #474848;
+        right: 0;
+        top: 10rpx;
+      }
+      .t1 {
+        font-size: 28rpx;
+        color: $white;
+        padding-bottom: 20rpx;
+      }
+      .t2 {
+        font-size: 60rpx;
+        color: $orange;
+        font-family: Arial, Helvetica, sans-serif;
+        image {
+          width: 62rpx;
+          height: 62rpx;
+          border-radius: 62rpx;
+          border: 4rpx solid $orange;
+        }
+      }
+    }
+  }
+
+</style>
+<template lang="wxml">
+  <view class="fixed {{homeData.challengeId ? '' : 'no-has-challenge'}}">
+    <view class="ing"
+      @tap="toChallenge('{{homeData.challengeId}}')"
+      wx:if="{{homeData.challengeId}}">您当前有一场挑战在进心中，
+      <text>马上进入></text>
+    </view>
+    <view class="buttons">
+      <view class="button person"
+        @tap="toMe">
+        <image src="../images/icon-person.png"></image>
+      </view>
+      <view class="button qrcode"
+        @tap="toQrcode">
+        <image src="../images/icon-qrcode.png"></image>
+      </view>
+    </view>
+  </view>
+
+  <view class="space {{homeData.challengeId ? '' : 'no-has-challenge'}}"></view>
+
+  <view class="best-score"
+    wx:if="{{homeData.bestScore}}">
+    <view>
+      <view class="title">
+        <view>历史最佳</view>
+      </view>
+      <view class="score">
+        <view wx:if="{{bestScore.hour}}">
+          <text class="t1">{{bestScore.hour}}</text>
+          <text class="t2">h</text>
+        </view>
+        <view wx:if="{{bestScore.minute}}">
+          <text class="t1">{{bestScore.minute}}</text>
+          <text class="t2">min</text>
+        </view>
+        <view wx:if="{{bestScore.second}}">
+          <text class="t1">{{bestScore.second}}</text>
+          <text class="t2">s</text>
+        </view>
+      </view>
+      <view class="date">
+        <view>{{homeData.bestScore.date}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="user-info">
+    <view>
+      <view class="flex">
+        <view class="t1">本月参与参数</view>
+        <view class="t2">{{homeData.joinTime}}</view>
+      </view>
+      <view class="flex">
+        <view class="t1">本周排名</view>
+        <view class="t2">
+          <image src="{{homeData.headimgurl}}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import urls from '../services/urls.js';
+  import request from '../services/request.js';
+
+  export default class Hmoe extends wepy.page {
+    config = {
+      navigationBarTitleText: '塔拓',
+    }
+
+    components = {
+
+    }
+
+    data = {
+      userInfo: null,
+      homeData: null,
+    }
+
+    computed = {
+      bestScore() {
+        let hour = 0;
+        let minute = 0;
+        let second = 0;
+
+        if (this.homeData && this.homeData.bestScore) {
+          const score = this.homeData.bestScore.score;
+
+          hour = parseInt(score / (1000 * 60 * 60), 10);
+          minute = parseInt((score % (1000 * 60 * 60)) / (1000 * 60), 10);
+          second = parseInt((score % (1000 * 60)) / 1000, 10);
+        }
+
+        return {
+          hour,
+          minute,
+          second,
+        };
+      },
+    }
+
+    methods = {
+      toChallenge(challengeId) {
+        console.log('to challenge page', challengeId);
+      },
+      toMe() {
+        console.log('to me page');
+      },
+      toQrcode() {
+        console.log('to qrcode page');
+      }
+    }
+
+    events = {
+
+    }
+
+    async onLoad() {
+      let self = this;
+
+      self.userInfo = await request.getUserInfo();
+
+      self.homeData = (await request.get(urls.home)).result;
+
+      console.log('home init');
+
+      this.$apply();
+    }
+  }
+
+</script>
