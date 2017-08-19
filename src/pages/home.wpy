@@ -1,7 +1,6 @@
 <style lang="scss"
   scoped>
   @import '../scss/_theme.scss';
-
   .fixed {
     position: fixed;
     left: 0;
@@ -196,6 +195,64 @@
     }
   }
 
+  .confirm-mask {
+    opacity: 0;
+    visibility: hidden;
+    @include transition();
+    &.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .mask-content {
+      position: absolute;
+      z-index: 1;
+      height: 300rpx;
+      width: 100%;
+      text-align: center;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      .text {
+        font-size: 36rpx;
+        color: $white;
+        margin-bottom: 80rpx;
+      }
+      .button {
+        margin: 0 auto;
+        margin-bottom: 30rpx;
+        width: 660rpx;
+        line-height: 70rpx;
+        border-radius: 70rpx;
+        @include transition();
+        &:active {
+          opacity: 0.8;
+        }
+        &.orange {
+          background-color: $orange;
+          color: $white;
+        }
+        &.grey {
+          background-color: $blackBg;
+          color: $c6;
+        }
+      }
+    }
+  }
+
 </style>
 <template lang="wxml">
   <view class="fixed {{homeData.challengeId ? '' : 'no-has-challenge'}}">
@@ -277,10 +334,23 @@
         @tap="toQrcode">前往绑定手环 ></view>
     </view>
   </view>
+
+  <view class="confirm-mask {{showConfirmMask ? 'show' : ''}}">
+    <image src="../images/game-bg.jpg"
+      mode="aspectFill"></image>
+    <view class="mask-content">
+      <view class="text">你确认要开始该挑战吗？</view>
+      <view class="button orange"
+        @tap="confirmOk">确认</view>
+      <view class="button grey"
+        @tap="confirmCancel">取消</view>
+    </view>
+  </view>
 </template>
 
 <script>
   import wepy from 'wepy';
+  import defer from '../services/defer.js';
   import util from '../services/util.js';
   import urls from '../services/urls.js';
   import request from '../services/request.js';
@@ -321,6 +391,7 @@
     data = {
       userInfo: null,
       homeData: null,
+      showConfirmMask: false,
     }
 
     computed = {
@@ -353,20 +424,38 @@
         wepy.scanCode({
           onlyFromCamera: true,
           success: (res) => {
-            request.post(urls.postQrcode, {
-              loadingDelay: 0,
-              ...res,
-            }).then(d => {
-              this.methods.toChallenge(d.result.challengeId);
-              this.$broadcast('updateHome');
+            this.methods.confirmChallenge().then(() => {
+              request.post(urls.postQrcode, {
+                loadingDelay: 0,
+                ...res,
+              }).then(d => {
+                this.methods.toChallenge(d.result.challengeId);
+                this.methods.updateHome();
+              });
             });
+            this.$apply();
           },
           fail: (res) => {
             wepy.showAlert({
               content: res.errMsg,
             });
-          }
+          },
         })
+      },
+      confirmOk: () => {
+        this.confirmMaskDeferred.resolve();
+        this.showConfirmMask = false;
+      },
+      confirmCancel: () => {
+        this.showConfirmMask = false;
+      },
+      confirmChallenge: () => {
+        const deferred = defer();
+
+        this.showConfirmMask = true;
+        this.confirmMaskDeferred = deferred;
+
+        return deferred.promise;
       },
       updateHome: () => {
         request.get(urls.home).then(({

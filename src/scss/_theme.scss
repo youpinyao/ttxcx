@@ -29,3 +29,33 @@ $bordercolor: #474848 !global;
     clear: both;
   }
 }
+
+@mixin flex($num: 1) {
+  -webkit-box-flex: $num;
+  -ms-flex: $num;
+  flex: $num;
+  -webkit-flex: $num;
+}
+
+@mixin displayflex() {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+}
+
+@mixin appearance() {
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+@mixin transition($prop: all 300ms ease) {
+  transition: $prop;
+  -webkit-transition: $prop;
+}
+
+@mixin transform($prop) {
+  -webkit-transform: $prop;
+  transform: $prop;
+}

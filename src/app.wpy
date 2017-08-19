@@ -18,8 +18,8 @@
   export default class extends wepy.app {
     config = {
       pages: [
-        'pages/rank',
         'pages/home',
+        'pages/rank',
       ],
       window: {
         backgroundTextStyle: 'light',
