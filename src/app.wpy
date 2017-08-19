@@ -3,9 +3,11 @@
   page {
     background-color: $blackBg;
   }
+
   view {
     box-sizing: border-box;
   }
+
 </style>
 
 <script>
@@ -16,6 +18,7 @@
   export default class extends wepy.app {
     config = {
       pages: [
+        'pages/rank',
         'pages/home',
       ],
       window: {
@@ -34,7 +37,18 @@
     }
 
     onLaunch() {
+      const showModal = wepy.showModal;
+      wepy.showModal = function(config) {
+        config.confirmColor = '#ea5504';
+        config.cancelColor = '#666666';
+        showModal(config);
+      }
 
+      wepy.showAlert = function(config) {
+        config.showCancel = false;
+        config.confirmText = '知道了';
+        wepy.showModal(config);
+      }
     }
   }
 

@@ -1,0 +1,48 @@
+{
+  "success": true,
+  "result": {
+    "rank": 1,
+    "score": 650000,
+    "list": [{
+      "headimgurl": "../images/head.png",
+      "nickname": "MrDeerMrDeerMrDeerMrDeer",
+      "score": 66666
+    }, {
+      "headimgurl": "../images/head.png",
+      "nickname": "MrDeer",
+      "score": 66666
+    }, {
+      "headimgurl": "../images/head.png",
+      "nickname": "MrDeer",
+      "score": 66666
+    }, {
+      "headimgurl": "../images/head.png",
+      "nickname": "MrDeer",
+      "score": 66666
+    }, {
+      "headimgurl": "../images/head.png",
+      "nickname": "MrDeer",
+      "score": 66666
+    }, {
+      "headimgurl": "../images/head.png",
+      "nickname": "MrDeer",
+      "score": 66666
+    }, {
+      "headimgurl": "../images/head.png",
+      "nickname": "MrDeer",
+      "score": 66666
+    }, {
+      "headimgurl": "../images/head.png",
+      "nickname": "MrDeer",
+      "score": 66666
+    }, {
+      "headimgurl": "../images/head.png",
+      "nickname": "MrDeer",
+      "score": 66666
+    }, {
+      "headimgurl": "../images/head.png",
+      "nickname": "MrDeer",
+      "score": 66666
+    }]
+  }
+}

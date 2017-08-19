@@ -5,3 +5,27 @@ $orange: #ea5504 !global;
 $c3: #333333 !global;
 $c6: #666666 !global;
 $c9: #999999 !global;
+$bordercolor: #474848 !global;
+@mixin lineClamp($line) {
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: normal;
+}
+
+@mixin ellipsis() {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@mixin clearfix() {
+  &:after {
+    content: "\200B";
+    display: block;
+    height: 0;
+    clear: both;
+  }
+}

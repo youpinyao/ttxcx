@@ -1,6 +1,7 @@
 <style lang="scss"
   scoped>
   @import '../scss/_theme.scss';
+
   .fixed {
     position: fixed;
     left: 0;
@@ -133,7 +134,7 @@
         display: block;
         width: 1rpx;
         height: 100rpx;
-        background-color: #474848;
+        background-color: $bordercolor;
         right: 0;
         top: 10rpx;
       }
@@ -156,6 +157,45 @@
     }
   }
 
+  .info-item {
+    margin: 0 26rpx 30rpx 26rpx;
+    border: 1px solid rgba($orange, 0.2);
+    border-radius: 2rpx;
+    padding: 30rpx;
+    .info-item-title {
+      font-size: 24rpx;
+      color: $orange;
+      padding-left: 0rpx;
+      padding-bottom: 20rpx;
+    }
+    .info-item-desc {
+      font-size: 28rpx;
+      color: $c6;
+      padding-left: 10rpx;
+      padding-right: 10rpx;
+      padding-bottom: 30rpx;
+      line-height: 20px;
+    }
+    .info-item-content {
+      border-top: 1px solid $bordercolor;
+      padding-top: 30rpx;
+      .button {
+        line-height: 110rpx;
+        width: 500rpx;
+        text-align: center;
+        color: $white;
+        background-color: $orange;
+        border-radius: 55rpx;
+        font-size: 36rpx;
+        margin: 0 auto;
+      }
+      .button-text {
+        font-size: 30rpx;
+        color: $orange;
+      }
+    }
+  }
+
 </style>
 <template lang="wxml">
   <view class="fixed {{homeData.challengeId ? '' : 'no-has-challenge'}}">
@@ -170,6 +210,7 @@
         <image src="../images/icon-person.png"></image>
       </view>
       <view class="button qrcode"
+        wx:if="{{!homeData.challengeId}}"
         @tap="toQrcode">
         <image src="../images/icon-qrcode.png"></image>
       </view>
@@ -193,7 +234,7 @@
           <text class="t1">{{bestScore.minute}}</text>
           <text class="t2">min</text>
         </view>
-        <view wx:if="{{bestScore.second}}">
+        <view>
           <text class="t1">{{bestScore.second}}</text>
           <text class="t2">s</text>
         </view>
@@ -212,22 +253,65 @@
       </view>
       <view class="flex">
         <view class="t1">本周排名</view>
-        <view class="t2">
-          <image src="{{homeData.headimgurl}}"></image>
+        <view class="t2"
+          @tap="toRank">
+          <image src="{{userInfo.userInfo.avatarUrl}}"></image>
         </view>
       </view>
+    </view>
+  </view>
+
+  <view class="info-item">
+    <view class="info-item-title">马上预约</view>
+    <view class="info-item-desc">预约一步走，不用等待，合理安排您的塔拓时间。</view>
+    <view class="info-item-content">
+      <view class="button"
+        @tap="toBooking">前往预约 ></view>
+    </view>
+  </view>
+  <view class="info-item">
+    <view class="info-item-title">绑定手环</view>
+    <view class="info-item-desc">马上绑定手环，开启你的塔拓之旅!一起来享受极限带来的乐趣！</view>
+    <view class="info-item-content">
+      <view class="button-text"
+        @tap="toQrcode">前往绑定手环 ></view>
     </view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy';
+  import util from '../services/util.js';
   import urls from '../services/urls.js';
   import request from '../services/request.js';
 
-  export default class Hmoe extends wepy.page {
+  export default class Home extends wepy.page {
     config = {
       navigationBarTitleText: '塔拓',
+    }
+
+    onShareAppMessage(res) {
+      if (res.from === 'button') {
+        // 来自页面内转发按钮
+        console.log(res.target);
+      }
+      return {
+        title: '塔拓',
+        path: '/pages/home',
+        success: function(res) {
+          // 转发成功
+          wepy.showToast({
+            title: '转发成功',
+            duration: 2000,
+          });
+        },
+        fail: function(res) {
+          // 转发失败
+          wepy.showAlert({
+            content: '转发失败',
+          });
+        }
+      }
     }
 
     components = {
@@ -241,35 +325,56 @@
 
     computed = {
       bestScore() {
-        let hour = 0;
-        let minute = 0;
-        let second = 0;
-
         if (this.homeData && this.homeData.bestScore) {
-          const score = this.homeData.bestScore.score;
-
-          hour = parseInt(score / (1000 * 60 * 60), 10);
-          minute = parseInt((score % (1000 * 60 * 60)) / (1000 * 60), 10);
-          second = parseInt((score % (1000 * 60)) / 1000, 10);
+          return util.renderScore(this.homeData.bestScore.score);
         }
-
-        return {
-          hour,
-          minute,
-          second,
-        };
+        return {};
       },
     }
 
     methods = {
-      toChallenge(challengeId) {
+      toChallenge: (challengeId) => {
         console.log('to challenge page', challengeId);
       },
-      toMe() {
+      toRank: () => {
+        console.log('to rank page');
+        wepy.navigateTo({
+          url: '/pages/rank',
+        });
+      },
+      toMe: () => {
         console.log('to me page');
       },
-      toQrcode() {
+      toBooking: () => {
+        console.log('to booking');
+      },
+      toQrcode: () => {
         console.log('to qrcode page');
+        wepy.scanCode({
+          onlyFromCamera: true,
+          success: (res) => {
+            request.post(urls.postQrcode, {
+              loadingDelay: 0,
+              ...res,
+            }).then(d => {
+              this.methods.toChallenge(d.result.challengeId);
+              this.$broadcast('updateHome');
+            });
+          },
+          fail: (res) => {
+            wepy.showAlert({
+              content: res.errMsg,
+            });
+          }
+        })
+      },
+      updateHome: () => {
+        request.get(urls.home).then(({
+          result,
+        }) => {
+          this.homeData = result;
+          this.$apply();
+        });
       }
     }
 
@@ -277,16 +382,15 @@
 
     }
 
-    async onLoad() {
-      let self = this;
+    onShow() {
+      request.getUserInfo().then(d => {
+        this.userInfo = d;
+        this.methods.updateHome();
+      });
+    }
 
-      self.userInfo = await request.getUserInfo();
-
-      self.homeData = (await request.get(urls.home)).result;
-
-      console.log('home init');
-
-      this.$apply();
+    onLoad() {
+      console.log('home on load');
     }
   }
 

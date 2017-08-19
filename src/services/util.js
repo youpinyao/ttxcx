@@ -1,4 +1,3 @@
-
 import is from './is.js';
 
 function isBlankObject(value) {
@@ -13,7 +12,8 @@ function forEach(obj, iterator, context) {
       for (key in obj) {
         // Need to check if hasOwnProperty exists,
         // as on IE8 the result of querySelectorAll is an object without a hasOwnProperty function
-        if (key !== 'prototype' && key !== 'length' && key !== 'name' && (!obj.hasOwnProperty || obj.hasOwnProperty(key))) {
+        if (key !== 'prototype' && key !== 'length' && key !== 'name' && (!obj.hasOwnProperty ||
+            obj.hasOwnProperty(key))) {
           iterator.call(context, obj[key], key, obj);
         }
       }
@@ -50,6 +50,25 @@ function forEach(obj, iterator, context) {
   return obj;
 }
 
+function renderScore(score) {
+  let hour = 0;
+  let minute = 0;
+  let second = 0;
+
+  if (score) {
+    hour = parseInt(score / (1000 * 60 * 60), 10);
+    minute = parseInt((score % (1000 * 60 * 60)) / (1000 * 60), 10);
+    second = parseInt((score % (1000 * 60)) / 1000, 10);
+  }
+
+  return {
+    hour,
+    minute,
+    second,
+  };
+}
+
 export default {
   each: forEach,
+  renderScore,
 };

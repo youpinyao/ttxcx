@@ -5,6 +5,7 @@ const path = 'http://localhost/ttxcx/src/';
 const urls = {
   login: 'json/login.json',
   home: 'json/home.json',
+  rank: 'json/rank.json',
 }
 
 function convert(urls) {

@@ -19,6 +19,8 @@ function request(url, method, data) {
     data = {}
   }
 
+  data.userId = global.userId;
+
   var hasLoading = false;
   var loadingDelaySt = null;
 
@@ -41,7 +43,7 @@ function request(url, method, data) {
   }
 
   if (!is.empty(data.loadingDelay)) {
-    loadingDelaySt = setTimeout(function () {
+    loadingDelaySt = setTimeout(function() {
       hasLoading = true
       loading.show({
         title: data.loadingText || '努力加载中'
@@ -66,7 +68,8 @@ function request(url, method, data) {
       wepy.showModal({
         content: d.msg || '似乎出错了，请稍后再试。',
         showCancel: false,
-        confirmText: '知道了'
+        confirmText: '知道了',
+
       })
     }
 
@@ -78,7 +81,7 @@ function request(url, method, data) {
     }
   }
   if (param.url && param.url.indexOf('{userId}') !== -1) {
-    getUserInfo.then(function ({
+    getUserInfo.then(function({
       userInfo,
       userId,
     }) {
@@ -94,7 +97,7 @@ function request(url, method, data) {
 // 向服务器请求数据，param：{url:请求相对路径,data:请求参数,success:function,fail:function，默认true}
 function requestSvr(param) {
   if (global.logining) {
-    global.loginCallback.push(function () {
+    global.loginCallback.push(function() {
       requestSvr(param);
     });
   }
@@ -108,13 +111,13 @@ function requestSvr(param) {
       'X-APP-TOKEN': global.appToken,
       'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
     },
-    success: function (res) {
+    success: function(res) {
       if (!res.data) {
         wepy.showModal({
           content: '服务端返回无效的数据',
           showCancel: false,
-          confirmColor: '#000',
-          confirmText: '知道了'
+          confirmText: '知道了',
+
         })
         console.error('服务端返回无效的数据', res)
         return;
@@ -138,7 +141,7 @@ function requestSvr(param) {
       } else {
         if (res.data.code === 'TIMEOUT') {
           console.error('登录超时，自动重新登录', res);
-          global.loginCallback = [function () {
+          global.loginCallback = [function() {
             requestSvr(param);
           }];
 
@@ -149,8 +152,8 @@ function requestSvr(param) {
           wepy.showModal({
             content: res.data.msg || '似乎出错了，请稍后再试。',
             showCancel: false,
-            confirmColor: '#000',
-            confirmText: '知道了'
+            confirmText: '知道了',
+
           })
 
           try {
@@ -166,13 +169,13 @@ function requestSvr(param) {
         }
       }
     },
-    fail: function (res) {
+    fail: function(res) {
       console.error(res.data ? '似乎出错了，请稍后再试' : '似乎已断开与互联网的连接');
       wepy.showModal({
         content: res.data ? '似乎出错了，请稍后再试' : '似乎已断开与互联网的连接',
         showCancel: false,
-        confirmColor: '#000',
-        confirmText: '知道了'
+        confirmText: '知道了',
+
       })
 
       try {
@@ -196,7 +199,7 @@ function doLogin() {
 
   function wxLogin() {
     wepy.login({
-      success: function (res) {
+      success: function(res) {
         if (!res.code) {
           deferred.reject({
             success: false,
@@ -206,13 +209,13 @@ function doLogin() {
         }
         _getUserInfo(res.code)
       },
-      fail: function (res) {
+      fail: function(res) {
         wepy.showModal({
           content: 'wx.login[' + res.errMsg + ']微信登录失败',
           showCancel: false,
-          confirmColor: '#000',
           confirmText: '知道了',
-          success: function (res) {
+
+          success: function(res) {
             if (res.confirm) {
               wxLogin();
             }
@@ -229,12 +232,12 @@ function doLogin() {
   // 登录成功后获取用户信息
   function _getUserInfo(code) {
     wepy.getUserInfo({
-      success: function (res) {
+      success: function(res) {
         console.log('获取用户信息成功', code, res);
         global.userInfo = res.userInfo;
         serverLogin(code, res)
       },
-      fail: function () {
+      fail: function() {
         _getUserInfo(code)
         deferred.reject({
           success: false,
@@ -252,13 +255,13 @@ function doLogin() {
         code: code,
         userInfo: JSON.stringify(res)
       },
-      method: 'GET',
+      method: 'POST',
       header: {
         // 设置请求的 header
         'X-APP-TOKEN': global.appToken,
         'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
       },
-      success: function (res) {
+      success: function(res) {
         if (typeof res.data === 'string') {
           res.data = JSON.parse(res.data);
         }
@@ -276,9 +279,9 @@ function doLogin() {
         } else {
           wepy.showModal({
             content: (res.data && res.data.msg) ? res.data.msg : '微信登录失败',
-            confirmColor: '#000',
             showCancel: false,
-            confirmText: '知道了'
+            confirmText: '知道了',
+
           })
 
           console.log('微信登录失败', res.data)
@@ -289,12 +292,12 @@ function doLogin() {
           })
         }
       },
-      fail: function (res) {
+      fail: function(res) {
         wepy.showModal({
           content: '似乎出错了，请稍后再试。',
           showCancel: false,
-          confirmColor: '#000',
-          confirmText: '知道了'
+          confirmText: '知道了',
+
         })
 
         deferred.reject({
@@ -327,12 +330,12 @@ function getUserInfo() {
   const deferred = defer();
 
   if (global.userInfo && global.userId) {
-    if (typeof callback === 'function') {
+    setTimeout(() => {
       deferred.resolve({
         userInfo: global.userInfo,
         userId: global.userId,
       })
-    }
+    });
   } else {
     doLogin().then(data => {
       if (data.success) {

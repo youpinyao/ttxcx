@@ -1,0 +1,267 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  $bordercolor: #313335;
+  .banner {
+    position: relative;
+    .bg {
+      vertical-align: top;
+      height: 420rpx;
+      width: 100%;
+    }
+    .info {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      padding-top: 90rpx;
+      text-align: center;
+      .head {
+        width: 180rpx;
+        height: 180rpx;
+        display: inline-block;
+        position: relative;
+        > image {
+          vertical-align: top;
+          width: 100%;
+          height: 100%;
+          border-radius: 180rpx;
+        }
+        .crown {
+          position: absolute;
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+          top: -50rpx;
+          width: 70rpx;
+          height: 70rpx;
+          image {
+            width: 100%;
+            height: 100%;
+            vertical-align: top;
+          }
+        }
+      }
+      .nickname {
+        color: $white;
+        font-size: 36rpx;
+        padding-top: 25rpx;
+      }
+      .score {
+        padding-top: 20rpx;
+        color: $white;
+        font-size: 28rpx;
+      }
+    }
+  }
+
+  .tabs {
+    text-align: center;
+    font-size: 36rpx;
+    color: #b2b2b2;
+    line-height: 95rpx;
+    display: flex;
+    border-bottom: 1px solid $bordercolor;
+    .tab {
+      flex: 1;
+      &.active {
+        color: $orange;
+      }
+    }
+  }
+
+  .rank-list {
+    .rank-item {
+      @include clearfix();
+      border-bottom: 1px solid $bordercolor;
+      line-height: 150rpx;
+      min-height: 150rpx;
+      font-size: 28rpx;
+      color: $white;
+      > view {
+        float: left;
+      }
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3),
+      {
+        view:nth-child(1) {
+          padding-right: 20rpx;
+        }
+      }
+      > view:nth-child(1) {
+        width: 110rpx;
+        padding-right: 40rpx;
+        text-align: right;
+        image {
+          width: 50rpx;
+          height: 70rpx;
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+      > view:nth-child(2) {
+        width: 110rpx;
+        image {
+          width: 84rpx;
+          height: 84rpx;
+          border-radius: 84px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+      > view:nth-child(3) {
+        @include ellipsis();
+        width: 350rpx;
+      }
+      > view:nth-child(4) {
+        width: 180rpx;
+        padding-left: 10rpx;
+      }
+    }
+  }
+
+</style>
+<template lang="wxml">
+  <view class="banner">
+    <image class="bg"
+      src="../images/banner-header.jpg"></image>
+    <view class="info">
+      <view class="head">
+        <image src="{{userInfo.userInfo.avatarUrl}}"></image>
+        <view class="crown"
+          wx:if="{{rankData.rank == 1}}">
+          <image src="../images/icon-crown.png"></image>
+        </view>
+      </view>
+      <view class="nickname">{{userInfo.userInfo.nickName}}</view>
+      <view class="score">
+        <text wx:if="{{myScore.hour}}">{{myScore.hour}}h</text>
+        <text wx:if="{{myScore.minute}}">{{myScore.minute}}min</text>
+        <text>{{myScore.second}}s</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="tabs">
+    <view class="tab {{type == 'week' ? 'active' : ''}}"
+      @tap="selectTab('week')">本周</view>
+    <view class="tab {{type == 'month' ? 'active' : ''}}"
+      @tap="selectTab('month')">本月</view>
+    <view class="tab {{type == 'total' ? 'active' : ''}}"
+      @tap="selectTab('total')">总排行</view>
+  </view>
+
+  <view class="rank-list">
+    <view class="rank-item"
+      wx:for="{{rankData.list}}">
+      <view wx:if="{{index == 0}}">
+        <image src="../images/icon-rank-first.png"></image>
+      </view>
+      <view wx:if="{{index == 1}}">
+        <image src="../images/icon-rank-second.png"></image>
+      </view>
+      <view wx:if="{{index == 2}}">
+        <image src="../images/icon-rank-third.png"></image>
+      </view>
+      <view wx:if="{{index > 2}}">{{index + 1}}</view>
+      <view>
+        <image src="{{item.headimgurl}}"></image>
+      </view>
+      <view>{{item.nickname}}</view>
+      <view>{{item.score}}</view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import util from '../services/util.js';
+  import urls from '../services/urls.js';
+  import request from '../services/request.js';
+
+  export default class Rank extends wepy.page {
+    config = {
+      navigationBarTitleText: '排行榜',
+      enablePullDownRefresh: true,
+    }
+
+    components = {
+
+    }
+
+    data = {
+      userInfo: null,
+      rankData: null,
+      type: 'week',
+    }
+
+    computed = {
+      myScore: () => {
+        if (this.rankData && this.rankData.score) {
+          return util.renderScore(this.rankData.score);
+        }
+        return {};
+      }
+    }
+
+    methods = {
+      selectTab: (type) => {
+        this.methods.updateRank(type);
+      },
+      updateRank: (type) => {
+        if (type) {
+          this.type = type;
+        }
+
+        request.get(urls.rank, {
+          type: this.data.type,
+        }).then(({
+          result,
+        }) => {
+          this.rankData = result;
+          this.methods.convertList(this.rankData.list);
+          this.$apply();
+        });
+      },
+      convertList: (list) => {
+        util.each(list, d => {
+          const score = util.renderScore(d.score);
+          d.score = '';
+
+          if (score.hour) {
+            d.score += `${score.hour}h`;
+          }
+          if (score.minute) {
+            d.score += `${score.minute}min`;
+          }
+          if (score.second) {
+            d.score += `${score.second}s`;
+          }
+        });
+      }
+    }
+
+    events = {
+
+    }
+
+    onPullDownRefresh() {
+      this.methods.updateRank();
+    }
+
+    onShow() {
+      let self = this;
+
+      request.getUserInfo().then(d => {
+        self.userInfo = d;
+        this.methods.updateRank();
+      });
+    }
+
+    onLoad() {
+      console.log('rank on load');
+    }
+  }
+
+</script>
