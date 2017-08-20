@@ -1,4 +1,5 @@
-const path = require('path')
+const path = require('path');
+
 var prod = process.env.NODE_ENV === 'production'
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
       compress: false
     },
     sass: {
-      outputStyle: 'uncompress'
+      outputStyle: 'compressed'
     },
     babel: {
       sourceMap: true,

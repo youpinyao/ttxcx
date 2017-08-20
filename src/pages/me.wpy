@@ -1,0 +1,329 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  $grey: #b2b2b2;
+  .fixed {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .space {
+    height: 330rpx;
+  }
+
+  .banner {
+    position: relative;
+    .bg {
+      vertical-align: top;
+      height: 234rpx;
+      width: 100%;
+    }
+    .info {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      padding-left: 40rpx;
+      padding-top: 55rpx;
+      color: $white;
+      .head {
+        width: 110rpx;
+        height: 110rpx;
+        border-radius: 110rpx;
+        float: left;
+        margin-right: 40rpx;
+        margin-top: 10rpx;
+      }
+      .nickname {
+        font-size: 36rpx;
+      }
+      .wechat,
+      .phone {
+        font-size: 28rpx;
+        padding-top: 20rpx;
+      }
+    }
+  }
+
+  .tabs {
+    text-align: center;
+    font-size: 36rpx;
+    color: $grey;
+    line-height: 96rpx;
+    display: flex;
+    background-color: $blackBar;
+    .tab {
+      flex: 1;
+      &.active {
+        color: $orange;
+      }
+    }
+  }
+
+  .me-list {
+    padding-bottom: 30rpx;
+    .me-item {
+      height: 110rpx;
+      background-color: $blackBar;
+      font-size: 30rpx;
+      text-align: center;
+      color: $white;
+      @include clearfix();
+      margin-top: 30rpx;
+      > view {
+        float: left;
+        &:nth-child(1) {
+          width: 115rpx;
+          view:nth-child(1) {
+            font-size: 36rpx;
+            padding-top: 22rpx;
+          }
+          view:nth-child(2) {
+            padding-top: 10rpx;
+            font-size: 24rpx;
+            color: $grey;
+          }
+        }
+        &:nth-child(2) {
+          width: 60rpx;
+          image {
+            width: 60rpx;
+            height: 110rpx;
+          }
+        }
+        &:nth-child(3) {
+          width: 110rpx;
+          line-height: 110rpx;
+        }
+        &:nth-child(4) {
+          width: 330rpx;
+          view:nth-child(1) {
+            padding-top: 20rpx;
+          }
+          view:nth-child(2) {
+            padding-top: 16rpx;
+            font-size: 24rpx;
+            color: $grey;
+            @include ellipsis();
+          }
+        }
+        &:nth-child(5) {
+          width: 95rpx;
+          line-height: 110rpx;
+          .arrow {
+            width: 20rpx;
+            height: 40rpx;
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+          }
+        }
+        &:nth-child(6) {
+          width: 40rpx;
+          image {
+            width: 40rpx;
+            height: 110rpx;
+          }
+        }
+      }
+    }
+  }
+
+  .scroll-view {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 330rpx;
+    bottom: 0;
+    margin: auto;
+  }
+
+</style>
+<template lang="wxml">
+  <view class="fixed">
+    <view class="banner">
+      <image class="bg"
+        src="../images/me-header.jpg"></image>
+      <view class="info">
+        <image class="head"
+          src="{{userInfo.userInfo.avatarUrl}}"></image>
+        <view class="nickname">{{userInfo.userInfo.nickName}}</view>
+        <view class="wechat">绑定微信：{{userData.wechat}}</view>
+        <view class="phone">绑定手机：{{userData.phone}}</view>
+      </view>
+    </view>
+
+    <view class="tabs">
+      <view class="tab {{type == 'booking' ? 'active' : ''}}"
+        @tap="selectTab('booking')">预约记录</view>
+      <view class="tab {{type == 'record' ? 'active' : ''}}"
+        @tap="selectTab('record')">我的战绩</view>
+    </view>
+  </view>
+
+  <view class="space"></view>
+
+  <view class="booking-content"
+    hidden="{{type !== 'booking'}}">
+    <null-list wx:if="{{bookingData.length < 0}}">暂无数据</null-list>
+    <view wx:if="{{bookingData.length > 0}}"
+      class="me-list">
+      <view class="me-item"
+        wx:for="{{bookingData}}"
+        wx:key="index">
+        <view>
+          <view>{{item.date2}}</view>
+          <view>{{item.date1}}</view>
+        </view>
+        <view>
+          <image src="../images/me-item-split-1.jpg"></image>
+        </view>
+        <view>{{item.date3}}</view>
+        <view>
+          <view>{{item.city}}</view>
+          <view>{{item.address}}</view>
+        </view>
+        <view>
+          {{item.number}}人
+        </view>
+        <view>
+          <image src="../images/me-item-split-2.jpg"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="record-content"
+    hidden="{{type !== 'record'}}">
+    <null-list wx:if="{{recordData.length < 0}}">暂无数据</null-list>
+    <view wx:if="{{recordData.length > 0}}"
+      class="me-list">
+      <view class="me-item"
+        wx:for="{{recordData}}"
+        wx:key="index">
+        <view>
+          <view>{{item.date2}}</view>
+          <view>{{item.date1}}</view>
+        </view>
+        <view>
+          <image src="../images/me-item-split-1.jpg"></image>
+        </view>
+        <view>{{item.date3}}</view>
+        <view>
+          <view>{{item.city}}</view>
+          <view>{{item.address}}</view>
+        </view>
+        <view>
+          <image class="arrow"
+            src="../images/icon-arrow-right.png"></image>
+        </view>
+        <view>
+          <image src="../images/me-item-split-2.jpg"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import urls from '../services/urls.js';
+  import util from '../services/util.js';
+  import moment from 'moment';
+  import request from '../services/request.js';
+
+  import nullList from '../components/nullList';
+
+  export default class Rank extends wepy.page {
+    config = {
+      navigationBarTitleText: '我',
+      enablePullDownRefresh: true,
+    }
+
+    components = {
+      'null-list': nullList,
+    }
+
+    data = {
+      userInfo: null,
+      recordData: null,
+      bookingData: null,
+      userData: null,
+      type: 'booking',
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      selectTab: (type) => {
+        wepy.pageScrollTo({
+          scrollTop: 0
+        })
+        this.type = type;
+      },
+      updateRecord: () => {
+        request.get(urls.record).then(({
+          result,
+        }) => {
+          this.recordData = result;
+          this.methods.convertData(this.recordData);
+        });
+      },
+      updateBooking: () => {
+        request.get(urls.booking).then(({
+          result,
+        }) => {
+          this.bookingData = result;
+          this.methods.convertData(this.bookingData);
+        });
+      },
+      updateUser: () => {
+        request.get(urls.user).then(({
+          result,
+        }) => {
+          this.userData = result;
+        });
+      },
+      convertData: (data) => {
+        util.each(data, d => {
+          const date = moment(d.date);
+
+          d.date1 = date.format('YYYY-M');
+          d.date2 = date.format('DD');
+          d.date3 = date.format('HH:mm');
+        });
+      }
+    }
+
+    events = {
+
+    }
+
+    onPullDownRefresh() {
+      this.methods.updateBooking();
+      this.methods.updateRecord();
+      this.methods.updateUser();
+    }
+
+    onShow() {
+      let self = this;
+
+      request.getUserInfo().then(d => {
+        self.userInfo = d;
+        this.methods.updateBooking();
+        this.methods.updateRecord();
+        this.methods.updateUser();
+      });
+    }
+
+    onLoad() {
+      console.log('me on load');
+    }
+  }
+
+</script>

@@ -1,0 +1,28 @@
+<style type="scss"
+  scoped>
+  @import '../scss/_theme.scss'; .null-list { color: $c6; text-align: center; padding: 100rpx 0; font-size: 32rpx; }
+</style>
+<template>
+  <view class="null-list">
+    <view>
+      <slot></slot>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class NullList extends wepy.component {
+    props = {
+
+    }
+
+    components = {
+
+    }
+    methods = {
+
+    }
+  }
+
+</script>

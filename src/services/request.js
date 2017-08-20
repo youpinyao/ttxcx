@@ -11,6 +11,13 @@ function post(url, data) {
 }
 
 function get(url, data) {
+  if (!data) {
+    data = {
+
+    }
+  }
+  data._timestamp = +new Date();
+
   return request(url, 'GET', data);
 }
 

@@ -19,6 +19,7 @@
     config = {
       pages: [
         'pages/home',
+        'pages/me',
         'pages/rank',
       ],
       window: {

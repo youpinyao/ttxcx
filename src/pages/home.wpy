@@ -326,7 +326,8 @@
         @tap="toBooking">前往预约 ></view>
     </view>
   </view>
-  <view class="info-item">
+  <view class="info-item"
+    wx:if="{{!homeData.challengeId}}">
     <view class="info-item-title">绑定手环</view>
     <view class="info-item-desc">马上绑定手环，开启你的塔拓之旅!一起来享受极限带来的乐趣！</view>
     <view class="info-item-content">
@@ -415,6 +416,9 @@
       },
       toMe: () => {
         console.log('to me page');
+        wepy.navigateTo({
+          url: '/pages/me',
+        });
       },
       toBooking: () => {
         console.log('to booking');
@@ -462,7 +466,6 @@
           result,
         }) => {
           this.homeData = result;
-          this.$apply();
         });
       }
     }

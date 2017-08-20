@@ -2,6 +2,19 @@
   scoped>
   @import '../scss/_theme.scss';
   $bordercolor: #313335;
+  $grey: #b2b2b2;
+  .fixed {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .space {
+    height: 516rpx;
+  }
+
   .banner {
     position: relative;
     .bg {
@@ -58,10 +71,11 @@
   .tabs {
     text-align: center;
     font-size: 36rpx;
-    color: #b2b2b2;
-    line-height: 95rpx;
+    color: $grey;
+    line-height: 96rpx;
     display: flex;
     border-bottom: 1px solid $bordercolor;
+    background-color: $blackBg;
     .tab {
       flex: 1;
       &.active {
@@ -123,38 +137,45 @@
 
 </style>
 <template lang="wxml">
-  <view class="banner">
-    <image class="bg"
-      src="../images/banner-header.jpg"></image>
-    <view class="info">
-      <view class="head">
-        <image src="{{userInfo.userInfo.avatarUrl}}"></image>
-        <view class="crown"
-          wx:if="{{rankData.rank == 1}}">
-          <image src="../images/icon-crown.png"></image>
+  <view class="fixed">
+    <view class="banner">
+      <image class="bg"
+        src="../images/banner-header.jpg"></image>
+      <view class="info">
+        <view class="head">
+          <image src="{{userInfo.userInfo.avatarUrl}}"></image>
+          <view class="crown"
+            wx:if="{{rankData.rank == 1}}">
+            <image src="../images/icon-crown.png"></image>
+          </view>
+        </view>
+        <view class="nickname">{{userInfo.userInfo.nickName}}</view>
+        <view class="score">
+          <text wx:if="{{myScore.hour}}">{{myScore.hour}}h</text>
+          <text wx:if="{{myScore.minute}}">{{myScore.minute}}min</text>
+          <text>{{myScore.second}}s</text>
         </view>
       </view>
-      <view class="nickname">{{userInfo.userInfo.nickName}}</view>
-      <view class="score">
-        <text wx:if="{{myScore.hour}}">{{myScore.hour}}h</text>
-        <text wx:if="{{myScore.minute}}">{{myScore.minute}}min</text>
-        <text>{{myScore.second}}s</text>
-      </view>
+    </view>
+
+    <view class="tabs">
+      <view class="tab {{type == 'week' ? 'active' : ''}}"
+        @tap="selectTab('week')">本周</view>
+      <view class="tab {{type == 'month' ? 'active' : ''}}"
+        @tap="selectTab('month')">本月</view>
+      <view class="tab {{type == 'total' ? 'active' : ''}}"
+        @tap="selectTab('total')">总排行</view>
     </view>
   </view>
 
-  <view class="tabs">
-    <view class="tab {{type == 'week' ? 'active' : ''}}"
-      @tap="selectTab('week')">本周</view>
-    <view class="tab {{type == 'month' ? 'active' : ''}}"
-      @tap="selectTab('month')">本月</view>
-    <view class="tab {{type == 'total' ? 'active' : ''}}"
-      @tap="selectTab('total')">总排行</view>
-  </view>
+  <view class="space"></view>
 
-  <view class="rank-list">
+  <null-list wx:if="{{rankData.list.length < 0}}">暂无数据</null-list>
+  <view wx:if="{{rankData.list.length > 0}}"
+    class="rank-list">
     <view class="rank-item"
-      wx:for="{{rankData.list}}">
+      wx:for="{{rankData.list}}"
+      wx:key="index">
       <view wx:if="{{index == 0}}">
         <image src="../images/icon-rank-first.png"></image>
       </view>
@@ -180,6 +201,8 @@
   import urls from '../services/urls.js';
   import request from '../services/request.js';
 
+  import nullList from '../components/nullList';
+
   export default class Rank extends wepy.page {
     config = {
       navigationBarTitleText: '排行榜',
@@ -187,7 +210,7 @@
     }
 
     components = {
-
+      'null-list': nullList,
     }
 
     data = {
@@ -207,6 +230,9 @@
 
     methods = {
       selectTab: (type) => {
+        wepy.pageScrollTo({
+          scrollTop: 0
+        })
         this.methods.updateRank(type);
       },
       updateRank: (type) => {
@@ -221,7 +247,6 @@
         }) => {
           this.rankData = result;
           this.methods.convertList(this.rankData.list);
-          this.$apply();
         });
       },
       convertList: (list) => {

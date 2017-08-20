@@ -6,6 +6,9 @@ const urls = {
   login: 'json/login.json',
   home: 'json/home.json',
   rank: 'json/rank.json',
+  record: 'json/record.json',
+  booking: 'json/booking.json',
+  user: 'json/user.json',
 }
 
 function convert(urls) {
