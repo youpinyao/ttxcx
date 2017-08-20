@@ -1,6 +1,7 @@
 <style lang="scss"
   scoped>
   @import '../scss/_theme.scss';
+  $bordercolor: #474848;
   .fixed {
     position: fixed;
     left: 0;
@@ -187,6 +188,10 @@
         border-radius: 55rpx;
         font-size: 36rpx;
         margin: 0 auto;
+        @include transition();
+        &:active {
+          opacity: 0.8;
+        }
       }
       .button-text {
         font-size: 30rpx;
@@ -422,6 +427,9 @@
       },
       toBooking: () => {
         console.log('to booking');
+        wepy.navigateTo({
+          url: '/pages/booking',
+        });
       },
       toQrcode: () => {
         console.log('to qrcode page');
@@ -466,6 +474,7 @@
           result,
         }) => {
           this.homeData = result;
+          this.$apply();
         });
       }
     }

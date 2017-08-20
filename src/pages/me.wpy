@@ -53,9 +53,13 @@
     font-size: 36rpx;
     color: $grey;
     line-height: 96rpx;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     background-color: $blackBar;
     .tab {
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
       flex: 1;
       &.active {
         color: $orange;
@@ -238,7 +242,7 @@
 
   import nullList from '../components/nullList';
 
-  export default class Rank extends wepy.page {
+  export default class Me extends wepy.page {
     config = {
       navigationBarTitleText: '我',
       enablePullDownRefresh: true,
@@ -276,6 +280,7 @@
         }) => {
           this.recordData = result;
           this.methods.convertData(this.recordData);
+          this.$apply();
         });
       },
       updateBooking: () => {
@@ -284,6 +289,7 @@
         }) => {
           this.bookingData = result;
           this.methods.convertData(this.bookingData);
+          this.$apply();
         });
       },
       updateUser: () => {
@@ -291,6 +297,7 @@
           result,
         }) => {
           this.userData = result;
+          this.$apply();
         });
       },
       convertData: (data) => {

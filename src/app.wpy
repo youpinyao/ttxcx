@@ -8,6 +8,11 @@
     box-sizing: border-box;
   }
 
+  .wetoast__bd {
+    min-height: 0 !important;
+    font-size: 28rpx;
+  }
+
 </style>
 
 <script>
@@ -19,6 +24,7 @@
     config = {
       pages: [
         'pages/home',
+        'pages/booking',
         'pages/me',
         'pages/rank',
       ],

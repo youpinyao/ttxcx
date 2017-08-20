@@ -9,6 +9,8 @@ const urls = {
   record: 'json/record.json',
   booking: 'json/booking.json',
   user: 'json/user.json',
+  bookingParams: 'json/bookingParams.json',
+  bookingAdd: 'json/bookingAdd.json',
 }
 
 function convert(urls) {

@@ -73,10 +73,14 @@
     font-size: 36rpx;
     color: $grey;
     line-height: 96rpx;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     border-bottom: 1px solid $bordercolor;
     background-color: $blackBg;
     .tab {
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
       flex: 1;
       &.active {
         color: $orange;
@@ -247,6 +251,7 @@
         }) => {
           this.rankData = result;
           this.methods.convertList(this.rankData.list);
+          this.$apply();
         });
       },
       convertList: (list) => {

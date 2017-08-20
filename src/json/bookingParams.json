@@ -1,0 +1,23 @@
+{
+  "success": true,
+  "result": {
+    "minNumber": 1,
+    "maxNumber": 10,
+    "placeList": [{
+      "id": "1123123",
+      "content": "达克斯游戏场1"
+    }, {
+      "id": "2123123",
+      "content": "达克斯游戏场2"
+    }, {
+      "id": "3123123",
+      "content": "达克斯游戏场3"
+    }, {
+      "id": "4123123",
+      "content": "达克斯游戏场4"
+    }, {
+      "id": "5123123",
+      "content": "达克斯游戏场5"
+    }]
+  }
+}

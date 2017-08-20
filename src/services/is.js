@@ -17,7 +17,7 @@ var symbolValueOf;
 if (typeof Symbol === 'function') {
   symbolValueOf = Symbol.prototype.valueOf;
 }
-var isActualNaN = function (value) {
+var isActualNaN = function(value) {
   return value !== value;
 };
 var NON_HOST_TYPES = {
@@ -50,7 +50,7 @@ var is = {};
  * @api public
  */
 
-is.a = is.type = function (value, type) {
+is.a = is.type = function(value, type) {
   return typeof value === type;
 };
 
@@ -63,7 +63,7 @@ is.a = is.type = function (value, type) {
  * @api public
  */
 
-is.defined = function (value) {
+is.defined = function(value) {
   return typeof value !== 'undefined';
 };
 
@@ -76,9 +76,13 @@ is.defined = function (value) {
  * @api public
  */
 
-is.empty = function (value) {
+is.empty = function(value) {
   var type = toStr.call(value);
   var key;
+
+  if (value === 0) {
+    return false;
+  }
 
   if (type === '[object Array]' || type === '[object Arguments]' || type === '[object String]') {
     return value.length === 0;
@@ -96,7 +100,7 @@ is.empty = function (value) {
   return !value;
 };
 
-is.phone = function (str) {
+is.phone = function(str) {
   return /^(110|13[0-9]|14[0-9]|15[0-9]|18[0-9]|17[0-9])\d{8}$/g.test(str);
 };
 
@@ -169,7 +173,7 @@ is.equal = function equal(value, other) {
  * @api public
  */
 
-is.hosted = function (value, host) {
+is.hosted = function(value, host) {
   var type = typeof host[value];
   return type === 'object' ? !!host[value] : !NON_HOST_TYPES[type];
 };
@@ -183,7 +187,7 @@ is.hosted = function (value, host) {
  * @api public
  */
 
-is.instance = is['instanceof'] = function (value, constructor) {
+is.instance = is['instanceof'] = function(value, constructor) {
   return value instanceof constructor;
 };
 
@@ -196,7 +200,7 @@ is.instance = is['instanceof'] = function (value, constructor) {
  * @api public
  */
 
-is.nil = is['null'] = function (value) {
+is.nil = is['null'] = function(value) {
   return value === null;
 };
 
@@ -209,7 +213,7 @@ is.nil = is['null'] = function (value) {
  * @api public
  */
 
-is.undef = is.undefined = function (value) {
+is.undef = is.undefined = function(value) {
   return typeof value === 'undefined';
 };
 
@@ -226,9 +230,10 @@ is.undef = is.undefined = function (value) {
  * @api public
  */
 
-is.args = is.arguments = function (value) {
+is.args = is.arguments = function(value) {
   var isStandardArguments = toStr.call(value) === '[object Arguments]';
-  var isOldArguments = !is.array(value) && is.arraylike(value) && is.object(value) && is.fn(value.callee);
+  var isOldArguments = !is.array(value) && is.arraylike(value) && is.object(value) && is.fn(value
+    .callee);
   return isStandardArguments || isOldArguments;
 };
 
@@ -245,7 +250,7 @@ is.args = is.arguments = function (value) {
  * @api public
  */
 
-is.array = Array.isArray || function (value) {
+is.array = Array.isArray || function(value) {
   return toStr.call(value) === '[object Array]';
 };
 
@@ -257,7 +262,7 @@ is.array = Array.isArray || function (value) {
  * @return {Boolean} true if `value` is an empty arguments object, false otherwise
  * @api public
  */
-is.args.empty = function (value) {
+is.args.empty = function(value) {
   return is.args(value) && value.length === 0;
 };
 
@@ -269,7 +274,7 @@ is.args.empty = function (value) {
  * @return {Boolean} true if `value` is an empty array, false otherwise
  * @api public
  */
-is.array.empty = function (value) {
+is.array.empty = function(value) {
   return is.array(value) && value.length === 0;
 };
 
@@ -282,8 +287,9 @@ is.array.empty = function (value) {
  * @api public
  */
 
-is.arraylike = function (value) {
-  return !!value && !is.bool(value) && owns.call(value, 'length') && isFinite(value.length) && is.number(value.length) && value.length >= 0;
+is.arraylike = function(value) {
+  return !!value && !is.bool(value) && owns.call(value, 'length') && isFinite(value.length) && is
+    .number(value.length) && value.length >= 0;
 };
 
 /**
@@ -299,7 +305,7 @@ is.arraylike = function (value) {
  * @api public
  */
 
-is.bool = is['boolean'] = function (value) {
+is.bool = is['boolean'] = function(value) {
   return toStr.call(value) === '[object Boolean]';
 };
 
@@ -312,7 +318,7 @@ is.bool = is['boolean'] = function (value) {
  * @api public
  */
 
-is['false'] = function (value) {
+is['false'] = function(value) {
   return is.bool(value) && Boolean(Number(value)) === false;
 };
 
@@ -325,7 +331,7 @@ is['false'] = function (value) {
  * @api public
  */
 
-is['true'] = function (value) {
+is['true'] = function(value) {
   return is.bool(value) && Boolean(Number(value)) === true;
 };
 
@@ -342,7 +348,7 @@ is['true'] = function (value) {
  * @api public
  */
 
-is.date = function (value) {
+is.date = function(value) {
   return toStr.call(value) === '[object Date]';
 };
 
@@ -353,7 +359,7 @@ is.date = function (value) {
  * @param {Mixed} value value to test
  * @returns {Boolean} true if `value` is a valid date, false otherwise
  */
-is.date.valid = function (value) {
+is.date.valid = function(value) {
   return is.date(value) && !isNaN(Number(value));
 };
 
@@ -370,8 +376,9 @@ is.date.valid = function (value) {
  * @api public
  */
 
-is.element = function (value) {
-  return value !== undefined && typeof HTMLElement !== 'undefined' && value instanceof HTMLElement && value.nodeType === 1;
+is.element = function(value) {
+  return value !== undefined && typeof HTMLElement !== 'undefined' && value instanceof HTMLElement &&
+    value.nodeType === 1;
 };
 
 /**
@@ -387,7 +394,7 @@ is.element = function (value) {
  * @api public
  */
 
-is.error = function (value) {
+is.error = function(value) {
   return toStr.call(value) === '[object Error]';
 };
 
@@ -404,7 +411,7 @@ is.error = function (value) {
  * @api public
  */
 
-is.fn = is['function'] = function (value) {
+is.fn = is['function'] = function(value) {
   var isAlert = typeof window !== 'undefined' && value === window.alert;
   return isAlert || toStr.call(value) === '[object Function]';
 };
@@ -422,7 +429,7 @@ is.fn = is['function'] = function (value) {
  * @api public
  */
 
-is.number = function (value) {
+is.number = function(value) {
   return toStr.call(value) === '[object Number]';
 };
 
@@ -434,7 +441,7 @@ is.number = function (value) {
  * @return {Boolean} true if `value` is positive or negative Infinity, false otherwise
  * @api public
  */
-is.infinite = function (value) {
+is.infinite = function(value) {
   return value === Infinity || value === -Infinity;
 };
 
@@ -447,7 +454,7 @@ is.infinite = function (value) {
  * @api public
  */
 
-is.decimal = function (value) {
+is.decimal = function(value) {
   return is.number(value) && !isActualNaN(value) && !is.infinite(value) && value % 1 !== 0;
 };
 
@@ -461,10 +468,11 @@ is.decimal = function (value) {
  * @api public
  */
 
-is.divisibleBy = function (value, n) {
+is.divisibleBy = function(value, n) {
   var isDividendInfinite = is.infinite(value);
   var isDivisorInfinite = is.infinite(n);
-  var isNonZeroNumber = is.number(value) && !isActualNaN(value) && is.number(n) && !isActualNaN(n) && n !== 0;
+  var isNonZeroNumber = is.number(value) && !isActualNaN(value) && is.number(n) && !isActualNaN(n) &&
+    n !== 0;
   return isDividendInfinite || isDivisorInfinite || (isNonZeroNumber && value % n === 0);
 };
 
@@ -477,7 +485,7 @@ is.divisibleBy = function (value, n) {
  * @api public
  */
 
-is.integer = is['int'] = function (value) {
+is.integer = is['int'] = function(value) {
   return is.number(value) && !isActualNaN(value) && value % 1 === 0;
 };
 
@@ -491,7 +499,7 @@ is.integer = is['int'] = function (value) {
  * @api public
  */
 
-is.maximum = function (value, others) {
+is.maximum = function(value, others) {
   if (isActualNaN(value)) {
     throw new TypeError('NaN is not a valid value');
   } else if (!is.arraylike(others)) {
@@ -518,7 +526,7 @@ is.maximum = function (value, others) {
  * @api public
  */
 
-is.minimum = function (value, others) {
+is.minimum = function(value, others) {
   if (isActualNaN(value)) {
     throw new TypeError('NaN is not a valid value');
   } else if (!is.arraylike(others)) {
@@ -544,7 +552,7 @@ is.minimum = function (value, others) {
  * @api public
  */
 
-is.nan = function (value) {
+is.nan = function(value) {
   return !is.number(value) || value !== value;
 };
 
@@ -557,7 +565,7 @@ is.nan = function (value) {
  * @api public
  */
 
-is.even = function (value) {
+is.even = function(value) {
   return is.infinite(value) || (is.number(value) && value === value && value % 2 === 0);
 };
 
@@ -570,7 +578,7 @@ is.even = function (value) {
  * @api public
  */
 
-is.odd = function (value) {
+is.odd = function(value) {
   return is.infinite(value) || (is.number(value) && value === value && value % 2 !== 0);
 };
 
@@ -584,7 +592,7 @@ is.odd = function (value) {
  * @api public
  */
 
-is.ge = function (value, other) {
+is.ge = function(value, other) {
   if (isActualNaN(value) || isActualNaN(other)) {
     throw new TypeError('NaN is not a valid value');
   }
@@ -601,7 +609,7 @@ is.ge = function (value, other) {
  * @api public
  */
 
-is.gt = function (value, other) {
+is.gt = function(value, other) {
   if (isActualNaN(value) || isActualNaN(other)) {
     throw new TypeError('NaN is not a valid value');
   }
@@ -618,7 +626,7 @@ is.gt = function (value, other) {
  * @api public
  */
 
-is.le = function (value, other) {
+is.le = function(value, other) {
   if (isActualNaN(value) || isActualNaN(other)) {
     throw new TypeError('NaN is not a valid value');
   }
@@ -635,7 +643,7 @@ is.le = function (value, other) {
  * @api public
  */
 
-is.lt = function (value, other) {
+is.lt = function(value, other) {
   if (isActualNaN(value) || isActualNaN(other)) {
     throw new TypeError('NaN is not a valid value');
   }
@@ -652,7 +660,7 @@ is.lt = function (value, other) {
  * @return {Boolean} true if 'value' is is within 'start' and 'finish'
  * @api public
  */
-is.within = function (value, start, finish) {
+is.within = function(value, start, finish) {
   if (isActualNaN(value) || isActualNaN(start) || isActualNaN(finish)) {
     throw new TypeError('NaN is not a valid value');
   } else if (!is.number(value) || !is.number(start) || !is.number(finish)) {
@@ -674,7 +682,7 @@ is.within = function (value, start, finish) {
  * @return {Boolean} true if `value` is an object, false otherwise
  * @api public
  */
-is.object = function (value) {
+is.object = function(value) {
   return toStr.call(value) === '[object Object]';
 };
 
@@ -705,7 +713,7 @@ is.primitive = function isPrimitive(value) {
  * @api public
  */
 
-is.hash = function (value) {
+is.hash = function(value) {
   return is.object(value) && value.constructor === Object && !value.nodeType && !value.setInterval;
 };
 
@@ -722,7 +730,7 @@ is.hash = function (value) {
  * @api public
  */
 
-is.regexp = function (value) {
+is.regexp = function(value) {
   return toStr.call(value) === '[object RegExp]';
 };
 
@@ -739,7 +747,7 @@ is.regexp = function (value) {
  * @api public
  */
 
-is.string = function (value) {
+is.string = function(value) {
   return toStr.call(value) === '[object String]';
 };
 
@@ -756,7 +764,7 @@ is.string = function (value) {
  * @api public
  */
 
-is.base64 = function (value) {
+is.base64 = function(value) {
   return is.string(value) && (!value.length || base64Regex.test(value));
 };
 
@@ -773,7 +781,7 @@ is.base64 = function (value) {
  * @api public
  */
 
-is.hex = function (value) {
+is.hex = function(value) {
   return is.string(value) && (!value.length || hexRegex.test(value));
 };
 
@@ -786,8 +794,9 @@ is.hex = function (value) {
  * @api public
  */
 
-is.symbol = function (value) {
-  return typeof Symbol === 'function' && toStr.call(value) === '[object Symbol]' && typeof symbolValueOf.call(value) === 'symbol';
+is.symbol = function(value) {
+  return typeof Symbol === 'function' && toStr.call(value) === '[object Symbol]' && typeof symbolValueOf
+    .call(value) === 'symbol';
 }
 
 export default is;

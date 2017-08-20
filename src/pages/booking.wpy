@@ -1,0 +1,192 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  @import '../scss/_form.scss';
+  .button {
+    line-height: 110rpx;
+    width: 670rpx;
+    text-align: center;
+    color: $white;
+    background-color: $orange;
+    border-radius: 55rpx;
+    font-size: 36rpx;
+    margin: 30rpx auto 0 auto;
+    @include transition();
+    &:active {
+      opacity: 0.8;
+    }
+  }
+
+</style>
+<template lang="wxml">
+  <view class="form-container">
+    <label class="control-group">
+      <view class="control-label">游戏地点</view>
+      <view class="controls">
+        <view class="select">
+          <picker bindchange="setPlace"
+            value="{{formData.place}}"
+            range-key="content"
+            range="{{placeData}}">
+            <text>{{placeData[formData.place].content || '请选择'}}</text>
+            <image src="../images/icon-arrow-right.png"></image>
+          </picker>
+        </view>
+      </view>
+    </label>
+    <label class="control-group">
+      <view class="control-label">联系电话</view>
+      <view class="controls">
+        <input type="number"
+          bindinput="setPhone"
+          value="{{formData.phone}}"
+          maxlength="11" />
+      </view>
+    </label>
+    <label class="control-group vertical">
+      <view class="control-label">
+        <text>游戏人数</text>
+        <text>{{formData.number}}人</text>
+      </view>
+      <view class="controls">
+        <slider bindchange="setNumber"
+          value="{{formData.number}}"
+          color="#ffffff"
+          activeColor="#ea5504"
+          min="{{minNumber}}"
+          max="{{maxNumber}}" />
+      </view>
+    </label>
+  </view>
+  <view class="button"
+    @tap="doSubmit">马上预约</view>
+  <toast/>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import urls from '../services/urls.js';
+  import loading from '../services/loading.js';
+  import Toast from 'wepy-com-toast'
+  import request from '../services/request.js';
+  import is from '../services/is.js';
+
+  export default class Booking extends wepy.page {
+    config = {
+      navigationBarTitleText: '线上预约',
+    }
+
+    components = {
+      toast: Toast
+    }
+
+    data = {
+      userInfo: null,
+      placeData: null,
+      maxNumber: null,
+      minNumber: null,
+      formData: {
+        place: '',
+        phone: '',
+        number: 0,
+      }
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      doSubmit: (e) => {
+        if (is.empty(this.formData.place)) {
+          this.$invoke('toast', 'show', {
+            title: '请选择游戏地点'
+          });
+          return;
+        }
+
+        if (is.empty(this.formData.phone)) {
+          this.$invoke('toast', 'show', {
+            title: '请填写联系电话'
+          });
+          return;
+        }
+
+        if ((this.formData.phone + '').length !== 7 && (this.formData.phone + '').length !==
+          8 && (this.formData.phone + '').length !== 11) {
+          this.$invoke('toast', 'show', {
+            title: '请填写正确联系电话'
+          });
+          return;
+        }
+
+        loading.show('预约中');
+
+        request.post(urls.bookingAdd, {
+          place: this.placeData[this.formData.place].id,
+          phone: this.formData.phone,
+          number: this.formData.number,
+        }).then(d => {
+          wepy.showToast({
+            title: d.msg,
+            icon: 'success',
+            duration: 2000
+          });
+
+          this.formData = {
+            place: null,
+            phone: null,
+            number: this.minNumber,
+          }
+
+          this.$apply();
+
+          setTimeout(function() {
+            wepy.navigateTo({
+              url: '/pages/home',
+            });
+          }, 2000);
+        })
+      },
+      setNumber: (e) => {
+        this.formData.number = parseInt(e.detail.value, 10);
+      },
+      setPlace: (e) => {
+        this.formData.place = parseInt(e.detail.value, 10);
+      },
+      setPhone: (e) => {
+        this.formData.phone = e.detail.value;
+      },
+      updateParams: () => {
+        request.get(urls.bookingParams).then(({
+          result,
+        }) => {
+          this.placeData = result.placeList;
+          this.maxNumber = result.maxNumber;
+          this.minNumber = result.minNumber;
+          this.formData.number = result.minNumber;
+
+          this.$apply();
+        });
+      },
+    }
+
+    events = {
+
+    }
+
+    onShow() {
+      let self = this;
+
+      request.getUserInfo().then(d => {
+        self.userInfo = d;
+        self.methods.updateParams();
+      });
+    }
+
+    onLoad() {
+      console.log('rank on load');
+    }
+  }
+
+</script>
