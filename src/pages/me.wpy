@@ -201,6 +201,7 @@
     <view wx:if="{{recordData.length > 0}}"
       class="me-list">
       <view class="me-item"
+        @tap="toChallenge({{item.challengeId}})"
         wx:for="{{recordData}}"
         wx:key="index">
         <view>
@@ -260,6 +261,9 @@
     }
 
     methods = {
+      toChallenge: (challengeId) => {
+        console.log('to challenge page', challengeId);
+      },
       selectTab: (type) => {
         wepy.pageScrollTo({
           scrollTop: 0
