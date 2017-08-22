@@ -1,6 +1,11 @@
 <style lang="scss"
   scoped>
   @import '../scss/_theme.scss';
+  $status0: #ffcd55;
+  $status1: #ff5555;
+  $status2: #b2b2b2;
+  $border: #e6e6e6;
+  $time: #4c4340;
   .bg {
     position: fixed;
     left: 0;
@@ -16,16 +21,31 @@
     top: 0;
     width: 100%;
     height: 100%;
+    .canvas-box {
+      overflow: hidden;
+    }
     canvas {
       width: 100%;
       min-height: 100%;
-      transform: scale(0.3333);
       transform-origin: left top;
     }
     .point {
       position: absolute;
       width: 100rpx;
       height: 100rpx;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      transition: opacity 300ms ease;
+      &.show {
+        opacity: 1;
+        view:nth-child(1) {
+          animation: fadeOutBig 1s ease infinite;
+        }
+        view:nth-child(2) {
+          animation: fadeOutBig 1s ease infinite 0.3s;
+        }
+      }
       view {
         position: absolute;
         left: 0;
@@ -41,22 +61,153 @@
         height: 100rpx;
         background-color: rgba(#ffcd55, 0.4);
       }
-      view:nth-child(1) {
-        animation: fadeOutBig 1s ease infinite;
-      }
-      view:nth-child(2) {
-        animation: fadeOutBig 1s ease infinite 0.3s;
-      }
       view:nth-child(3) {
         width: 80rpx;
         height: 80rpx;
         background-color: rgba(#ffcd55, 0.6);
       }
       view:nth-child(4) {
-        width: 50rpx;
-        height: 50rpx;
+        width: 48rpx;
+        height: 48rpx;
         background-color: rgba(#ffcd55, 1);
       }
+    }
+  }
+
+  .info {
+    font-size: 28rpx;
+    line-height: 80rpx;
+    min-height: 80rpx;
+    border-radius: 10rpx;
+    background-color: $white;
+    position: fixed;
+    z-index: 1;
+    left: 25rpx;
+    top: 20rpx;
+    right: 25rpx;
+    margin: auto;
+    text-align: center;
+    transition: all 300ms ease;
+    transform-origin: top center;
+    &.hide {
+      opacity: 0;
+      visibility: hidden;
+      transform: scaleY(0);
+    }
+    .status0 {
+      color: $status0;
+    }
+    .status1 {
+      color: $status1;
+    }
+    .status2 {
+      color: $status2;
+    }
+    image {
+      width: 40rpx;
+      height: 40rpx;
+      position: absolute;
+      right: 30rpx;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+    }
+  }
+
+  .info-expand {
+    text-align: center;
+    padding: 76rpx 0 70rpx 0;
+    margin: 0 auto;
+    border-radius: 10rpx;
+    background-color: $white;
+    position: absolute;
+    z-index: 2;
+    left: 25rpx;
+    right: 25rpx;
+    top: 20rpx;
+    opacity: 0;
+    visibility: hidden;
+    transform: scaleY(0);
+    transition: all 300ms ease;
+    transform-origin: top center;
+    &.show {
+      opacity: 1;
+      visibility: visible;
+      transform: scaleY(1);
+    }
+    > view.box {
+      position: relative;
+      display: inline-block;
+      min-width: 400rpx;
+      border: 2rpx solid $border;
+      padding: 0 40rpx;
+      .title {
+        font-size: 28rpx;
+        width: 100%;
+        position: absolute;
+        line-height: 40rpx;
+        top: -21rpx;
+        left: 0;
+        width: 100%;
+        view {
+          display: inline-block;
+          background-color: $white;
+          padding: 0 15rpx;
+          color: $c6;
+        }
+      }
+      .date {
+        font-size: 24rpx;
+        position: absolute;
+        line-height: 40rpx;
+        bottom: -22rpx;
+        left: 0;
+        width: 100%;
+        view {
+          background-color: $white;
+          display: inline-block;
+          padding: 0 15rpx;
+          color: $grey;
+        }
+      }
+      .score {
+        padding: 20rpx 0;
+        color: $time;
+        view {
+          display: inline;
+          text.t1 {
+            font-size: 100rpx;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 0 6rpx;
+          }
+          text.t2 {
+            font-size: 26rpx;
+            font-weight: normal;
+          }
+        }
+      }
+    }
+    .status {
+      font-size: 28rpx;
+      padding-top: 65rpx;
+      .status0 {
+        color: $status0;
+      }
+      .status1 {
+        color: $status1;
+      }
+      .status2 {
+        color: $status2;
+      }
+    }
+    image {
+      width: 40rpx;
+      height: 40rpx;
+      position: absolute;
+      right: 30rpx;
+      top: 20rpx;
+      margin: auto;
     }
   }
 
@@ -66,12 +217,15 @@
     src="../images/game-bg.jpg"></image>
   <scroll-view class="dots"
     scroll-y="true"
+    @scrolltoupper="doExpand(false)"
     scroll-top="{{scrollTop}}">
-    <canvas canvas-id="dotsCanvas"
-      style="height: {{canvasHeight}}px; width: {{canvasWidth}}px"></canvas>
+    <view class="canvas-box"
+      style="height: {{canvasBoxHeight}}px; width: {{canvasBoxWidth}}px">
+      <canvas canvas-id="dotsCanvas"
+        style="height: {{canvasHeight}}px; width: {{canvasWidth}}px; transform: scale({{1 / systemInfo.pixelRatio}})"></canvas>
+    </view>
 
-    <view class="point"
-      hidden="{{hasPoint !== true}}"
+    <view class="point {{hasPoint !== true ? '' : 'show'}}"
       style="left:{{pointPosition.x}}px; top:{{pointPosition.y}}px;">
       <view></view>
       <view></view>
@@ -79,6 +233,52 @@
       <view></view>
     </view>
   </scroll-view>
+
+  <view class="info {{expand ? 'hide' : ''}}"
+    @tap="doExpand(true)">
+    <text class="status0"
+      wx:if="{{challengeData.status === 0}}">进行中</text>
+    <text class="status1"
+      wx:if="{{challengeData.status === 1}}">已通过</text>
+    <text class="status2"
+      wx:if="{{challengeData.status === 2}}">未通过</text>
+    <image src="../images/icon-plus.png"></image>
+  </view>
+
+  <view class="info-expand {{expand ? 'show' : ''}}">
+    <view class="box">
+      <view class="title">
+        <view>第{{challengeData.checkpointCurrent}}关</view>
+      </view>
+      <view class="score">
+        <view wx:if="{{challengeData.scoreFormat.hour}}">
+          <text class="t1">{{challengeData.scoreFormat.hour}}</text>
+          <text class="t2">h</text>
+        </view>
+        <view wx:if="{{challengeData.scoreFormat.minute}}">
+          <text class="t1">{{challengeData.scoreFormat.minute}}</text>
+          <text class="t2">min</text>
+        </view>
+        <view>
+          <text class="t1">{{challengeData.scoreFormat.second}}</text>
+          <text class="t2">s</text>
+        </view>
+      </view>
+      <view class="date">
+        <view>{{challengeData.date}}</view>
+      </view>
+    </view>
+    <view class="status">
+      <view class="status0"
+        wx:if="{{challengeData.status === 0}}">进行中</view>
+      <view class="status1"
+        wx:if="{{challengeData.status === 1}}">已通过</view>
+      <view class="status2"
+        wx:if="{{challengeData.status === 2}}">未通过</view>
+    </view>
+    <image src="../images/icon-minus.png"
+      @tap="doExpand(false)"></image>
+  </view>
 </template>
 
 <script>
@@ -102,11 +302,15 @@
     }
 
     data = {
+      expand: false,
       userInfo: null,
+      systemInfo: null,
       id: null,
       scrollTop: 0,
       dots: null,
       screenScale: 1,
+      canvasBoxWidth: null,
+      canvasBoxHeight: null,
       canvasWidth: null,
       canvasHeight: null,
       challengeData: null,
@@ -120,6 +324,9 @@
     }
 
     methods = {
+      doExpand: (expand) => {
+        this.expand = expand === 'true';
+      },
       hasUpdateCanvas: (data) => {
         if (is.empty(data)) {
           return false;
@@ -151,7 +358,9 @@
 
           const hasUpdate = this.methods.hasUpdateCanvas(result);
 
+          result.scoreFormat = util.renderScore(result.score);
           this.challengeData = result;
+
           if (hasUpdate) {
             console.log('update challege canvas');
             this.methods.drawDot();
@@ -179,7 +388,7 @@
       drawDot: () => {
         const ctx = this.context;
         const scale = this.screenScale;
-        const offsetTop = 60 / scale;
+        const offsetTop = 140 / scale;
         const challengeData = this.challengeData;
         let dots = this.dots.map(d => {
           return {
@@ -187,8 +396,6 @@
             y: d.y,
           };
         });
-
-        console.log(dots);
 
         const orange = '#df540e';
         const white = '#ffffff';
@@ -227,6 +434,9 @@
         this.canvasHeight = dots[0].y / 2 * this.systemInfo.pixelRatio;
         this.canvasWidth = this.systemInfo.windowWidth * this.systemInfo.pixelRatio;
 
+        this.canvasBoxHeight = dots[0].y / 2;
+        this.canvasBoxWidth = this.systemInfo.windowWidth;
+
         // ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
         // ctx.draw();
 
@@ -248,11 +458,11 @@
         dots.forEach((dot, i) => {
           if (i !== 0) {
             ctx.beginPath();
-            if (this.challengeData.checkpointCurrent > i) {
+            if (challengeData.checkpointCurrent > i) {
               ctx.setStrokeStyle(orange);
               ctx.setFillStyle(orange);
-            } else if (this.challengeData.checkpointCurrent === i) {
-              if (this.challengeData.status === 2) {
+            } else if (challengeData.checkpointCurrent === i) {
+              if (challengeData.status === 2) {
                 ctx.setStrokeStyle(grey);
                 ctx.setFillStyle(grey);
               } else {
@@ -267,7 +477,7 @@
               ctx.setFillStyle(white);
             }
 
-            const hasBig = this.challengeData.checkpointCurrent === i && this.challengeData.status === 2;
+            const hasBig = challengeData.checkpointCurrent === i && challengeData.status === 2;
 
             ctx.arc(dot.x / 2, dot.y / 2, hasBig ? 12 : 6, 0, Math.PI * 2);
             ctx.stroke();
@@ -276,7 +486,6 @@
         });
 
         ctx.closePath();
-
         ctx.draw();
       },
     }

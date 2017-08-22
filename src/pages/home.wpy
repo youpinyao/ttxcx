@@ -78,7 +78,7 @@
         width: 100%;
         position: absolute;
         line-height: 40rpx;
-        top: -22rpx;
+        top: -21rpx;
         left: 0;
         width: 100%;
         view {

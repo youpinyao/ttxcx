@@ -2,7 +2,7 @@
   "success": true,
   "result": {
     "isEnd": false,
-    "checkpointCount": 15,
+    "checkpointCount": 20,
     "checkpointCurrent": 5,
     "date": "2017-08-10",
     "score": 650000,
