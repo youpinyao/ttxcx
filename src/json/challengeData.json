@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "result": {
+    "isEnd": false,
+    "checkpointCount": 15,
+    "checkpointCurrent": 5,
+    "date": "2017-08-10",
+    "score": 650000,
+    "statusIntro": "这个字段没用，我用来解释下面的字段用的：三个状态：进行中0，已通过1，未通过2",
+    "status": 0
+  }
+}

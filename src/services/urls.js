@@ -11,6 +11,7 @@ const urls = {
   user: 'json/user.json',
   bookingParams: 'json/bookingParams.json',
   bookingAdd: 'json/bookingAdd.json',
+  challengeData: 'json/challengeData.json'
 }
 
 function convert(urls) {

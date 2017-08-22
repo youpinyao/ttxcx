@@ -1,0 +1,317 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  .bg {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 750rpx;
+    height: 1290rpx;
+  }
+
+  .dots {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    canvas {
+      width: 100%;
+      min-height: 100%;
+      transform: scale(0.3333);
+      transform-origin: left top;
+    }
+    .point {
+      position: absolute;
+      width: 100rpx;
+      height: 100rpx;
+      view {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        border-radius: 50px;
+      }
+      view:nth-child(1),
+      view:nth-child(2) {
+        width: 100rpx;
+        height: 100rpx;
+        background-color: rgba(#ffcd55, 0.4);
+      }
+      view:nth-child(1) {
+        animation: fadeOutBig 1s ease infinite;
+      }
+      view:nth-child(2) {
+        animation: fadeOutBig 1s ease infinite 0.3s;
+      }
+      view:nth-child(3) {
+        width: 80rpx;
+        height: 80rpx;
+        background-color: rgba(#ffcd55, 0.6);
+      }
+      view:nth-child(4) {
+        width: 50rpx;
+        height: 50rpx;
+        background-color: rgba(#ffcd55, 1);
+      }
+    }
+  }
+
+</style>
+<template lang="wxml">
+  <image class="bg"
+    src="../images/game-bg.jpg"></image>
+  <scroll-view class="dots"
+    scroll-y="true"
+    scroll-top="{{scrollTop}}">
+    <canvas canvas-id="dotsCanvas"
+      style="height: {{canvasHeight}}px; width: {{canvasWidth}}px"></canvas>
+
+    <view class="point"
+      hidden="{{hasPoint !== true}}"
+      style="left:{{pointPosition.x}}px; top:{{pointPosition.y}}px;">
+      <view></view>
+      <view></view>
+      <view></view>
+      <view></view>
+    </view>
+  </scroll-view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import is from '../services/is.js';
+  import util from '../services/util.js';
+  import initDots from '../services/dots.js';
+  import urls from '../services/urls.js';
+  import request from '../services/request.js';
+
+  export default class Booking extends wepy.page {
+    config = {
+      navigationBarTitleText: '',
+    }
+    canvasIdErrorCallback = (e) => {
+      console.error('canvas error', e.detail.errMsg)
+    }
+
+    components = {
+
+    }
+
+    data = {
+      userInfo: null,
+      id: null,
+      scrollTop: 0,
+      dots: null,
+      screenScale: 1,
+      canvasWidth: null,
+      canvasHeight: null,
+      challengeData: null,
+      timer: null,
+      hasPoint: false,
+      pointPosition: null,
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      hasUpdateCanvas: (data) => {
+        if (is.empty(data)) {
+          return false;
+        }
+        if (is.empty(this.challengeData)) {
+          return true;
+        }
+
+        let count = 0;
+
+        util.each(this.challengeData, (d, k) => {
+          if (d !== data[k] && ['checkpointCount', 'checkpointCurrent', 'status', 'isEnd'].indexOf(
+              k) !== -1) {
+            count++;
+          }
+        });
+
+        return count > 0;
+      },
+      updateChallege: () => {
+        console.log('check update challege');
+        request.get(urls.challengeData).then(({
+          result,
+        }) => {
+          clearTimeout(this.timer);
+          this.timer = setTimeout(() => {
+            this.methods.updateChallege();
+          }, 3000);
+
+          const hasUpdate = this.methods.hasUpdateCanvas(result);
+
+          this.challengeData = result;
+          if (hasUpdate) {
+            console.log('update challege canvas');
+            this.methods.drawDot();
+            setTimeout(() => {
+              this.scrollTop = this.scrollTop + 1;
+              this.$apply();
+            });
+
+            wepy.setNavigationBarTitle({
+              title: this.challengeData.isEnd ? '战绩详情' : '塔拓时刻'
+            });
+          }
+
+          this.$apply();
+        });
+      },
+      updatePoint: (dot) => {
+        const hasPoint = this.challengeData.status === 0;
+        this.hasPoint = hasPoint;
+        this.pointPosition = {
+          x: dot.x / 2 - 25 / this.screenScale,
+          y: dot.y / 2 - 25 / this.screenScale,
+        }
+      },
+      drawDot: () => {
+        const ctx = this.context;
+        const scale = this.screenScale;
+        const offsetTop = 60 / scale;
+        const challengeData = this.challengeData;
+        let dots = this.dots.map(d => {
+          return {
+            x: d.x,
+            y: d.y,
+          };
+        });
+
+        console.log(dots);
+
+        const orange = '#df540e';
+        const white = '#ffffff';
+        const grey = '#333333';
+        const lineGrey = '#8c8c8d';
+
+        if (challengeData.checkpointCount > dots.length - 1) {
+          const count = challengeData.checkpointCount - dots.length + 1;
+          const len = dots.length - 2;
+          for (let i = 0; i < count; i++) {
+            const j = i <= len ? i : i % len;
+            const dot = dots[j];
+            const offset = 200;
+
+            dots = dots.map(d => {
+              d.y += offset;
+              return d;
+            });
+            dots.push({
+              x: dot.x,
+              y: offsetTop,
+            });
+          }
+        } else if (challengeData.checkpointCount < dots.length - 1) {
+          dots.splice(challengeData.checkpointCount + 1, dots.length - challengeData.checkpointCount);
+        }
+
+        if (dots[0].y / 2 - dots[dots.length - 1].y / 2 + offsetTop < this.systemInfo.windowHeight) {
+          const offset = dots[0].y - this.systemInfo.windowHeight * 2;
+          dots = dots.map(d => {
+            d.y -= offset;
+            return d;
+          });
+        }
+
+        this.canvasHeight = dots[0].y / 2 * this.systemInfo.pixelRatio;
+        this.canvasWidth = this.systemInfo.windowWidth * this.systemInfo.pixelRatio;
+
+        // ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+        // ctx.draw();
+
+        ctx.setLineWidth(1);
+        ctx.scale(this.systemInfo.pixelRatio, this.systemInfo.pixelRatio);
+
+        ctx.beginPath();
+        dots.forEach((dot, i) => {
+          if (i === 0) {
+            ctx.moveTo(dot.x / 2, dot.y / 2);
+          } else {
+            ctx.setStrokeStyle(lineGrey);
+            ctx.lineTo(dot.x / 2, dot.y / 2);
+            ctx.stroke();
+            ctx.moveTo(dot.x / 2, dot.y / 2);
+          }
+        });
+
+        dots.forEach((dot, i) => {
+          if (i !== 0) {
+            ctx.beginPath();
+            if (this.challengeData.checkpointCurrent > i) {
+              ctx.setStrokeStyle(orange);
+              ctx.setFillStyle(orange);
+            } else if (this.challengeData.checkpointCurrent === i) {
+              if (this.challengeData.status === 2) {
+                ctx.setStrokeStyle(grey);
+                ctx.setFillStyle(grey);
+              } else {
+                ctx.setStrokeStyle(orange);
+                ctx.setFillStyle(orange);
+              }
+              this.methods.updatePoint(dot);
+              this.scrollTop = parseInt(dot.y / 2 - this.systemInfo.windowHeight + 100,
+                10);
+            } else {
+              ctx.setStrokeStyle(white);
+              ctx.setFillStyle(white);
+            }
+
+            const hasBig = this.challengeData.checkpointCurrent === i && this.challengeData.status === 2;
+
+            ctx.arc(dot.x / 2, dot.y / 2, hasBig ? 12 : 6, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fill();
+          }
+        });
+
+        ctx.closePath();
+
+        ctx.draw();
+      },
+    }
+
+    events = {
+
+    }
+
+    onShow() {}
+
+    onLoad(option) {
+      console.log('challenge on load', option);
+      this.id = option.id;
+    }
+
+    onReady() {
+      const self = this;
+      const systemInfo = wepy.getSystemInfoSync();
+      const scale = 375 / systemInfo.windowWidth;
+      this.systemInfo = systemInfo;
+      this.context = wepy.createCanvasContext('dotsCanvas');
+      this.screenScale = scale;
+      this.dots = initDots.map(d => {
+        return {
+          x: d.x / scale,
+          y: d.y / scale
+        };
+      });
+
+      request.getUserInfo().then(d => {
+        self.userInfo = d;
+        clearTimeout(this.timer);
+        this.methods.updateChallege();
+      });
+    }
+  }
+
+</script>

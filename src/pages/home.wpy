@@ -412,6 +412,9 @@
     methods = {
       toChallenge: (challengeId) => {
         console.log('to challenge page', challengeId);
+        wepy.navigateTo({
+          url: `/pages/challenge?id=${challengeId}`
+        })
       },
       toRank: () => {
         console.log('to rank page');
