@@ -1,6 +1,6 @@
 import util from './util.js';
 
-const path = 'http://localhost/ttxcx/src/';
+const path = 'http://10.1.199.128/ttxcx/src/';
 
 const urls = {
   login: 'json/login.json',

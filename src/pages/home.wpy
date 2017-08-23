@@ -140,6 +140,7 @@
       }
       .t1 {
         font-size: 28rpx;
+        line-height: 28rpx;
         color: $white;
         padding-bottom: 20rpx;
       }
@@ -154,6 +155,11 @@
           border: 4rpx solid $orange;
         }
       }
+      &:last-child {
+        &:before {
+          display: none;
+        }
+      }
     }
   }
 
@@ -164,6 +170,7 @@
     padding: 30rpx;
     .info-item-title {
       font-size: 24rpx;
+      line-height: 24rpx;
       color: $orange;
       padding-left: 0rpx;
       padding-bottom: 20rpx;
@@ -360,6 +367,7 @@
   import util from '../services/util.js';
   import urls from '../services/urls.js';
   import request from '../services/request.js';
+  import loading from '../services/loading.js';
 
   export default class Home extends wepy.page {
     config = {
@@ -451,9 +459,9 @@
             this.$apply();
           },
           fail: (res) => {
-            wepy.showAlert({
-              content: res.errMsg,
-            });
+            // wepy.showAlert({
+            //   content: res.errMsg,
+            // });
           },
         })
       },
@@ -478,6 +486,7 @@
         }) => {
           this.homeData = result;
           this.$apply();
+          loading.hide();
         });
       }
     }
@@ -487,6 +496,7 @@
     }
 
     onShow() {
+      console.log('home on show');
       request.getUserInfo().then(d => {
         this.userInfo = d;
         this.methods.updateHome();
@@ -495,6 +505,7 @@
 
     onLoad() {
       console.log('home on load');
+      loading.show();
     }
   }
 

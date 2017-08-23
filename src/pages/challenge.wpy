@@ -21,13 +21,18 @@
     top: 0;
     width: 100%;
     height: 100%;
-    .canvas-box {
-      overflow: hidden;
-    }
-    canvas {
+    .canvas {
       width: 100%;
       min-height: 100%;
-      transform-origin: left top;
+      .dot {
+        position: absolute;
+        border-radius: 200rpx;
+      }
+      .line {
+        height: 1rpx;
+        position: absolute;
+        transform-origin: left center;
+      }
     }
     .point {
       position: absolute;
@@ -219,10 +224,16 @@
     scroll-y="true"
     @scrolltoupper="doExpand(false)"
     scroll-top="{{scrollTop}}">
-    <view class="canvas-box"
-      style="height: {{canvasBoxHeight}}px; width: {{canvasBoxWidth}}px">
-      <canvas canvas-id="dotsCanvas"
-        style="height: {{canvasHeight}}px; width: {{canvasWidth}}px; transform: scale({{1 / systemInfo.pixelRatio}})"></canvas>
+    <view class="canvas"
+      style="height: {{canvasHeight}}px; width: {{canvasWidth}}px">
+      <view wx:for="{{drawLines}}"
+        wx:key="index"
+        class="line"
+        style="left:{{item.x}}px; top:{{item.y}}px; background-color:{{item.color}}; width: {{item.width}}px; transform:rotate({{item.rotate}}deg);"></view>
+      <view wx:for="{{drawDots}}"
+        wx:key="index"
+        class="dot"
+        style="left:{{item.x}}px; top: {{item.y}}px; background-color:{{item.color}}; width:{{item.size}}px; height:{{item.size}}px;"></view>
     </view>
 
     <view class="point {{hasPoint !== true ? '' : 'show'}}"
@@ -235,6 +246,7 @@
   </scroll-view>
 
   <view class="info {{expand ? 'hide' : ''}}"
+    wx:if="{{challengeData}}"
     @tap="doExpand(true)">
     <text class="status0"
       wx:if="{{challengeData.status === 0}}">进行中</text>
@@ -245,7 +257,8 @@
     <image src="../images/icon-plus.png"></image>
   </view>
 
-  <view class="info-expand {{expand ? 'show' : ''}}">
+  <view class="info-expand {{expand ? 'show' : ''}}"
+    wx:if="{{challengeData}}">
     <view class="box">
       <view class="title">
         <view>第{{challengeData.checkpointCurrent}}关</view>
@@ -288,6 +301,7 @@
   import initDots from '../services/dots.js';
   import urls from '../services/urls.js';
   import request from '../services/request.js';
+  import loading from '../services/loading.js';
 
   export default class Booking extends wepy.page {
     config = {
@@ -309,14 +323,14 @@
       scrollTop: 0,
       dots: null,
       screenScale: 1,
-      canvasBoxWidth: null,
-      canvasBoxHeight: null,
       canvasWidth: null,
       canvasHeight: null,
       challengeData: null,
       timer: null,
       hasPoint: false,
       pointPosition: null,
+      drawDots: [],
+      drawLines: [],
     }
 
     computed = {
@@ -354,7 +368,7 @@
           clearTimeout(this.timer);
           this.timer = setTimeout(() => {
             this.methods.updateChallege();
-          }, 3000);
+          }, 6000);
 
           const hasUpdate = this.methods.hasUpdateCanvas(result);
 
@@ -375,6 +389,7 @@
           }
 
           this.$apply();
+          loading.hide();
         });
       },
       updatePoint: (dot) => {
@@ -386,7 +401,7 @@
         }
       },
       drawDot: () => {
-        const ctx = this.context;
+        // const ctx = this.context;
         const scale = this.screenScale;
         const offsetTop = 140 / scale;
         const challengeData = this.challengeData;
@@ -431,62 +446,87 @@
           });
         }
 
-        this.canvasHeight = dots[0].y / 2 * this.systemInfo.pixelRatio;
-        this.canvasWidth = this.systemInfo.windowWidth * this.systemInfo.pixelRatio;
-
-        this.canvasBoxHeight = dots[0].y / 2;
-        this.canvasBoxWidth = this.systemInfo.windowWidth;
+        this.canvasHeight = dots[0].y / 2
+        this.canvasWidth = this.systemInfo.windowWidth;
 
         // ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
         // ctx.draw();
 
-        ctx.setLineWidth(1);
-        ctx.scale(this.systemInfo.pixelRatio, this.systemInfo.pixelRatio);
+        // ctx.setLineWidth(1);
+        // ctx.scale(this.systemInfo.pixelRatio, this.systemInfo.pixelRatio);
 
-        ctx.beginPath();
+        // ctx.beginPath();
+        const drawLines = [];
         dots.forEach((dot, i) => {
-          if (i === 0) {
-            ctx.moveTo(dot.x / 2, dot.y / 2);
-          } else {
-            ctx.setStrokeStyle(lineGrey);
-            ctx.lineTo(dot.x / 2, dot.y / 2);
-            ctx.stroke();
-            ctx.moveTo(dot.x / 2, dot.y / 2);
+          const nextDot = dots[i + 1];
+          if (nextDot) {
+            const x = Math.abs(nextDot.x / 2 - dot.x / 2);
+            const y = Math.abs(nextDot.y / 2 - dot.y / 2);
+            const width = Math.pow(Math.pow(x, 2) + Math.pow(y, 2), 0.5);
+            let rotate = Math.asin(y / width) * 180 / Math.PI;
+
+            if (nextDot.x >= dot.x && nextDot.y <= dot.y) {
+              rotate = -rotate;
+            } else if (nextDot.x >= dot.x && nextDot.y > dot.y) {
+              // rotate = rotate;
+            } else if (nextDot.x < dot.x && nextDot.y <= dot.y) {
+              rotate = rotate - 180;
+            } else if (nextDot.x < dot.x && nextDot.y > dot.y) {
+              rotate = -rotate - 180;
+            }
+
+            drawLines.push({
+              x: dot.x / 2,
+              y: dot.y / 2,
+              width,
+              rotate,
+              color: lineGrey,
+            });
           }
         });
+        this.drawLines = drawLines;
 
+        const drawDots = [];
         dots.forEach((dot, i) => {
           if (i !== 0) {
-            ctx.beginPath();
             if (challengeData.checkpointCurrent > i) {
-              ctx.setStrokeStyle(orange);
-              ctx.setFillStyle(orange);
+              drawDots.push({
+                size: 12,
+                x: dot.x / 2 - 6,
+                y: dot.y / 2 - 6,
+                color: orange,
+              });
             } else if (challengeData.checkpointCurrent === i) {
               if (challengeData.status === 2) {
-                ctx.setStrokeStyle(grey);
-                ctx.setFillStyle(grey);
+                drawDots.push({
+                  size: 24,
+                  x: dot.x / 2 - 12,
+                  y: dot.y / 2 - 12,
+                  color: grey,
+                });
               } else {
-                ctx.setStrokeStyle(orange);
-                ctx.setFillStyle(orange);
+                drawDots.push({
+                  size: 12,
+                  x: dot.x / 2 - 6,
+                  y: dot.y / 2 - 6,
+                  color: orange,
+                });
               }
               this.methods.updatePoint(dot);
               this.scrollTop = parseInt(dot.y / 2 - this.systemInfo.windowHeight + 100,
                 10);
             } else {
-              ctx.setStrokeStyle(white);
-              ctx.setFillStyle(white);
+              drawDots.push({
+                size: 12,
+                x: dot.x / 2 - 6,
+                y: dot.y / 2 - 6,
+                color: white,
+              });
             }
-
-            const hasBig = challengeData.checkpointCurrent === i && challengeData.status === 2;
-
-            ctx.arc(dot.x / 2, dot.y / 2, hasBig ? 12 : 6, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.fill();
           }
         });
 
-        ctx.closePath();
-        ctx.draw();
+        this.drawDots = drawDots;
       },
     }
 
@@ -499,6 +539,7 @@
     onLoad(option) {
       console.log('challenge on load', option);
       this.id = option.id;
+      loading.show();
     }
 
     onReady() {

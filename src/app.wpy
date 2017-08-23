@@ -23,8 +23,8 @@
   export default class extends wepy.app {
     config = {
       pages: [
-        'pages/home',
         'pages/challenge',
+        'pages/home',
         'pages/booking',
         'pages/me',
         'pages/rank',
@@ -34,6 +34,7 @@
         navigationBarBackgroundColor: '#ea5504',
         navigationBarTitleText: '塔拓',
         navigationBarTextStyle: '#ffffff',
+        backgroundColor: '#1f2021',
       }
     }
 

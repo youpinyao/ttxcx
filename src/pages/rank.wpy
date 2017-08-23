@@ -4,11 +4,11 @@
   $bordercolor: #313335;
   $grey: #b2b2b2;
   .fixed {
-    position: fixed;
+    /*position: fixed;
     z-index: 1;
     left: 0;
     top: 0;
-    width: 100%;
+    width: 100%;*/
   }
 
   .space {
@@ -58,12 +58,14 @@
       .nickname {
         color: $white;
         font-size: 36rpx;
+        line-height: 36rpx;
         padding-top: 25rpx;
       }
       .score {
         padding-top: 20rpx;
         color: $white;
         font-size: 28rpx;
+        line-height: 28rpx;
       }
     }
   }
@@ -154,7 +156,7 @@
           </view>
         </view>
         <view class="nickname">{{userInfo.userInfo.nickName}}</view>
-        <view class="score">
+        <view class="score" wx:if="{{myScore}}">
           <text wx:if="{{myScore.hour}}">{{myScore.hour}}h</text>
           <text wx:if="{{myScore.minute}}">{{myScore.minute}}min</text>
           <text>{{myScore.second}}s</text>
@@ -172,7 +174,7 @@
     </view>
   </view>
 
-  <view class="space"></view>
+  <!-- <view class="space"></view> -->
 
   <null-list wx:if="{{rankData.list.length < 0}}">暂无数据</null-list>
   <view wx:if="{{rankData.list.length > 0}}"
@@ -201,6 +203,7 @@
 
 <script>
   import wepy from 'wepy';
+  import loading from '../services/loading.js';
   import util from '../services/util.js';
   import urls from '../services/urls.js';
   import request from '../services/request.js';
@@ -252,6 +255,8 @@
           this.rankData = result;
           this.methods.convertList(this.rankData.list);
           this.$apply();
+          loading.hide();
+          wepy.stopPullDownRefresh();
         });
       },
       convertList: (list) => {
@@ -291,6 +296,7 @@
 
     onLoad() {
       console.log('rank on load');
+      loading.show();
     }
   }
 

@@ -142,9 +142,10 @@
           this.$apply();
 
           setTimeout(function() {
-            wepy.navigateTo({
-              url: '/pages/home',
-            });
+            // wepy.navigateTo({
+            //   url: '/pages/home',
+            // });
+            wepy.navigateBack();
           }, 2000);
         })
       },
@@ -167,6 +168,7 @@
           this.formData.number = result.minNumber;
 
           this.$apply();
+          loading.hide();
         });
       },
     }
@@ -186,6 +188,7 @@
 
     onLoad() {
       console.log('rank on load');
+      loading.show();
     }
   }
 
