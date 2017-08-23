@@ -33,6 +33,19 @@
         position: absolute;
         transform-origin: left center;
       }
+      .text {
+        font-size: 32rpx;
+        position: absolute;
+        top: 40rpx;
+        left: -10rpx;
+        &.ing {
+          top: 65rpx;
+        }
+        &.fail {
+          top: 60rpx;
+          left: 0;
+        }
+      }
     }
     .point {
       position: absolute;
@@ -233,7 +246,10 @@
       <view wx:for="{{drawDots}}"
         wx:key="index"
         class="dot"
-        style="left:{{item.x}}px; top: {{item.y}}px; background-color:{{item.color}}; width:{{item.size}}px; height:{{item.size}}px;"></view>
+        style="left:{{item.x}}px; top: {{item.y}}px; background-color:{{item.color}}; width:{{item.size}}px; height:{{item.size}}px;">
+        <view class="text {{item.ing ? 'ing' : ''}} {{item.fail ? 'fail' : ''}}"
+          style="color: {{item.fontColor}}">{{item.text}}</view>
+      </view>
     </view>
 
     <view class="point {{hasPoint !== true ? '' : 'show'}}"
@@ -416,6 +432,7 @@
         const white = '#ffffff';
         const grey = '#333333';
         const lineGrey = '#8c8c8d';
+        const ing = '#ffcd55';
 
         if (challengeData.checkpointCount > dots.length - 1) {
           const count = challengeData.checkpointCount - dots.length + 1;
@@ -488,41 +505,59 @@
 
         const drawDots = [];
         dots.forEach((dot, i) => {
+          let drawDot = {};
           if (i !== 0) {
             if (challengeData.checkpointCurrent > i) {
-              drawDots.push({
+              drawDot = {
                 size: 12,
                 x: dot.x / 2 - 6,
                 y: dot.y / 2 - 6,
                 color: orange,
-              });
+                fontColor: orange,
+              };
             } else if (challengeData.checkpointCurrent === i) {
               if (challengeData.status === 2) {
-                drawDots.push({
+                drawDot = {
                   size: 24,
                   x: dot.x / 2 - 12,
                   y: dot.y / 2 - 12,
                   color: grey,
-                });
+                  fontColor: grey,
+                  fail: true,
+                };
               } else {
-                drawDots.push({
+                drawDot = {
                   size: 12,
                   x: dot.x / 2 - 6,
                   y: dot.y / 2 - 6,
                   color: orange,
-                });
+                  fontColor: challengeData.status === 0 ? ing : orange,
+                  ing: challengeData.status === 0,
+                };
               }
               this.methods.updatePoint(dot);
               this.scrollTop = parseInt(dot.y / 2 - this.systemInfo.windowHeight + 100,
                 10);
             } else {
-              drawDots.push({
+              drawDot = {
                 size: 12,
                 x: dot.x / 2 - 6,
                 y: dot.y / 2 - 6,
                 color: white,
-              });
+                fontColor: white,
+              };
             }
+
+            if (i === 1) {
+              drawDot.text = '1st';
+            } else if (i === 1) {
+              drawDot.text = '2nd';
+            } else if (i === 1) {
+              drawDot.text = '3rd';
+            } else {
+              drawDot.text = `${i}th`;
+            }
+            drawDots.push(drawDot);
           }
         });
 
