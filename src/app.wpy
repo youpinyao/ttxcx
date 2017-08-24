@@ -24,9 +24,9 @@
     config = {
       pages: [
         'pages/home',
+        'pages/me',
         'pages/challenge',
         'pages/booking',
-        'pages/me',
         'pages/rank',
       ],
       window: {

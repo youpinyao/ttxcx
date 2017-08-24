@@ -1,6 +1,7 @@
 import util from './util.js';
 
-const path = 'https://www.zhanzhibin.com/resource/ttxcx/';
+// const path = 'https://www.zhanzhibin.com/resource/ttxcx/';
+const path = 'http://localhost/ttxcx/src/';
 
 const urls = {
   login: 'json/login.json',

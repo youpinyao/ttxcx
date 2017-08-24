@@ -4,7 +4,8 @@
     "date": "2017-08-01 15:30:00",
     "city": "漳州",
     "address": "达克斯游戏场",
-    "number": 10
+    "number": 10,
+    "completed": true
   }, {
     "date": "2017-08-01 15:30:00",
     "city": "漳州",

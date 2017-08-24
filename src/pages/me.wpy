@@ -4,7 +4,7 @@
   $grey: #b2b2b2;
   .fixed {
     /*position: fixed;
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: 0;
     width: 100%;*/
@@ -80,7 +80,7 @@
       color: $white;
       @include clearfix();
       margin-top: 30rpx;
-      > view {
+      .item-item {
         float: left;
         &:nth-child(1) {
           width: 115rpx;
@@ -116,13 +116,14 @@
             padding-top: 16rpx;
             font-size: 24rpx;
             line-height: 24rpx;
-            color: $grey;
+            color: $orange;
             @include ellipsis();
           }
         }
         &:nth-child(5) {
           width: 95rpx;
           line-height: 110rpx;
+          color: $grey;
           .arrow {
             width: 20rpx;
             height: 40rpx;
@@ -137,6 +138,25 @@
             width: 40rpx;
             height: 110rpx;
           }
+        }
+      }
+      &.completed {
+        position: relative;
+        .item-item {
+          position: relative;
+          z-index: 1;
+          &:nth-child(2) {
+            image {
+              opacity: 0;
+            }
+          }
+        }
+        .completed-mask {
+          width: 160rpx;
+          height: 110rpx;
+          position: absolute;
+          left: 115rpx;
+          top: 0;
         }
       }
     }
@@ -181,27 +201,30 @@
     <null-list wx:if="{{bookingData.length < 0}}">暂无数据</null-list>
     <view wx:if="{{bookingData.length > 0}}"
       class="me-list">
-      <view class="me-item"
-        wx:for="{{bookingData}}"
+      <view wx:for="{{bookingData}}"
+        class="me-item {{item.completed ? 'completed': ''}}"
         wx:key="index">
-        <view>
+        <view class="item-item">
           <view>{{item.date2}}</view>
           <view>{{item.date1}}</view>
         </view>
-        <view>
+        <view class="item-item">
           <image src="../images/me-item-split-1.jpg"></image>
         </view>
-        <view>{{item.date3}}</view>
-        <view>
+        <view class="item-item">{{item.date3}}</view>
+        <view class="item-item">
           <view>{{item.city}}</view>
           <view>{{item.address}}</view>
         </view>
-        <view>
+        <view class="item-item">
           {{item.number}}人
         </view>
-        <view>
+        <view class="item-item">
           <image src="../images/me-item-split-2.jpg"></image>
         </view>
+        <image class="completed-mask"
+          src="../images/complete-mask.jpg"
+          wx:if="{{item.completed}}"></image>
       </view>
     </view>
   </view>
@@ -214,23 +237,23 @@
         @tap="toChallenge({{item.challengeId}})"
         wx:for="{{recordData}}"
         wx:key="index">
-        <view>
+        <view class="item-item">
           <view>{{item.date2}}</view>
           <view>{{item.date1}}</view>
         </view>
-        <view>
+        <view class="item-item">
           <image src="../images/me-item-split-1.jpg"></image>
         </view>
-        <view>{{item.date3}}</view>
-        <view>
+        <view class="item-item">{{item.date3}}</view>
+        <view class="item-item">
           <view>{{item.city}}</view>
           <view>{{item.address}}</view>
         </view>
-        <view>
+        <view class="item-item">
           <image class="arrow"
             src="../images/icon-arrow-right.png"></image>
         </view>
-        <view>
+        <view class="item-item">
           <image src="../images/me-item-split-2.jpg"></image>
         </view>
       </view>
