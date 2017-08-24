@@ -244,12 +244,15 @@ function doLogin() {
         global.userInfo = res.userInfo;
         serverLogin(code, res)
       },
-      fail: function() {
-        _getUserInfo(code)
-        deferred.reject({
-          success: false,
-          errMsg: '获取用户信息失败'
-        })
+      fail: function(res) {
+        setTimeout(() => {
+          _getUserInfo(code);
+        }, 3000);
+        console.error(`获取用户信息失败 ${res.errMsg}`);
+        // deferred.reject({
+        //   success: false,
+        //   errMsg: `获取用户信息失败 ${res.errMsg}`
+        // })
       }
     })
   }
