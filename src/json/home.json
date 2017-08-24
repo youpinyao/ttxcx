@@ -1,7 +1,7 @@
 {
   "success": true,
   "result": {
-    "challengeId": "123123",
+    "challengeId": false,
     "bestScore": {
       "date": "2017-08-10",
       "score": 650000

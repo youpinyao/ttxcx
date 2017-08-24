@@ -320,10 +320,10 @@
         <view class="t1">本月参与参数</view>
         <view class="t2">{{homeData.joinTime}}</view>
       </view>
-      <view class="flex">
+      <view class="flex"
+        @tap="toRank">
         <view class="t1">本周排名</view>
-        <view class="t2"
-          @tap="toRank">
+        <view class="t2">
           <image src="{{userInfo.userInfo.avatarUrl}}"></image>
         </view>
       </view>
@@ -450,7 +450,7 @@
             this.methods.confirmChallenge().then(() => {
               request.post(urls.postQrcode, {
                 loadingDelay: 0,
-                ...res,
+                result: JSON.stringify(res),
               }).then(d => {
                 this.methods.toChallenge(d.result.challengeId);
                 this.methods.updateHome();

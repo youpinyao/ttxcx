@@ -1,6 +1,6 @@
 import util from './util.js';
 
-const path = 'http://10.1.199.128/ttxcx/src/';
+const path = 'https://www.zhanzhibin.com/resource/ttxcx/';
 
 const urls = {
   login: 'json/login.json',
@@ -11,7 +11,8 @@ const urls = {
   user: 'json/user.json',
   bookingParams: 'json/bookingParams.json',
   bookingAdd: 'json/bookingAdd.json',
-  challengeData: 'json/challengeData.json'
+  challengeData: 'json/challengeData.json',
+  postQrcode: 'json/postQrcode.json',
 }
 
 function convert(urls) {
