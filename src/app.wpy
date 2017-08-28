@@ -23,8 +23,8 @@
   export default class extends wepy.app {
     config = {
       pages: [
-        'pages/challenge',
         'pages/home',
+        'pages/challenge',
         'pages/me',
         'pages/booking',
         'pages/rank',
