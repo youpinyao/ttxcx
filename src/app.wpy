@@ -24,10 +24,10 @@
     config = {
       pages: [
         'pages/home',
+        'pages/rank',
         'pages/challenge',
         'pages/me',
         'pages/booking',
-        'pages/rank',
       ],
       window: {
         backgroundTextStyle: 'light',

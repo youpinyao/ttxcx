@@ -1,6 +1,7 @@
 {
   "success": true,
   "result": {
+    "desc": "这个参数只是给你解释的：如果没排行就返回rank false",
     "rank": 1,
     "score": 650000,
     "list": [{
