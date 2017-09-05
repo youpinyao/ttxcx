@@ -189,9 +189,9 @@
             });
             // wepy.navigateBack();
           }, 2000);
-        }, () => {
+        }).finally(() => {
           loading.hide();
-        })
+        });
       },
       setNumber: (e) => {
         this.formData.number = parseInt(e.detail.value, 10);

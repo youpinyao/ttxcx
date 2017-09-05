@@ -324,6 +324,7 @@
   import urls from '../services/urls.js';
   import request from '../services/request.js';
   import loading from '../services/loading.js';
+  import question from '../services/question.js';
 
   export default class Booking extends wepy.page {
     config = {
@@ -400,6 +401,7 @@
           if (hasUpdate) {
             console.log('update challege canvas');
             this.methods.drawDot();
+            question.check();
             setTimeout(() => {
               this.scrollTop = this.scrollTop + 1;
               this.$apply();
@@ -575,7 +577,16 @@
 
     }
 
-    onShow() {}
+    onShow() {
+      if (this.isReady) {
+        clearTimeout(this.timer);
+        this.methods.updateChallege();
+      }
+    }
+
+    onHide() {
+      clearTimeout(this.timer);
+    }
 
     onLoad(option) {
       console.log('challenge on load', option);
@@ -587,6 +598,7 @@
       const self = this;
       const systemInfo = wepy.getSystemInfoSync();
       const scale = 375 / systemInfo.windowWidth;
+      this.isReady = true;
       this.systemInfo = systemInfo;
       this.context = wepy.createCanvasContext('dotsCanvas');
       this.screenScale = scale;

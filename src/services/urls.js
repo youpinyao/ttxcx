@@ -1,7 +1,7 @@
 import util from './util.js';
 
 // const path = 'https://www.zhanzhibin.com/resource/ttxcx/';
-const path = 'http://localhost/ttxcx/src/';
+const path = 'http://192.168.3.11/ttxcx/src/';
 
 const urls = {
   login: 'json/login.json',
@@ -14,6 +14,11 @@ const urls = {
   bookingAdd: 'json/bookingAdd.json',
   challengeData: 'json/challengeData.json',
   postQrcode: 'json/postQrcode.json',
+  questionCheck: 'json/questionCheck.json',
+  questionQuit: 'json/questionQuit.json',
+  questionStart: 'json/questionStart.json',
+  questionList: 'json/questionList.json',
+  questionUpload: 'json/questionUpload.json',
 }
 
 function convert(urls) {

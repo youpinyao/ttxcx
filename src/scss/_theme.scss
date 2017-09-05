@@ -51,6 +51,15 @@ $grey: #b2b2b2 !global;
   -webkit-appearance: none;
 }
 
+@mixin center() {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
 @mixin transition($prop: all 300ms ease) {
   transition: $prop;
   -webkit-transition: $prop;
@@ -64,13 +73,13 @@ $grey: #b2b2b2 !global;
 @-webkit-keyframes fadeOutBig1 {
   0% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
   50%,
   100% {
     -webkit-transform: scale(2);
-            transform: scale(2);
+    transform: scale(2);
     opacity: 0;
   }
 }
@@ -78,13 +87,13 @@ $grey: #b2b2b2 !global;
 @keyframes fadeOutBig1 {
   0% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
   50%,
   100% {
     -webkit-transform: scale(2);
-            transform: scale(2);
+    transform: scale(2);
     opacity: 0;
   }
 }
@@ -92,22 +101,22 @@ $grey: #b2b2b2 !global;
 @-webkit-keyframes fadeOutBig2 {
   0% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 0;
   }
   40% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 0;
   }
   41% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
   100% {
     -webkit-transform: scale(2);
-            transform: scale(2);
+    transform: scale(2);
     opacity: 0;
   }
 }
@@ -115,22 +124,22 @@ $grey: #b2b2b2 !global;
 @keyframes fadeOutBig2 {
   0% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 0;
   }
   40% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 0;
   }
   41% {
     -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
   100% {
     -webkit-transform: scale(2);
-            transform: scale(2);
+    transform: scale(2);
     opacity: 0;
   }
 }

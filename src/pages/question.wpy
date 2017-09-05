@@ -1,0 +1,505 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  @import '../scss/_form.scss';
+  $modalBg: #161719;
+  .bg {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 750rpx;
+    height: 1290rpx;
+  }
+
+  .question-tip {
+    width: 640rpx;
+    height: 830rpx;
+    background-color: $modalBg;
+    border-radius: 10rpx;
+    @include center();
+    z-index: 1;
+    text-align: center;
+    &.hide {
+      visibility: hidden;
+      opacity: 0;
+      transform: scale(0);
+      @include transition();
+    }
+    .tip {
+      width: 440rpx;
+      height: 540rpx;
+      margin-top: 60rpx;
+    }
+    .close {
+      position: absolute;
+      width: 50rpx;
+      height: 50rpx;
+      top: -14rpx;
+      right: -14rpx;
+    }
+    .submit-button {
+      margin-top: 40rpx;
+    }
+    .quit {
+      font-size: 20rpx;
+      color: $grey;
+      text-align: center;
+      margin: 20rpx 0;
+      text-decoration: underline;
+      line-height: 20rpx;
+    }
+  }
+
+  .question-container {
+    position: absolute;
+    z-index: 2;
+    top: 90rpx;
+    bottom: 120rpx;
+    left: 70rpx;
+    right: 70rpx;
+    margin: auto;
+    @include transition();
+    &.hide {
+      visibility: hidden;
+      opacity: 0;
+      transform: scale(0);
+    }
+    .title {
+      line-height: 60rpx;
+      font-size: 24rpx;
+      padding-right: 20rpx;
+      text-align: right;
+      color: $c6;
+      text:nth-child(2) {
+        color: $orange;
+        margin-left: 10rpx;
+      }
+    }
+    .question-box {
+      box-sizing: border-box;
+      position: absolute;
+      top: 60rpx;
+      bottom: 150rpx;
+      left: 0;
+      right: 0;
+      margin: auto;
+      border-radius: 10rpx;
+      border: 1rpx solid rgba($orange, 0.45);
+      background-color: $blackBar;
+      padding: 54rpx 54rpx 54rpx 54rpx;
+      .question {
+        font-size: 36rpx;
+        color: #e5e5e5;
+        line-height: 50rpx;
+        padding-bottom: 20rpx;
+      }
+      .answer {
+        font-size: 28rpx;
+        color: $c6;
+        line-height: 36rpx;
+        padding: 15rpx;
+        border-radius: 10rpx;
+        background-color: $blackBg;
+        border: 1px solid #282a2c;
+        margin-top: 30rpx;
+        position: relative;
+        .icon {
+          @include transition();
+          visibility: hidden;
+          opacity: 0;
+          background-color: $blackBg;
+          position: absolute;
+          right: 10rpx;
+          top: 10rpx;
+          bottom: 10rpx;
+          margin: 4rpx 8rpx 0 0;
+          padding-left: 10rpx;
+          image {
+            display: none;
+            width: 36rpx;
+            height: 36rpx;
+          }
+        }
+        &.yes .icon,
+        &.no .icon {
+          opacity: 1;
+          visibility: visible;
+        }
+        &.yes {
+          border-color: #68a86e;
+          .icon {
+            .yes {
+              display: block;
+            }
+          }
+        }
+        &.no {
+          border-color: #ad2929;
+          color: $orange;
+          .icon {
+            .no {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+    .next-button {
+      width: 300rpx;
+      height: 70rpx;
+      line-height: 68rpx;
+      border-radius: 70rpx;
+      font-size: 30rpx;
+      border: 1px solid $orange;
+      margin: auto;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      color: $orange;
+      text-align: center;
+      background-color: $blackBar;
+    }
+    .tip {
+      font-size: 22rpx;
+      color: $c6;
+      text-align: center;
+      line-height: 80rpx;
+      background-color: $blackBar;
+      position: absolute;
+      left: 2rpx;
+      right: 2rpx;
+      bottom: 152rpx;
+      border-bottom-left-radius: 10rpx;
+      border-bottom-right-radius: 10rpx;
+    }
+  }
+
+  .question-container.end-container {
+    .question-box {
+      padding-top: 70rpx;
+    }
+    text-align: center;
+    .title {
+      margin: auto;
+      width: 300rpx;
+      height: 80rpx;
+    }
+    .t1 {
+      padding-top: 80rpx;
+      font-size: 28rpx;
+      color: $c6;
+      line-height: 40rpx;
+      text-indent: 2em;
+      text-align: left;
+      text {
+        color: $orange;
+      }
+    }
+    .t2 {
+      font-size: 66rpx;
+      color: $orange;
+      line-height: 70rpx;
+      padding: 70rpx 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .t3 {
+      font-size: 28rpx;
+      padding: 24rpx 0;
+      text-decoration: underline;
+      color: $c6;
+    }
+    .next-button {
+      position: static;
+    }
+  }
+
+</style>
+<template lang="wxml">
+  <image class="bg"
+    src="../images/game-bg.jpg"></image>
+
+  <!-- 答题提示 -->
+  <view class="question-tip {{hideTip ? 'hide' : ''}}">
+    <image class="tip"
+      src="../images/question-tip.png"></image>
+    <image class="close"
+      @tap="quit"
+      src="../images/question-close.png"></image>
+    <view class="submit-button small"
+      @tap="start">开始答题</view>
+    <view @tap="quit"
+      class="quit">跳过答题</view>
+  </view>
+
+  <!-- 题目 -->
+  <view class="question-container {{currentQuestion ? '' : 'hide'}}">
+    <view class="title">
+      <text>已答</text>
+      <text>{{index + 1}}/{{list.length}}</text>
+    </view>
+    <scroll-view class="question-box"
+      scroll-y="true">
+      <view class="question">{{currentQuestion.question}}</view>
+      <view class="answer {{currentAnswer !== null && index === currentQuestion.answer ? 'yes' : ''}} {{currentAnswer !== null && currentAnswer === index &&  currentQuestion.answer !== currentAnswer ? 'no' : ''}}"
+
+        wx:for="{{currentQuestion.answers}}"
+        wx:key="index"
+        @tap="select({{index}})">
+        <text>{{item}}</text>
+        <view class="icon">
+          <image class="yes"
+            src="../images/question-true.png"></image>
+          <image class="no"
+            src="../images/question-false.png"></image>
+        </view>
+      </view>
+      <view style="height: 40rpx"></view>
+    </scroll-view>
+    <view class="tip">点击选项，完成答题</view>
+    <view class="next-button"
+      @tap="next">下一题</view>
+  </view>
+
+
+  <!-- 结束 -->
+  <view class="question-container end-container {{isEnd ? '' : 'hide'}}">
+    <scroll-view class="question-box"
+      scroll-y="true">
+      <image class="title"
+        src="../images/question-end.png"></image>
+      <view class="t1">您的游戏时间为
+        <text>{{beforeTime}}，</text>您在游戏中共计答对了11题，您的游戏通关时间获得减免
+        <text>{{minusTime}}。</text>
+      </view>
+      <view class="t2">{{afterTime}}</view>
+      <view class="next-button"
+        @tap="toRank">查看排行</view>
+      <view class="t3"
+        @tap="toHome">返回首页</view>
+    </scroll-view>
+  </view>
+
+  <toast/>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import question from '../services/question.js';
+  import loading from '../services/loading.js';
+  import util from '../services/util.js';
+  import is from '../services/is.js';
+  import Toast from 'wepy-com-toast'
+
+  export default class Question extends wepy.page {
+    config = {
+      navigationBarTitleText: '答题时间',
+    }
+
+    components = {
+      toast: Toast,
+    }
+
+    data = {
+      index: -1,
+      list: [],
+      hideTip: false,
+      isEnd: false,
+      endData: null,
+      currentQuestion: null,
+      currentAnswer: null,
+    }
+
+    computed = {
+      beforeTime: () => {
+        if (is.null(this.endData)) {
+          return '';
+        }
+        const time = util.renderScore(this.endData.before);
+        let str = '';
+
+        if (time.hour) {
+          str += `${time.hour}时`;
+        }
+        if (time.minute) {
+          str += `${time.minute}分`;
+        }
+        if (time.second) {
+          str += `${time.second}秒`;
+        }
+
+        return str;
+      },
+      afterTime: () => {
+        if (is.null(this.endData)) {
+          return '';
+        }
+        const time = util.renderScore(this.endData.after);
+        let str = '';
+
+        if (time.hour) {
+          str += `${time.hour}时`;
+        }
+        if (time.minute) {
+          str += `${time.minute}分`;
+        }
+        if (time.second) {
+          str += `${time.second}秒`;
+        }
+
+        return str;
+      },
+      minusTime: () => {
+        if (is.null(this.endData)) {
+          return '';
+        }
+        const time = util.renderScore(this.endData.minus);
+        let str = '';
+
+        if (time.hour) {
+          str += `${time.hour}时`;
+        }
+        if (time.minute) {
+          str += `${time.minute}分`;
+        }
+        if (time.second) {
+          str += `${time.second}秒`;
+        }
+
+        return str;
+      }
+    }
+
+    methods = {
+      toRank: (e) => {
+        wepy.redirectTo({
+          url: '/pages/rank',
+        });
+      },
+      toHome: (e) => {
+        wepy.reLaunch({
+          url: '/pages/home',
+        });
+      },
+      next: (e) => {
+        if (this.currentAnswer === null) {
+          this.$invoke('toast', 'show', {
+            title: '请选择答案'
+          });
+          return;
+        }
+
+        this.list[this.index].selectAnswer = this.currentAnswer;
+        this.currentAnswer = null;
+        this.methods.nextQuestion();
+
+        return true;
+      },
+      select: (index) => {
+        if (this.currentAnswer !== null) {
+          return;
+        }
+        this.currentAnswer = index;
+        console.log('select', index);
+      },
+      quit: (e) => {
+        loading.show()
+        question.quit({
+          id: this.id,
+        }).then(() => {
+          wepy.navigateBack();
+        }).finally(() => {
+          loading.hide();
+        });
+      },
+      start: (e) => {
+        question.start({
+          id: this.id,
+        }).then(data => {
+          this.hideTip = true;
+          this.methods.nextQuestion(true);
+          this.$apply();
+        }).finally(() => {
+          loading.hide();
+        });
+      },
+      nextQuestion: (isFirst) => {
+        if (this.index >= 0 && !this.list[this.index]) {
+          this.methods.questionEnd();
+          return;
+        }
+        this.index++;
+        if (this.list[this.index]) {
+          this.methods.showQuestion(this.list[this.index], isFirst);
+        } else {
+          this.methods.questionEnd();
+        }
+      },
+      showQuestion: (question, isFirst) => {
+        this.currentQuestion = null;
+        if (!isFirst) {
+          this.$apply();
+        }
+        setTimeout(() => {
+          this.currentQuestion = question;
+          this.$apply();
+        }, isFirst ? 0 : 150);
+      },
+      questionEnd: () => {
+        this.currentQuestion = null;
+        this.methods.uploadQuestion();
+      },
+      uploadQuestion: () => {
+        loading.show('提交中');
+        const answers = JSON.stringify(this.list.map(item => {
+          return {
+            id: item.id,
+            selectAnswer: item.selectAnswer,
+            answer: item.answer,
+          };
+        }));
+        question.upload({
+          answers,
+        }).then(({
+          before,
+          after,
+          minus,
+        }) => {
+          this.endData = {
+            before,
+            after,
+            minus,
+          };
+          this.isEnd = true;
+          this.$apply();
+        }).finally(() => {
+          loading.hide();
+        });
+      },
+    }
+
+    events = {
+
+    }
+
+    onShow() {
+      console.log('question show');
+    }
+
+    onLoad(option) {
+      console.log('question meal on load', option.id);
+      this.id = option.id;
+
+      question.list({
+        id: this.id,
+      }).then(data => {
+        this.index = -1;
+        this.currentAnswer = null;
+        this.currentQuestion = null;
+        this.endData = null;
+        this.list = data.list;
+      });
+    }
+  }
+
+</script>

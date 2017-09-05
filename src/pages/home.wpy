@@ -368,6 +368,7 @@
   import urls from '../services/urls.js';
   import request from '../services/request.js';
   import loading from '../services/loading.js';
+  import question from '../services/question.js';
 
   export default class Home extends wepy.page {
     config = {
@@ -500,6 +501,7 @@
       request.getUserInfo().then(d => {
         this.userInfo = d;
         this.methods.updateHome();
+        question.check();
       });
     }
 
