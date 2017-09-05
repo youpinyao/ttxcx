@@ -1,0 +1,82 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  @import '../scss/_form.scss';
+  .title {
+    font-size: 30rpx;
+    color: $grey;
+    line-height: 64rpx;
+    padding: 0 0 0 26rpx;
+    padding-top: 10rpx;
+  }
+
+  .meal-item {
+    border-top: 1rpx solid $bordercolor;
+    border-bottom: 1rpx solid $bordercolor;
+  }
+
+  .submit-button {
+    margin-top: 50rpx;
+  }
+
+</style>
+<template lang="wxml">
+  <view wx:if="{{meals.length}}" class="title">超值套餐</view>
+  <null-list wx:if="{{!meals.length}}">暂无数据</null-list>
+  <repeat for="{{meals}}"
+    key="index"
+    index="index"
+    item="item">
+    <meal-item :item.sync="item"></meal-item>
+  </repeat>
+  <view class="submit-button"
+    @tap="doSave">保存</view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import $ from 'jquery';
+  import mealItem from '../components/meal-item';
+  import global from '../services/global.js';
+  import nullList from '../components/nullList';
+
+  export default class BookingMeal extends wepy.page {
+    config = {
+      navigationBarTitleText: '线上预约',
+    }
+
+    components = {
+      'meal-item': mealItem,
+      'null-list': nullList,
+    }
+
+    data = {
+      meals: [],
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      doSave: (e) => {
+        global.meals = $.extend(true, [], this.meals);
+        console.log($.extend(true, [], this.meals));
+        wepy.navigateBack();
+      },
+    }
+
+    events = {
+
+    }
+
+    onShow() {
+      this.meals = $.extend(true, [], global.meals) || [];
+    }
+
+    onLoad() {
+      console.log('booking meal on load');
+    }
+  }
+
+</script>

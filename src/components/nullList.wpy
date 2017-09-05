@@ -1,6 +1,13 @@
-<style type="scss"
+<style lang="scss"
   scoped>
-  @import '../scss/_theme.scss'; .null-list { color: $c6; text-align: center; padding: 100rpx 0; font-size: 32rpx; }
+  @import '../scss/_theme.scss';
+  .null-list {
+    color: $c6;
+    text-align: center;
+    padding: 100rpx 0;
+    font-size: 32rpx;
+  }
+
 </style>
 <template>
   <view class="null-list">

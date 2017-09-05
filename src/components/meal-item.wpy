@@ -1,0 +1,111 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  .meal-item {
+    padding: 30rpx 30rpx 30rpx 45rpx;
+    background-color: $blackBar;
+    margin-bottom: 20rpx;
+    image {
+      width: 200rpx;
+      height: 200rpx;
+      border: 1rpx solid $bordercolor;
+      margin-right: 38rpx;
+      float: left;
+    }
+    .t1 {
+      font-size: 36rpx;
+      color: $grey;
+      @include lineClamp(2);
+      line-height: 48rpx;
+      padding: 16rpx 0 0 0;
+      margin-bottom: 30rpx;
+    }
+    .t2 {
+      @include clearfix();
+      line-height: 54rpx;
+      .price {
+        float: left;
+        color: $orange;
+        font-size: 30rpx;
+        text {
+          font-size: 24rpx;
+        }
+      }
+      .control {
+        float: right;
+        color: $white;
+        float: right;
+        .item {
+          float: left;
+          font-size: 44rpx;
+          width: 54rpx;
+          height: 54rpx;
+          background-color: $orange;
+          border-radius: 54rpx;
+          text-align: center;
+          line-height: 46rpx;
+        }
+        .input {
+          float: left;
+          font-size: 24rpx;
+          width: 70rpx;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+</style>
+<template>
+  <view class="meal-item">
+    <image src="{{item.picture}}"></image>
+    <view class="t1">{{item.name}}</view>
+    <view class="t2">
+      <view class="price">
+        <text>￥</text>{{item.price}}
+      </view>
+      <view class="control">
+        <view class="item"
+          @tap="minus">-</view>
+        <view class="input">{{item.amount || 0}}</view>
+        <view class="item"
+          @tap="plus">+</view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy';
+  import is from '../services/is.js';
+
+  export default class MealItem extends wepy.component {
+    props = {
+      item: {
+        type: Object,
+        twoWay: true,
+      },
+    }
+
+    methods = {
+      plus: (e) => {
+        if (is.undefined(this.item.amount)) {
+          this.item.amount = 0;
+        }
+        this.item.amount++;
+        if (this.item.max && this.item.amount > this.item.max) {
+          this.item.amount = this.item.max;
+        }
+      },
+      minus: (e) => {
+        if (is.undefined(this.item.amount)) {
+          this.item.amount = 0;
+        }
+        this.item.amount--;
+        if (this.item.amount <= 0) {
+          this.item.amount = 0;
+        }
+      },
+    }
+  }
+
+</script>

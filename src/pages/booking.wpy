@@ -2,18 +2,24 @@
   scoped>
   @import '../scss/_theme.scss';
   @import '../scss/_form.scss';
-  .button {
-    line-height: 110rpx;
-    width: 670rpx;
-    text-align: center;
-    color: $white;
-    background-color: $orange;
-    border-radius: 55rpx;
-    font-size: 36rpx;
-    margin: 30rpx auto 0 auto;
-    @include transition();
-    &:active {
-      opacity: 0.8;
+  .meal-text {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 30rpx;
+    width: 380rpx;
+    @include ellipsis();
+  }
+
+  .meal-amount {
+    position: relative;
+    top: 1px;
+    padding-left: 10rpx;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 30rpx;
+    color: $orange;
+    text {
+      font-size: 20rpx;
     }
   }
 
@@ -29,7 +35,8 @@
             range-key="content"
             range="{{placeData}}">
             <text>{{placeData[formData.place].content || '请选择'}}</text>
-            <image src="../images/icon-arrow-right.png"></image>
+            <image class="arrow-right"
+              src="../images/icon-arrow-right.png"></image>
           </picker>
         </view>
       </view>
@@ -41,6 +48,22 @@
           bindinput="setPhone"
           value="{{formData.phone}}"
           maxlength="11" />
+      </view>
+    </label>
+    <label class="control-group"
+      wx:if="{{hasMeal}}"
+      @tap="toMealList">
+      <view class="control-label">超值套餐</view>
+      <view class="controls">
+        <view class="text">
+          <view wx:if="{{mealamount}}"
+            class="meal-text">{{mealText}}</view>
+          <view wx:if="{{mealamount}}"
+            class="meal-amount">
+            <text>x</text>{{mealamount}}</view>
+          <image class="arrow-right"
+            src="../images/icon-arrow-right.png"></image>
+        </view>
       </view>
     </label>
     <label class="control-group vertical">
@@ -58,18 +81,20 @@
       </view>
     </label>
   </view>
-  <view class="button"
+  <view class="submit-button"
     @tap="doSubmit">马上预约</view>
   <toast/>
 </template>
 
 <script>
   import wepy from 'wepy';
+  import $ from 'jquery';
   import urls from '../services/urls.js';
   import loading from '../services/loading.js';
   import Toast from 'wepy-com-toast'
   import request from '../services/request.js';
   import is from '../services/is.js';
+  import global from '../services/global.js';
 
   export default class Booking extends wepy.page {
     config = {
@@ -88,15 +113,30 @@
       formData: {
         place: '',
         phone: '',
+        meals: [],
         number: 0,
       }
     }
 
     computed = {
-
+      hasMeal: () => {
+        return !is.empty(this.formData.meals);
+      },
+      mealText: () => {
+        return this.formData.meals[0] && this.formData.meals[0].amount ? this.formData.meals[0].name : null
+      },
+      mealamount: () => {
+        return this.formData.meals[0] && this.formData.meals[0].amount ? this.formData.meals[0].amount : null
+      },
     }
 
     methods = {
+      toMealList: (e) => {
+        global.meals = this.formData.meals;
+        wepy.navigateTo({
+          url: '/pages/booking-meal',
+        });
+      },
       doSubmit: (e) => {
         if (is.empty(this.formData.place)) {
           this.$invoke('toast', 'show', {
@@ -126,6 +166,7 @@
           place: this.placeData[this.formData.place].id,
           phone: this.formData.phone,
           number: this.formData.number,
+          meals: JSON.stringify(this.formData.meals),
         }).then(d => {
           wepy.showToast({
             title: d.msg,
@@ -135,6 +176,7 @@
 
           this.formData = {
             place: null,
+            meals: [],
             phone: null,
             number: this.minNumber,
           }
@@ -142,11 +184,13 @@
           this.$apply();
 
           setTimeout(function() {
-            // wepy.navigateTo({
-            //   url: '/pages/home',
-            // });
-            wepy.navigateBack();
+            wepy.reLaunch({
+              url: '/pages/home',
+            });
+            // wepy.navigateBack();
           }, 2000);
+        }, () => {
+          loading.hide();
         })
       },
       setNumber: (e) => {
@@ -166,6 +210,13 @@
           this.maxNumber = result.maxNumber;
           this.minNumber = result.minNumber;
           this.formData.number = result.minNumber;
+          this.formData.meals = result.meals;
+
+          if (!is.empty(this.formData.meals)) {
+            this.formData.meals.forEach(d => {
+              d.amount = 0;
+            });
+          }
 
           this.$apply();
           loading.hide();
@@ -174,21 +225,28 @@
     }
 
     events = {
-
+      'update-meal': () => {
+        console.log('update meal', arguments);
+      },
     }
 
     onShow() {
+      if (!is.empty(global.meals)) {
+        this.formData.meals = $.extend(true, [], global.meals) || [];
+      }
+    }
+
+    onLoad() {
       let self = this;
+      console.log('rank on load');
+      loading.show();
+
+      global.meals = [];
 
       request.getUserInfo().then(d => {
         self.userInfo = d;
         self.methods.updateParams();
       });
-    }
-
-    onLoad() {
-      console.log('rank on load');
-      loading.show();
     }
   }
 

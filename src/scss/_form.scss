@@ -42,18 +42,35 @@
         color: $white;
         font-size: 30rpx;
       }
-      .select {
+      .select,
+      .text {
         text-align: right;
         line-height: 66rpx;
-        image {
-          width: 20rpx;
-          height: 40rpx;
-          margin-left: 26rpx;
-          vertical-align: middle;
-          position: relative;
-          top: -1px;
-        }
+      }
+      image.arrow-right {
+        width: 20rpx;
+        height: 40rpx;
+        margin-left: 26rpx;
+        vertical-align: middle;
+        position: relative;
+        display: inline-block;
+        top: -1px;
       }
     }
+  }
+}
+
+.submit-button {
+  line-height: 110rpx;
+  width: 670rpx;
+  text-align: center;
+  color: $white;
+  background-color: $orange;
+  border-radius: 55rpx;
+  font-size: 36rpx;
+  margin: 30rpx auto 0 auto;
+  @include transition();
+  &:active {
+    opacity: 0.8;
   }
 }
