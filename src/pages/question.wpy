@@ -459,6 +459,7 @@
           };
         }));
         question.upload({
+          id: this.id,
           answers,
         }).then(({
           before,
