@@ -1,0 +1,1 @@
+var anObject=require("./_an-object.js"),aFunction=require("./_a-function.js"),SPECIES=require("./_wks.js")("species");module.exports=function(e,n){var r,t=anObject(e).constructor;return void 0===t||void 0==(r=anObject(t)[SPECIES])?n:aFunction(r)};

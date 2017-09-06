@@ -1,0 +1,1 @@
+var isObject=require("./_is-object.js");module.exports=function(e){if(!isObject(e))throw TypeError(e+" is not an object!");return e};

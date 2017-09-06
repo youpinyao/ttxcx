@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var golbal={appToken:null,userInfo:null,userId:null};exports.default=golbal;

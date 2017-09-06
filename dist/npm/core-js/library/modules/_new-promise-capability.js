@@ -1,0 +1,1 @@
+"use strict";function PromiseCapability(i){var o,r;this.promise=new i(function(i,t){if(void 0!==o||void 0!==r)throw TypeError("Bad Promise constructor");o=i,r=t}),this.resolve=aFunction(o),this.reject=aFunction(r)}var aFunction=require("./_a-function.js");module.exports.f=function(i){return new PromiseCapability(i)};

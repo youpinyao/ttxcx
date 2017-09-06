@@ -1,0 +1,1 @@
+var isObject=require("./_is-object.js"),document=require("./_global.js").document,is=isObject(document)&&isObject(document.createElement);module.exports=function(e){return is?document.createElement(e):{}};

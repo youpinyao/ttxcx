@@ -1,0 +1,1 @@
+var global=require("./_global.js"),SHARED="__core-js_shared__",store=global[SHARED]||(global[SHARED]={});module.exports=function(o){return store[o]||(store[o]={})};

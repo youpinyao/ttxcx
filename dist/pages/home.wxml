@@ -1,0 +1,80 @@
+
+  <view class="fixed {{homeData.challengeId ? '' : 'no-has-challenge'}} _3962cc2">
+    <view class="ing _3962cc2" bindtap="toChallenge"  wx:if="{{homeData.challengeId}}" data-wepy-params-a="{{homeData.challengeId}}">您当前有一场挑战在进心中，
+      <text class="_3962cc2">马上进入></text>
+    </view>
+    <view class="buttons _3962cc2">
+      <view class="button person _3962cc2" bindtap="toMe">
+        <image src="../images/icon-person.png" class="_3962cc2"/>
+      </view>
+      <view class="button qrcode _3962cc2"  wx:if="{{!homeData.challengeId}}" bindtap="toQrcode">
+        <image src="../images/icon-qrcode.png" class="_3962cc2"/>
+      </view>
+    </view>
+  </view>
+
+  <view class="space {{homeData.challengeId ? '' : 'no-has-challenge'}} _3962cc2"/>
+
+  <view class="best-score _3962cc2"  wx:if="{{homeData.bestScore}}">
+    <view class="_3962cc2">
+      <view class="title _3962cc2">
+        <view class="_3962cc2">历史最佳</view>
+      </view>
+      <view class="score _3962cc2">
+        <view wx:if="{{bestScore.hour}}" class="_3962cc2">
+          <text class="t1 _3962cc2">{{bestScore.hour}}</text>
+          <text class="t2 _3962cc2">h</text>
+        </view>
+        <view wx:if="{{bestScore.minute}}" class="_3962cc2">
+          <text class="t1 _3962cc2">{{bestScore.minute}}</text>
+          <text class="t2 _3962cc2">min</text>
+        </view>
+        <view class="_3962cc2">
+          <text class="t1 _3962cc2">{{bestScore.second}}</text>
+          <text class="t2 _3962cc2">s</text>
+        </view>
+      </view>
+      <view class="date _3962cc2">
+        <view class="_3962cc2">{{homeData.bestScore.date}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="user-info _3962cc2">
+    <view class="_3962cc2">
+      <view class="flex _3962cc2">
+        <view class="t1 _3962cc2">本月参与参数</view>
+        <view class="t2 _3962cc2">{{homeData.joinTime}}</view>
+      </view>
+      <view class="flex _3962cc2" bindtap="toRank">
+        <view class="t1 _3962cc2">本周排名</view>
+        <view class="t2 _3962cc2">
+          <image src="{{userInfo.userInfo.avatarUrl}}" class="_3962cc2"/>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-item _3962cc2">
+    <view class="info-item-title _3962cc2">马上预约</view>
+    <view class="info-item-desc _3962cc2">预约一步走，不用等待，合理安排您的塔拓时间。</view>
+    <view class="info-item-content _3962cc2">
+      <view class="button _3962cc2" bindtap="toBooking">前往预约 ></view>
+    </view>
+  </view>
+  <view class="info-item _3962cc2"  wx:if="{{!homeData.challengeId}}">
+    <view class="info-item-title _3962cc2">绑定手环</view>
+    <view class="info-item-desc _3962cc2">马上绑定手环，开启你的塔拓之旅!一起来享受极限带来的乐趣！</view>
+    <view class="info-item-content _3962cc2">
+      <view class="button-text _3962cc2" bindtap="toQrcode">前往绑定手环 ></view>
+    </view>
+  </view>
+
+  <view class="confirm-mask {{showConfirmMask ? 'show' : ''}} _3962cc2">
+    <image src="../images/game-bg.jpg" mode="aspectFill" class="_3962cc2"/>
+    <view class="mask-content _3962cc2">
+      <view class="text _3962cc2">你确认要开始该挑战吗？</view>
+      <view class="button orange _3962cc2" bindtap="confirmOk">确认</view>
+      <view class="button grey _3962cc2" bindtap="confirmCancel">取消</view>
+    </view>
+  </view>
