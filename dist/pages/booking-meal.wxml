@@ -9,7 +9,7 @@
   <block class="_1371112" wx:for="{{meals}}" wx:for-index="index" wx:for-item="item" wx:key="index">
     
   <view class="meal-item _31a23b9 _1371112">
-    <image src="{{item.picture}}" class="_31a23b9"/>
+    <image src="{{item.picture}}" bindtap="$mealItem$preview" class="_31a23b9" data-com-index="{{index}}"/>
     <view class="t1 _31a23b9">{{item.name}}</view>
     <view class="t2 _31a23b9">
       <view class="price _31a23b9">

@@ -58,7 +58,8 @@
 </style>
 <template>
   <view class="meal-item">
-    <image src="{{item.picture}}"></image>
+    <image src="{{item.picture}}"
+      @tap="preview"></image>
     <view class="t1">{{item.name}}</view>
     <view class="t2">
       <view class="price">
@@ -87,6 +88,12 @@
     }
 
     methods = {
+      preview: (e) => {
+        wepy.previewImage({
+          current: this.item.picture,
+          urls: [this.item.picture],
+        });
+      },
       plus: (e) => {
         if (is.undefined(this.item.amount)) {
           this.item.amount = 0;
