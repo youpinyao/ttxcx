@@ -126,6 +126,10 @@
         let index = 0;
         let meal = this.formData.meals[index];
 
+        if (!meal) {
+          return {};
+        }
+
         while (!meal.amount && this.formData.meals[index + 1]) {
           index++;
           meal = this.formData.meals[index];
