@@ -21,9 +21,9 @@
       <view class="control-label _9f13706">超值套餐</view>
       <view class="controls _9f13706">
         <view class="text _9f13706">
-          <view wx:if="{{mealamount}}" class="meal-text _9f13706">{{mealText}}</view>
-          <view wx:if="{{mealamount}}" class="meal-amount _9f13706">
-            <text class="_9f13706">x</text>{{mealamount}}</view>
+          <view wx:if="{{mealData.amount}}" class="meal-text _9f13706">{{mealData.name}}</view>
+          <view wx:if="{{mealData.amount}}" class="meal-amount _9f13706">
+            <text class="_9f13706">x</text>{{mealData.amount}}</view>
           <image class="arrow-right _9f13706" src="../images/icon-arrow-right.png"/>
         </view>
       </view>

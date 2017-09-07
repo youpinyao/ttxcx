@@ -56,11 +56,11 @@
       <view class="control-label">超值套餐</view>
       <view class="controls">
         <view class="text">
-          <view wx:if="{{mealamount}}"
-            class="meal-text">{{mealText}}</view>
-          <view wx:if="{{mealamount}}"
+          <view wx:if="{{mealData.amount}}"
+            class="meal-text">{{mealData.name}}</view>
+          <view wx:if="{{mealData.amount}}"
             class="meal-amount">
-            <text>x</text>{{mealamount}}</view>
+            <text>x</text>{{mealData.amount}}</view>
           <image class="arrow-right"
             src="../images/icon-arrow-right.png"></image>
         </view>
@@ -122,11 +122,16 @@
       hasMeal: () => {
         return !is.empty(this.formData.meals);
       },
-      mealText: () => {
-        return this.formData.meals[0] && this.formData.meals[0].amount ? this.formData.meals[0].name : null
-      },
-      mealamount: () => {
-        return this.formData.meals[0] && this.formData.meals[0].amount ? this.formData.meals[0].amount : null
+      mealData: () => {
+        let index = 0;
+        let meal = this.formData.meals[index];
+
+        while (!meal.amount && this.formData.meals[index + 1]) {
+          index++;
+          meal = this.formData.meals[index];
+        }
+
+        return meal.amount ? meal : {};
       },
     }
 
