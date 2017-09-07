@@ -7,7 +7,7 @@
       <view class="button person _3962cc2" bindtap="toMe">
         <image src="../images/icon-person.png" class="_3962cc2"/>
       </view>
-      <view class="button qrcode _3962cc2"  wx:if="{{!homeData.challengeId}}" bindtap="toQrcode">
+      <view class="button qrcode _3962cc2"  wx:if="{{!homeData.challengeId}}" bindtap="toQuestion">
         <image src="../images/icon-qrcode.png" class="_3962cc2"/>
       </view>
     </view>

@@ -35,9 +35,9 @@
   <view class="question-container end-container {{isEnd ? '' : 'hide'}} _d286e26">
     <scroll-view class="question-box _d286e26" scroll-y="true">
       <image class="title _d286e26" src="../images/question-end.png"/>
-      <view class="t1 _d286e26">您的游戏时间为
-        <text class="_d286e26">{{beforeTime}}，</text>您在游戏中共计答对了{{endData.rightCount}}题，您的游戏通关时间获得减免
-        <text class="_d286e26">{{minusTime}}。</text>
+      <view class="t1 _d286e26">您本次游戏时间为
+        <text class="_d286e26">{{beforeTime}}。</text>在本轮福利答题环节中，总计答对了{{endData.rightCount}}题。游戏通关时间减免
+        <text class="_d286e26">{{minusTime}}，</text>您本次游戏最终通关时间为:
       </view>
       <view class="t2 _d286e26">{{afterTime}}</view>
       <view class="next-button _d286e26" bindtap="toRank">查看排行</view>

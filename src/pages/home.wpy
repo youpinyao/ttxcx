@@ -280,7 +280,7 @@
       </view>
       <view class="button qrcode"
         wx:if="{{!homeData.challengeId}}"
-        @tap="toQrcode">
+        @tap="toQuestion">
         <image src="../images/icon-qrcode.png"></image>
       </view>
     </view>
@@ -419,6 +419,9 @@
     }
 
     methods = {
+      toQuestion: () => {
+        question.check(true);
+      },
       toChallenge: (challengeId) => {
         console.log('to challenge page', challengeId);
         wepy.navigateTo({

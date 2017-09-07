@@ -2,9 +2,9 @@ import urls from './urls.js';
 import wepy from 'wepy';
 import request from './request.js';
 
-function check() {
+function check(isTest) {
   request.get(urls.questionCheck).then(data => {
-    if (data.hasQuestion) {
+    if (data.hasQuestion || isTest) {
       wepy.navigateTo({
         url: `/pages/question?id=${data.questionId}`
       })
