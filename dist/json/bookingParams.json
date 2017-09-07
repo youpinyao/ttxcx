@@ -5,19 +5,19 @@
     "maxNumber": 10,
     "meals": [{
       "id": "1231231",
-      "picture": "../images/meal-item.jpg",
+      "picture": "https://fetribe.cn/ttxcx/src/images/meal-item.jpg",
       "name": "超级无敌豪华宇宙至尊白手套1只",
       "max": 10,
       "price": "25.2"
     }, {
       "id": "1231232",
-      "picture": "../images/meal-item.jpg",
+      "picture": "https://fetribe.cn/ttxcx/src/images/meal-item.jpg",
       "name": "超级无敌豪华宇宙至尊白手套1只1",
       "max": 10,
       "price": "25.3"
     }, {
       "id": "1231233",
-      "picture": "../images/meal-item.jpg",
+      "picture": "https://fetribe.cn/ttxcx/src/images/meal-item.jpg",
       "name": "超级无敌豪华宇宙至尊白手套1只1",
       "max": 10,
       "price": "25.4"
