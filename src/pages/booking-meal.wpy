@@ -35,7 +35,7 @@
 
 <script>
   import wepy from 'wepy';
-  import $ from 'jquery';
+  import extend from 'extend';
   import mealItem from '../components/meal-item';
   import global from '../services/global.js';
   import nullList from '../components/nullList';
@@ -60,8 +60,7 @@
 
     methods = {
       doSave: (e) => {
-        global.meals = $.extend(true, [], this.meals);
-        console.log($.extend(true, [], this.meals));
+        global.meals = extend(true, [], this.meals);
         wepy.navigateBack();
       },
     }
@@ -71,7 +70,7 @@
     }
 
     onShow() {
-      this.meals = $.extend(true, [], global.meals) || [];
+      this.meals = extend(true, [], global.meals) || [];
     }
 
     onLoad() {

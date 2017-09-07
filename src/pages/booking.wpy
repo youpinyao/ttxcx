@@ -88,7 +88,7 @@
 
 <script>
   import wepy from 'wepy';
-  import $ from 'jquery';
+  import extend from 'extend';
   import urls from '../services/urls.js';
   import loading from '../services/loading.js';
   import Toast from 'wepy-com-toast'
@@ -232,7 +232,7 @@
 
     onShow() {
       if (!is.empty(global.meals)) {
-        this.formData.meals = $.extend(true, [], global.meals) || [];
+        this.formData.meals = extend(true, [], global.meals) || [];
       }
     }
 
