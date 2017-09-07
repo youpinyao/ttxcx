@@ -466,11 +466,13 @@
           before,
           after,
           minus,
+          rightCount,
         }) => {
           this.endData = {
             before,
             after,
             minus,
+            rightCount,
           };
           this.isEnd = true;
           this.$apply();
