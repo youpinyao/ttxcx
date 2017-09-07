@@ -2,5 +2,6 @@
   "success": true,
   "before": 65000,
   "after": 55000,
-  "minus": 10000
+  "minus": 10000,
+  "rightCount": 3
 }

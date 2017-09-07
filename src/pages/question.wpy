@@ -269,7 +269,7 @@
       <image class="title"
         src="../images/question-end.png"></image>
       <view class="t1">您的游戏时间为
-        <text>{{beforeTime}}，</text>您在游戏中共计答对了11题，您的游戏通关时间获得减免
+        <text>{{beforeTime}}，</text>您在游戏中共计答对了{{endData.rightCount}}题，您的游戏通关时间获得减免
         <text>{{minusTime}}。</text>
       </view>
       <view class="t2">{{afterTime}}</view>
@@ -403,7 +403,7 @@
         console.log('select', index);
       },
       quit: (e) => {
-        loading.show()
+        loading.show();
         question.quit({
           id: this.id,
         }).then(() => {
@@ -413,6 +413,7 @@
         });
       },
       start: (e) => {
+        loading.show();
         question.start({
           id: this.id,
         }).then(data => {
