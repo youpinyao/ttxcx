@@ -285,6 +285,7 @@
 
 <script>
   import wepy from 'wepy';
+  import defer from '../services/defer.js';
   import question from '../services/question.js';
   import loading from '../services/loading.js';
   import util from '../services/util.js';
@@ -390,8 +391,10 @@
         }
 
         this.list[this.index].selectAnswer = this.currentAnswer;
-        this.currentAnswer = null;
-        this.methods.nextQuestion();
+        this.methods.nextQuestion().then(() => {
+          this.currentAnswer = null;
+          this.$apply();
+        });
 
         return true;
       },
@@ -425,16 +428,28 @@
         });
       },
       nextQuestion: (isFirst) => {
+        const deferred = defer();
+
         if (this.index >= 0 && !this.list[this.index]) {
-          this.methods.questionEnd();
+          this.methods.questionEnd().then(() => {
+            deferred.resolve();
+          });
           return;
         }
         this.index++;
         if (this.list[this.index]) {
           this.methods.showQuestion(this.list[this.index], isFirst);
+          setTimeout(() => {
+            deferred.resolve();
+          });
         } else {
-          this.methods.questionEnd();
+          this.index = this.list.length - 1;
+          this.methods.questionEnd().then(() => {
+            deferred.resolve();
+          });
         }
+
+        return deferred.promise;
       },
       showQuestion: (question, isFirst) => {
         this.currentQuestion = null;
@@ -447,10 +462,19 @@
         }, isFirst ? 0 : 150);
       },
       questionEnd: () => {
-        this.currentQuestion = null;
-        this.methods.uploadQuestion();
+        const deferred = defer();
+
+        this.methods.uploadQuestion().then(() => {
+          this.currentQuestion = null;
+          this.$apply();
+          deferred.resolve();
+        });
+
+        return deferred.promise;
       },
       uploadQuestion: () => {
+        const deferred = defer();
+
         loading.show('提交中');
         const answers = JSON.stringify(this.list.map(item => {
           return {
@@ -475,10 +499,13 @@
             rightCount,
           };
           this.isEnd = true;
+          deferred.resolve();
           this.$apply();
         }).finally(() => {
           loading.hide();
         });
+
+        return deferred.promise;
       },
     }
 

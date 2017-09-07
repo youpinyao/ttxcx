@@ -20,7 +20,8 @@ function showLoading(config) {
   wepy.showToast({
     title: config.title || '努力加载中',
     icon: config.icon || 'loading',
-    duration: config.duration || 10000
+    duration: config.duration || 10000,
+    mask: true,
   })
 }
 
