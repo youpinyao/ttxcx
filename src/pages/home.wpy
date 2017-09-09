@@ -463,9 +463,11 @@
             this.$apply();
           },
           fail: (res) => {
-            // wepy.showAlert({
-            //   content: res.errMsg,
-            // });
+            if (res.errMsg === 'scanCode:fail') {
+              wepy.showAlert({
+                content: '扫描失败',
+              });
+            }
           },
         })
       },
