@@ -1,1 +1,0 @@
-"use strict";var $at=require("./_string-at.js")(!0);require("./_iter-define.js")(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,i=this._t,e=this._i;return e>=i.length?{value:void 0,done:!0}:(t=$at(i,e),this._i+=t.length,{value:t,done:!1})});

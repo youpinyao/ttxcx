@@ -1,1 +1,0 @@
-var core=module.exports={version:"2.5.0"};"number"==typeof __e&&(__e=core);

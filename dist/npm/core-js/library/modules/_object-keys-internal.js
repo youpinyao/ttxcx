@@ -1,1 +1,0 @@
-var has=require("./_has.js"),toIObject=require("./_to-iobject.js"),arrayIndexOf=require("./_array-includes.js")(!1),IE_PROTO=require("./_shared-key.js")("IE_PROTO");module.exports=function(r,e){var a,s=toIObject(r),t=0,u=[];for(a in s)a!=IE_PROTO&&has(s,a)&&u.push(a);for(;e.length>t;)has(s,a=e[t++])&&(~arrayIndexOf(u,a)||u.push(a));return u};

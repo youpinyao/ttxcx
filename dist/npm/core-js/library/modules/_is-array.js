@@ -1,1 +1,0 @@
-var cof=require("./_cof.js");module.exports=Array.isArray||function(r){return"Array"==cof(r)};

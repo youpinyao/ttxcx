@@ -1,1 +1,0 @@
-var classof=require("./_classof.js"),ITERATOR=require("./_wks.js")("iterator"),Iterators=require("./_iterators.js");module.exports=require("./_core.js").getIteratorMethod=function(r){if(void 0!=r)return r[ITERATOR]||r["@@iterator"]||Iterators[classof(r)]};

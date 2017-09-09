@@ -1,1 +1,0 @@
-var $keys=require("./_object-keys-internal.js"),hiddenKeys=require("./_enum-bug-keys.js").concat("length","prototype");exports.f=Object.getOwnPropertyNames||function(e){return $keys(e,hiddenKeys)};

@@ -1,1 +1,0 @@
-"use strict";var global=require("./_global.js"),core=require("./_core.js"),dP=require("./_object-dp.js"),DESCRIPTORS=require("./_descriptors.js"),SPECIES=require("./_wks.js")("species");module.exports=function(e){var r="function"==typeof core[e]?core[e]:global[e];DESCRIPTORS&&r&&!r[SPECIES]&&dP.f(r,SPECIES,{configurable:!0,get:function(){return this}})};
