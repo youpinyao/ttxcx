@@ -1,5 +1,7 @@
 {
   "success": true,
-  "hasQuestion": false,
-  "questionId": "12312312"
+  "result": {
+    "hasQuestion": true,
+    "questionId": "12312312"
+  }
 }

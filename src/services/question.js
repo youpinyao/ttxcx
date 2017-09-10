@@ -3,10 +3,12 @@ import wepy from 'wepy';
 import request from './request.js';
 
 function check(isTest) {
-  request.get(urls.questionCheck).then(data => {
-    if (data.hasQuestion || isTest) {
+  request.get(urls.questionCheck).then(({
+    result,
+  }) => {
+    if (result.hasQuestion || isTest) {
       wepy.navigateTo({
-        url: `/pages/question?id=${data.questionId}`
+        url: `/pages/question?id=${result.questionId}`
       })
     }
   });

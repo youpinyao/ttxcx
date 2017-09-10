@@ -487,10 +487,12 @@
           id: this.id,
           answers,
         }).then(({
-          before,
-          after,
-          minus,
-          rightCount,
+          result: {
+            before,
+            after,
+            minus,
+            rightCount,
+          }
         }) => {
           this.endData = {
             before,
@@ -523,12 +525,16 @@
 
       question.list({
         id: this.id,
-      }).then(data => {
+      }).then(({
+        result: {
+          list
+        }
+      }) => {
         this.index = -1;
         this.currentAnswer = null;
         this.currentQuestion = null;
         this.endData = null;
-        this.list = data.list;
+        this.list = list;
       });
     }
   }
