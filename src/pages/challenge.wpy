@@ -385,7 +385,9 @@
       },
       updateChallege: () => {
         console.log('check update challege');
-        request.get(urls.challengeData).then(({
+        request.get(urls.challengeData, {
+          challengeId: this.id,
+        }).then(({
           result,
         }) => {
           clearTimeout(this.timer);
