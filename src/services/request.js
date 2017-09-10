@@ -116,6 +116,7 @@ function requestSvr(param) {
     header: {
       // 设置请求的 header
       'X-APP-TOKEN': global.appToken,
+      'Accept': 'application/json',
       'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
     },
     success: function(res) {
@@ -269,6 +270,7 @@ function doLogin() {
       header: {
         // 设置请求的 header
         'X-APP-TOKEN': global.appToken,
+        'Accept': 'application/json',
         'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
       },
       success: function(res) {
