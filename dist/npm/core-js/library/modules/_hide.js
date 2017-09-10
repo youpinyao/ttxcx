@@ -1,0 +1,1 @@
+var dP=require("./_object-dp.js"),createDesc=require("./_property-desc.js");module.exports=require("./_descriptors.js")?function(e,r,t){return dP.f(e,r,createDesc(1,t))}:function(e,r,t){return e[r]=t,e};

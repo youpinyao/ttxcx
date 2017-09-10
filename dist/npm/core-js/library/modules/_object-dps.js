@@ -1,0 +1,1 @@
+var dP=require("./_object-dp.js"),anObject=require("./_an-object.js"),getKeys=require("./_object-keys.js");module.exports=require("./_descriptors.js")?Object.defineProperties:function(e,r){anObject(e);for(var t,s=getKeys(r),j=s.length,o=0;j>o;)dP.f(e,t=s[o++],r[t]);return e};

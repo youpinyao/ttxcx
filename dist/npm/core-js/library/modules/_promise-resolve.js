@@ -1,0 +1,1 @@
+var newPromiseCapability=require("./_new-promise-capability.js");module.exports=function(e,i){var r=newPromiseCapability.f(e);return(0,r.resolve)(i),r.promise};

@@ -1,0 +1,61 @@
+
+  <image class="bg _d286e26" src="../images/game-bg.jpg"/>
+
+  <!-- 答题提示 -->
+  <view class="question-tip {{hideTip ? 'hide' : ''}} _d286e26">
+    <image class="tip _d286e26" src="../images/question-tip.png"/>
+    <image class="close _d286e26" bindtap="quit" src="../images/question-close.png"/>
+    <view class="submit-button small _d286e26" bindtap="start">开始答题</view>
+    <view bindtap="quit" class="quit _d286e26">跳过答题</view>
+  </view>
+
+  <!-- 题目 -->
+  <view class="question-container {{currentQuestion ? '' : 'hide'}} _d286e26">
+    <view class="title _d286e26">
+      <text class="_d286e26">已答</text>
+      <text class="_d286e26">{{index + 1}}/{{list.length}}</text>
+    </view>
+    <scroll-view class="question-box _d286e26" scroll-y="true">
+      <view class="question _d286e26">{{currentQuestion.question}}</view>
+      <view class="answer {{currentAnswer !== null && index === currentQuestion.answer ? 'yes' : ''}} {{currentAnswer !== null && currentAnswer === index &&  currentQuestion.answer !== currentAnswer ? 'no' : ''}} _d286e26"  wx:for="{{currentQuestion.answers}}" wx:key="index" bindtap="select" data-wepy-params-a="{{index}}">
+        <text class="_d286e26">{{item}}</text>
+        <view class="icon _d286e26">
+          <image class="yes _d286e26" src="../images/question-true.png"/>
+          <image class="no _d286e26" src="../images/question-false.png"/>
+        </view>
+      </view>
+      <view style="height: 40rpx" class="_d286e26"/>
+    </scroll-view>
+    <view class="tip _d286e26">点击选项，完成答题</view>
+    <view class="next-button _d286e26" bindtap="next">下一题</view>
+  </view>
+
+
+  <!-- 结束 -->
+  <view class="question-container end-container {{isEnd ? '' : 'hide'}} _d286e26">
+    <scroll-view class="question-box _d286e26" scroll-y="true">
+      <image class="title _d286e26" src="../images/question-end.png"/>
+      <view class="t1 _d286e26">您本次游戏时间为
+        <text class="_d286e26">{{beforeTime}}。</text>在本轮福利答题环节中，总计答对了{{endData.rightCount}}题。游戏通关时间减免
+        <text class="_d286e26">{{minusTime}}，</text>您本次游戏最终通关时间为:
+      </view>
+      <view class="t2 _d286e26">{{afterTime}}</view>
+      <view class="next-button _d286e26" bindtap="toRank">查看排行</view>
+      <view class="t3 _d286e26" bindtap="toHome">返回首页</view>
+    </scroll-view>
+  </view>
+
+  
+    <view class="wetoast {{$toast$reveal ? 'wetoast_show' : ''}} _d286e26">
+        <view class="wetoast__mask"/>
+        <view class="wetoast__bd" animation="{{$toast$animationData}}">
+            <block  wx:if="{{$toast$img}}">
+                <view class="wetoast__bd__img {{$toast$imgClassName || ''}}">
+                    <image class="wetoast__bd__img_desc" src="{{$toast$img}}" mode="{{$toast$imgMode || 'scaleToFill'}}"/>
+                </view>
+            </block>
+            <block  wx:if="{{$toast$title}}">
+                <view class="wetoast__bd__title {{$toast$titleClassName || ''}}">{{$toast$title}}</view>
+            </block>
+        </view>
+    </view>

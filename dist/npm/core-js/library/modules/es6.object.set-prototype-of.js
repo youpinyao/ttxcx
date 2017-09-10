@@ -1,0 +1,1 @@
+var $export=require("./_export.js");$export($export.S,"Object",{setPrototypeOf:require("./_set-proto.js").set});

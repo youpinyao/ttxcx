@@ -1,0 +1,1 @@
+var toInteger=require("./_to-integer.js"),max=Math.max,min=Math.min;module.exports=function(e,t){return e=toInteger(e),e<0?max(e+t,0):min(e,t)};

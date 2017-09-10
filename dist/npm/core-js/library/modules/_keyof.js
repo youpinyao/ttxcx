@@ -1,0 +1,1 @@
+var getKeys=require("./_object-keys.js"),toIObject=require("./_to-iobject.js");module.exports=function(e,t){for(var r,o=toIObject(e),j=getKeys(o),s=j.length,c=0;s>c;)if(o[r=j[c++]]===t)return r};

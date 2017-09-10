@@ -1,0 +1,56 @@
+
+  <image class="bg _7865707" src="../images/game-bg.jpg"/>
+  <scroll-view class="dots _7865707" scroll-y="true" bindscrolltoupper="doExpand" scroll-top="{{scrollTop}}" data-wepy-params-a="false">
+    <view class="canvas _7865707" style="height: {{canvasHeight}}px; width: {{canvasWidth}}px">
+      <view  wx:for="{{drawLines}}" wx:key="index" class="line _7865707" style="left:{{item.x}}px; top:{{item.y}}px; background-color:{{item.color}}; width: {{item.width}}px; transform:rotate({{item.rotate}}deg);"/>
+      <view  wx:for="{{drawDots}}" wx:key="index" class="dot _7865707" style="left:{{item.x}}px; top: {{item.y}}px; background-color:{{item.color}}; width:{{item.size}}px; height:{{item.size}}px;">
+        <view class="text {{item.ing ? 'ing' : ''}} {{item.fail ? 'fail' : ''}} _7865707" style="color: {{item.fontColor}}">{{item.text}}</view>
+      </view>
+    </view>
+
+    <view class="point {{hasPoint !== true ? '' : 'show'}} _7865707" style="left:{{pointPosition.x}}px; top:{{pointPosition.y}}px;">
+      <view class="_7865707"/>
+      <view class="_7865707"/>
+      <view class="_7865707"/>
+      <view class="_7865707"/>
+      <view class="_7865707"/>
+    </view>
+  </scroll-view>
+
+  <view class="info {{expand ? 'hide' : ''}} _7865707"  wx:if="{{challengeData}}" bindtap="doExpand" data-wepy-params-a="true">
+    <text class="status0 _7865707" wx:if="{{challengeData.status === 0}}">进行中</text>
+    <text class="status1 _7865707" wx:if="{{challengeData.status === 1}}">已通过</text>
+    <text class="status2 _7865707" wx:if="{{challengeData.status === 2}}">未通过</text>
+    <image src="../images/icon-plus.png" class="_7865707"/>
+  </view>
+
+  <view class="info-expand {{expand ? 'show' : ''}} _7865707"  wx:if="{{challengeData}}">
+    <view class="box _7865707">
+      <view class="title _7865707">
+        <view class="_7865707">第{{challengeData.checkpointCurrent}}关</view>
+      </view>
+      <view class="score _7865707">
+        <view wx:if="{{challengeData.scoreFormat.hour}}" class="_7865707">
+          <text class="t1 _7865707">{{challengeData.scoreFormat.hour}}</text>
+          <text class="t2 _7865707">h</text>
+        </view>
+        <view wx:if="{{challengeData.scoreFormat.minute}}" class="_7865707">
+          <text class="t1 _7865707">{{challengeData.scoreFormat.minute}}</text>
+          <text class="t2 _7865707">min</text>
+        </view>
+        <view class="_7865707">
+          <text class="t1 _7865707">{{challengeData.scoreFormat.second}}</text>
+          <text class="t2 _7865707">s</text>
+        </view>
+      </view>
+      <view class="date _7865707">
+        <view class="_7865707">{{challengeData.date}}</view>
+      </view>
+    </view>
+    <view class="status _7865707">
+      <view class="status0 _7865707" wx:if="{{challengeData.status === 0}}">进行中</view>
+      <view class="status1 _7865707" wx:if="{{challengeData.status === 1}}">已通过</view>
+      <view class="status2 _7865707" wx:if="{{challengeData.status === 2}}">未通过</view>
+    </view>
+    <image src="../images/icon-minus.png" bindtap="doExpand" class="_7865707" data-wepy-params-a="false"/>
+  </view>

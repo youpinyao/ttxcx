@@ -1,0 +1,1 @@
+var $export=require("./_export.js");$export($export.S+$export.F*!require("./_descriptors.js"),"Object",{defineProperty:require("./_object-dp.js").f});

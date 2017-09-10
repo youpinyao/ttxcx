@@ -1,0 +1,1 @@
+var toString={}.toString;module.exports=function(t){return toString.call(t).slice(8,-1)};
