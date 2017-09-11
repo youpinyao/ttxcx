@@ -151,7 +151,7 @@ Page.prototype.next = function(config) {
 }
 
 Page.prototype.isLast = function() {
-  if (this._nextKey == 'NONE') {
+  if (this._nextKey === 'NONE') {
     return true;
   }
   if (this._totalRecord === false) {
