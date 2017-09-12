@@ -30,7 +30,7 @@
 
   <view class="download-modal-mask _99f35f5" hidden="{{showDownloadModal !== true}}"/>
   <view class="download-modal _99f35f5" hidden="{{showDownloadModal !== true}}">
-    <view class="content _99f35f5">下载中（{{downloadLen}}/{{downloadCount}}）</view>
+    <view class="content _99f35f5">下载中（{{downloadCount}}/{{downloadLen}}）</view>
     <view class="button _99f35f5" bindtap="cancelDownload">取消</view>
   </view>
 

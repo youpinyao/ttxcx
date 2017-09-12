@@ -3,7 +3,7 @@
   "result": {
     "content": [{
       "title": "17年9月11日",
-      "list": [{
+      "items": [{
         "id": "123123",
         "small": "../images/head.png",
         "natural": "https://fetribe.cn/ttxcx/src/images/download.gif"
@@ -30,7 +30,7 @@
       }]
     }, {
       "title": "17年9月11日",
-      "list": [{
+      "items": [{
         "id": "123123",
         "small": "../images/head.png",
         "natural": "https://fetribe.cn/ttxcx/src/images/download.gif"
@@ -57,7 +57,7 @@
       }]
     }, {
       "title": "17年9月11日",
-      "list": [{
+      "items": [{
         "id": "123123",
         "small": "../images/head.png",
         "natural": "https://fetribe.cn/ttxcx/src/images/download.gif"

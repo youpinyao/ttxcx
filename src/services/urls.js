@@ -1,7 +1,7 @@
 import util from './util.js';
 
-const path = 'https://fetribe.cn/ttxcx/src/';
-// const path = 'http://localhost/ttxcx/src/';
+// const path = 'https://fetribe.cn/ttxcx/src/';
+const path = 'http://localhost/ttxcx/src/';
 
 const urls = {
   login: 'json/login.json',

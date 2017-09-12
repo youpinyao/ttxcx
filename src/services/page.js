@@ -183,7 +183,7 @@ Page.prototype.hasNext = function() {
   return true;
 }
 
-module.exports = {
+export default {
   Page: function(config) {
     return new Page(config);
   }

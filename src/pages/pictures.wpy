@@ -160,7 +160,7 @@
     hidden="{{showDownloadModal !== true}}"></view>
   <view class="download-modal"
     hidden="{{showDownloadModal !== true}}">
-    <view class="content">下载中（{{downloadLen}}/{{downloadCount}}）</view>
+    <view class="content">下载中（{{downloadCount}}/{{downloadLen}}）</view>
     <view class="button"
       @tap="cancelDownload">取消</view>
   </view>
@@ -173,11 +173,22 @@
   import nullList from '../components/nullList';
   import request from '../services/request.js';
   import urls from '../services/urls.js';
+  import pageService from '../services/page.js';
+  import loading from '../services/loading.js';
   import Toast from 'wepy-com-toast';
 
   export default class Pictures extends wepy.page {
     config = {
       navigationBarTitleText: '塔拓',
+      enablePullDownRefresh: true,
+    }
+
+    onPullDownRefresh() {
+      this.methods.doRefresh();
+    }
+
+    onReachBottom() {
+      this.methods.loadMore();
     }
 
     components = {
@@ -189,6 +200,8 @@
       status: 'view',
       pictureList: [],
       showDownloadModal: false,
+      downloadLen: 0,
+      downloadCount: 0,
     }
 
     computed = {
@@ -298,6 +311,13 @@
                 content: this.methods.convertError(res),
                 showCancel: false,
                 confirmText: '知道了',
+                success: (res) => {
+                  wepy.showModal({
+                    content: `成功下载${this.downloadCount}张图片`,
+                    showCancel: false,
+                    confirmText: '知道了',
+                  });
+                },
               });
               this.methods.unselectedAll();
               this.showDownloadModal = false;
@@ -352,10 +372,38 @@
             items: data.result.list,
           }];
           this.$apply();
+          loading.hide();
         });
       },
-      getChallengePicturesOfMy: () => {
+      doRefresh: () => {
+        console.log('doRefresh');
+        var promise = this.picturesPage.reset();
+        promise && promise.then((data) => {
+          this.pictureList = data;
+          this.$apply();
 
+          wepy.stopPullDownRefresh();
+          loading.hide();
+        }, () => {
+          wepy.stopPullDownRefresh();
+          loading.hide();
+        });
+      },
+      loadMore: () => {
+        console.log('doInfinite');
+        var promise = this.picturesPage.next();
+
+        if (promise) {
+          loading.show();
+        }
+
+        promise && promise.then((data) => {
+          this.pictureList = data;
+          this.$apply();
+          loading.hide();
+        }, () => {
+          loading.hide();
+        });
       }
     }
 
@@ -368,8 +416,14 @@
     }
 
     onLoad(options) {
-      this.challengeId = options.id || '123123';
+      this.challengeId = options.id;
       console.log('pictures on load', options);
+
+      this.picturesPage = pageService.Page({
+        url: urls.picturesDataOfMy
+      });
+
+      loading.show();
 
       request.getUserInfo().then(d => {
         this.userInfo = d;
@@ -377,7 +431,7 @@
         if (this.challengeId) {
           this.methods.getChallengePictures();
         } else {
-          this.methods.getChallengePicturesOfMy();
+          this.methods.doRefresh();
         }
       });
     }
