@@ -6,7 +6,6 @@
         <image class="head _8bc7d50" src="{{userInfo.userInfo.avatarUrl}}"/>
         <view class="nickname _8bc7d50">{{userInfo.userInfo.nickName}}</view>
         <view class="wechat _8bc7d50">绑定微信：{{userData.wechat}}</view>
-        <view class="phone _8bc7d50">绑定手机：{{userData.phone}}</view>
       </view>
     </view>
 
@@ -20,7 +19,7 @@
 
   <view class="booking-content _8bc7d50" hidden="{{type !== 'booking'}}">
     
-  <view class="null-list _3e0874d _8bc7d50" wx:if="{{bookingData.length < 0}}">
+  <view class="null-list _3e0874d _8bc7d50" wx:if="{{bookingData.length <= 0}}">
     <view class="_3e0874d">
       暂无数据
     </view>
@@ -51,7 +50,7 @@
   </view>
   <view class="record-content _8bc7d50" hidden="{{type !== 'record'}}">
     
-  <view class="null-list _3e0874d _8bc7d50" wx:if="{{recordData.length < 0}}">
+  <view class="null-list _3e0874d _8bc7d50" wx:if="{{recordData.length <= 0}}">
     <view class="_3e0874d">
       暂无数据
     </view>

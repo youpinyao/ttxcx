@@ -234,6 +234,31 @@
     }
   }
 
+  .button {
+    width: 88rpx;
+    height: 88rpx;
+    border-radius: 44rpx;
+    background-color: $orange;
+    position: absolute;
+    z-index: 10;
+    transition: all 300ms ease;
+    bottom: 50rpx;
+    right: 50rpx;
+    &:active {
+      opacity: 0.8;
+    }
+    image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      width: 40rpx;
+      height: 40rpx;
+    }
+  }
+
 </style>
 <template lang="wxml">
   <image class="bg"
@@ -314,6 +339,12 @@
     <image src="../images/icon-minus.png"
       @tap="doExpand(false)"></image>
   </view>
+
+  <view class="button"
+    wx:if="{{challengeData.isEnd}}"
+    @tap="toPictures">
+    <image src="../images/icon-pictures.png"></image>
+  </view>
 </template>
 
 <script>
@@ -361,6 +392,11 @@
     }
 
     methods = {
+      toPictures: () => {
+        wepy.navigateTo({
+          url: `/pages/pictures?id=${this.id}`,
+        })
+      },
       doExpand: (expand) => {
         this.expand = expand === 'true';
       },

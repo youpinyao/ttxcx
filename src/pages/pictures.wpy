@@ -1,0 +1,252 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  @import '../scss/_form.scss';
+  .button {
+    width: 300rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 32rpx;
+    text-align: center;
+    background-color: $orange;
+    border-radius: 80rpx;
+    position: fixed;
+    color: $white;
+    left: 0;
+    right: 0;
+    bottom: 50rpx;
+    margin: auto;
+  }
+
+  .button-back {
+    width: 76rpx;
+    height: 76rpx;
+    background-color: $orange;
+    border-radius: 76rpx;
+    position: fixed;
+    left: 60rpx;
+    bottom: 50rpx;
+    image {
+      width: 46rpx;
+      height: 46rpx;
+      margin: 15rpx 0 0 15rpx;
+    }
+  }
+
+  .space {
+    height: 180rpx;
+  }
+
+  .list {
+    .item-title {
+      line-height: 40rpx;
+      font-size: 24rpx;
+      color: $white;
+      padding-left: 30rpx;
+      padding-top: 10rpx;
+    }
+    .item-content {
+      border-top: 1px solid $bordercolor;
+      border-bottom: 1px solid $bordercolor;
+      background-color: $blackBar;
+      padding: 15rpx 6rpx 10rpx 6rpx;
+      @include clearfix();
+      .item {
+        position: relative;
+        margin: 5rpx 5rpx 10rpx 5rpx;
+        width: 176rpx;
+        height: 176rpx;
+        float: left;
+        > image {
+          vertical-align: top;
+          width: 100%;
+          height: 100%;
+        }
+        .check {
+          position: absolute;
+          right: 10rpx;
+          top: 10rpx;
+          width: 30rpx;
+          height: 30rpx;
+          image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+
+</style>
+<template lang="wxml">
+  <null-list wx:if="{{pictureList.length <= 0}}">暂无数据</null-list>
+
+  <view style="height: 10rpx"
+    hidden="{{challengeId}}"></view>
+
+  <view class="list"
+    wx:for="{{pictureList}}"
+    wx:key="index"
+    wx:if="{{pictureList.length > 0}}">
+    <view class="item-title"
+      hidden="{{item.title === false}}">{{item.title}}</view>
+    <view class="item-content">
+      <view class="item"
+        @tap="selectItem({{item.id}})"
+        wx:for="{{item.items}}"
+        wx:key="index">
+        <image src="{{item.small}}"></image>
+        <view class="check"
+          hidden="{{status === 'view'}}">
+          <image src="../images/icon-check.png"
+            hidden="{{item.checked !== true}}"></image>
+          <image src="../images/icon-uncheck.png"
+            hidden="{{item.checked === true}}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="space"></view>
+  <view class="button"
+    @tap="setStatus('save')"
+    wx:if="{{status === 'view'}}">下载照片</view>
+  <view class="button"
+    @tap="saveToPhoto"
+    wx:if="{{status === 'save'}}">保存至相册</view>
+
+  <view class="button-back"
+    @tap="setStatus('view')"
+    wx:if="{{status === 'save'}}">
+    <image src="../images/icon-arrow-back.png"></image>
+  </view>
+
+  <toast/>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import nullList from '../components/nullList';
+  import request from '../services/request.js';
+  import urls from '../services/urls.js';
+  import Toast from 'wepy-com-toast'
+
+  export default class Pictures extends wepy.page {
+    config = {
+      navigationBarTitleText: '塔拓',
+    }
+
+    components = {
+      'null-list': nullList,
+      'toast': Toast,
+    }
+
+    data = {
+      status: 'view',
+      pictureList: [],
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      previewImage: (itemId) => {
+        let current = null;
+        const urls = [];
+
+        this.pictureList.forEach(list => {
+          list.items.forEach(item => {
+            if (item.id === itemId) {
+              current = item.natural;
+            }
+            urls.push(item.natural);
+          });
+        });
+
+        wepy.previewImage({
+          current, // 当前显示图片的http链接
+          urls, // 需要预览的图片http链接列表
+        })
+      },
+      selectItem: (itemId) => {
+        if (this.status !== 'save') {
+          this.methods.previewImage(itemId);
+          return;
+        }
+        this.pictureList.forEach(list => {
+          list.items.forEach(item => {
+            console.log(item.id, itemId);
+            if (item.id === itemId) {
+              item.checked = !item.checked;
+            }
+          });
+        });
+        this.$apply();
+      },
+      saveToPhoto: () => {
+        const selected = [];
+
+        this.pictureList.forEach(list => {
+          list.items.forEach(item => {
+            if (item.checked === true) {
+              selected.push(item.natural);
+            }
+          });
+        });
+
+        if (!selected.length) {
+          this.$invoke('toast', 'show', {
+            title: '请勾选图片'
+          });
+          return false;
+        }
+
+        return true;
+      },
+      setStatus: (status) => {
+        this.status = status;
+      },
+      getChallengePictures: () => {
+        request.get(urls.picturesData, {
+          challengeId: this.challengeId,
+        }).then(data => {
+          this.pictureList = [{
+            title: false,
+            items: data.result.list,
+          }];
+          this.$apply();
+        });
+      },
+      getChallengePicturesOfMy: () => {
+
+      }
+    }
+
+    events = {
+
+    }
+
+    onShow() {
+
+    }
+
+    onLoad(options) {
+      this.challengeId = options.id || '123123';
+      console.log('pictures on load', options);
+
+      request.getUserInfo().then(d => {
+        this.userInfo = d;
+
+        if (this.challengeId) {
+          this.methods.getChallengePictures();
+        } else {
+          this.methods.getChallengePicturesOfMy();
+        }
+      });
+    }
+  }
+
+</script>

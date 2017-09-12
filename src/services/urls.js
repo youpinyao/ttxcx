@@ -1,7 +1,7 @@
 import util from './util.js';
 
-const path = 'https://fetribe.cn/ttxcx/src/';
-// const path = 'http://localhost/ttxcx/src/';
+// const path = 'https://fetribe.cn/ttxcx/src/';
+const path = 'http://localhost/ttxcx/src/';
 
 const urls = {
   login: 'json/login.json',
@@ -19,6 +19,8 @@ const urls = {
   questionStart: 'json/questionStart.json',
   questionList: 'json/questionList.json',
   questionUpload: 'json/questionUpload.json',
+  picturesData: 'json/picturesData.json',
+  picturesDataOfMy: 'json/picturesDataOfMy.json',
 }
 
 function convert(urls) {

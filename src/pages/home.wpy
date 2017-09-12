@@ -279,9 +279,8 @@
         <image src="../images/icon-person.png"></image>
       </view>
       <view class="button qrcode"
-        wx:if="{{!homeData.challengeId}}"
-        @tap="toQuestion">
-        <image src="../images/icon-qrcode.png"></image>
+        @tap="toPictures">
+        <image src="../images/icon-pictures.png"></image>
       </view>
     </view>
   </view>
@@ -419,6 +418,11 @@
     }
 
     methods = {
+      toPictures: () => {
+        wepy.navigateTo({
+          url: '/pages/pictures',
+        })
+      },
       toQuestion: () => {
         question.check(true);
       },

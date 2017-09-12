@@ -223,7 +223,7 @@
 
   <!-- <view class="space"></view> -->
 
-  <null-list wx:if="{{rankData.list.length < 0}}">暂无数据</null-list>
+  <null-list wx:if="{{rankData.list.length <= 0}}">暂无数据</null-list>
   <view class="my-rank"
     wx:if="{{rankData.rank}}">
     <view>

@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "result": {
+    "list": [{
+      "id": "123123",
+      "small": "../images/head.png",
+      "natural": "../images/meal-item.jpg"
+    }, {
+      "id": "1231232",
+      "small": "../images/head.png",
+      "natural": "../images/meal-item.jpg"
+    }, {
+      "id": "1231231",
+      "small": "../images/head.png",
+      "natural": "../images/meal-item.jpg"
+    }, {
+      "id": "1231233",
+      "small": "../images/head.png",
+      "natural": "../images/meal-item.jpg"
+    }, {
+      "id": "1231234",
+      "small": "../images/head.png",
+      "natural": "../images/meal-item.jpg"
+    }, {
+      "id": "1231235",
+      "small": "../images/head.png",
+      "natural": "../images/meal-item.jpg"
+    }]
+  }
+}

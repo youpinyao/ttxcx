@@ -40,6 +40,7 @@
       .nickname {
         font-size: 36rpx;
         line-height: 36rpx;
+        padding-top: 24rpx;
       }
       .wechat,
       .phone {
@@ -182,7 +183,6 @@
           src="{{userInfo.userInfo.avatarUrl}}"></image>
         <view class="nickname">{{userInfo.userInfo.nickName}}</view>
         <view class="wechat">绑定微信：{{userData.wechat}}</view>
-        <view class="phone">绑定手机：{{userData.phone}}</view>
       </view>
     </view>
 
@@ -198,7 +198,7 @@
 
   <view class="booking-content"
     hidden="{{type !== 'booking'}}">
-    <null-list wx:if="{{bookingData.length < 0}}">暂无数据</null-list>
+    <null-list wx:if="{{bookingData.length <= 0}}">暂无数据</null-list>
     <view wx:if="{{bookingData.length > 0}}"
       class="me-list">
       <view wx:for="{{bookingData}}"
@@ -230,7 +230,7 @@
   </view>
   <view class="record-content"
     hidden="{{type !== 'record'}}">
-    <null-list wx:if="{{recordData.length < 0}}">暂无数据</null-list>
+    <null-list wx:if="{{recordData.length <= 0}}">暂无数据</null-list>
     <view wx:if="{{recordData.length > 0}}"
       class="me-list">
       <view class="me-item"

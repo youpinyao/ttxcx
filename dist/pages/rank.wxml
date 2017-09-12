@@ -24,7 +24,7 @@
   <!-- <view class="space"></view> -->
 
   
-  <view class="null-list _3e0874d _a72d26c" wx:if="{{rankData.list.length < 0}}">
+  <view class="null-list _3e0874d _a72d26c" wx:if="{{rankData.list.length <= 0}}">
     <view class="_3e0874d">
       暂无数据
     </view>
