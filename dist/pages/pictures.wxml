@@ -6,7 +6,7 @@
     </view>
   </view>
 
-  <view style="height: 10rpx" hidden="{{challengeId}}" class="_99f35f5"/>
+  <view style="height: 10rpx" hidden="{{!challengeId}}" class="_99f35f5"/>
 
   <view class="list _99f35f5"  wx:for="{{pictureList}}" wx:key="index" wx:if="{{pictureList.length > 0}}">
     <view class="item-title _99f35f5" hidden="{{item.title === false}}">{{item.title}}</view>

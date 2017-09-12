@@ -118,7 +118,7 @@
   <null-list wx:if="{{pictureList.length <= 0}}">暂无数据</null-list>
 
   <view style="height: 10rpx"
-    hidden="{{challengeId}}"></view>
+    hidden="{{!challengeId}}"></view>
 
   <view class="list"
     wx:for="{{pictureList}}"
