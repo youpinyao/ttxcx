@@ -1,1 +1,1 @@
-require("./_wks-define.js")("asyncIterator");
+require('./_wks-define.js')('asyncIterator');

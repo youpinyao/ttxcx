@@ -28,6 +28,12 @@
     <image src="../images/icon-arrow-back.png" class="_99f35f5"/>
   </view>
 
+  <view class="download-modal-mask _99f35f5" hidden="{{showDownloadModal !== true}}"/>
+  <view class="download-modal _99f35f5" hidden="{{showDownloadModal !== true}}">
+    <view class="content _99f35f5">下载中（{{downloadLen}}/{{downloadCount}}）</view>
+    <view class="button _99f35f5" bindtap="cancelDownload">取消</view>
+  </view>
+
   
     <view class="wetoast {{$toast$reveal ? 'wetoast_show' : ''}} _99f35f5">
         <view class="wetoast__mask"/>

@@ -1,1 +1,1 @@
-module.exports=require("./_hide.js");
+module.exports = require('./_hide.js');

@@ -1,1 +1,1 @@
-module.exports={default:require("./../../core-js/library/fn/promise.js"),__esModule:!0};
+module.exports = { "default": require('./../../core-js/library/fn/promise.js'), __esModule: true };

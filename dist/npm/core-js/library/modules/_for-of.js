@@ -1,1 +1,25 @@
-var ctx=require("./_ctx.js"),call=require("./_iter-call.js"),isArrayIter=require("./_is-array-iter.js"),anObject=require("./_an-object.js"),toLength=require("./_to-length.js"),getIterFn=require("./core.get-iterator-method.js"),BREAK={},RETURN={},exports=module.exports=function(e,r,t,o,i){var n,a,s,R,c=i?function(){return e}:getIterFn(e),l=ctx(t,o,r?2:1),u=0;if("function"!=typeof c)throw TypeError(e+" is not iterable!");if(isArrayIter(c)){for(n=toLength(e.length);n>u;u++)if((R=r?l(anObject(a=e[u])[0],a[1]):l(e[u]))===BREAK||R===RETURN)return R}else for(s=c.call(e);!(a=s.next()).done;)if((R=call(s,l,a.value,r))===BREAK||R===RETURN)return R};exports.BREAK=BREAK,exports.RETURN=RETURN;
+var ctx = require('./_ctx.js');
+var call = require('./_iter-call.js');
+var isArrayIter = require('./_is-array-iter.js');
+var anObject = require('./_an-object.js');
+var toLength = require('./_to-length.js');
+var getIterFn = require('./core.get-iterator-method.js');
+var BREAK = {};
+var RETURN = {};
+var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
+  var iterFn = ITERATOR ? function () { return iterable; } : getIterFn(iterable);
+  var f = ctx(fn, that, entries ? 2 : 1);
+  var index = 0;
+  var length, step, iterator, result;
+  if (typeof iterFn != 'function') throw TypeError(iterable + ' is not iterable!');
+  // fast case for arrays with default iterator
+  if (isArrayIter(iterFn)) for (length = toLength(iterable.length); length > index; index++) {
+    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
+    if (result === BREAK || result === RETURN) return result;
+  } else for (iterator = iterFn.call(iterable); !(step = iterator.next()).done;) {
+    result = call(iterator, f, step.value, entries);
+    if (result === BREAK || result === RETURN) return result;
+  }
+};
+exports.BREAK = BREAK;
+exports.RETURN = RETURN;

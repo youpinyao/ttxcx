@@ -1,1 +1,21 @@
-"use strict";function _interopRequireDefault(t){return t&&t.__esModule?t:{default:t}}exports.__esModule=!0;var _iterator=require("./../core-js/symbol/iterator.js"),_iterator2=_interopRequireDefault(_iterator),_symbol=require("./../core-js/symbol.js"),_symbol2=_interopRequireDefault(_symbol),_typeof="function"==typeof _symbol2.default&&"symbol"==typeof _iterator2.default?function(t){return typeof t}:function(t){return t&&"function"==typeof _symbol2.default&&t.constructor===_symbol2.default&&t!==_symbol2.default.prototype?"symbol":typeof t};exports.default="function"==typeof _symbol2.default&&"symbol"===_typeof(_iterator2.default)?function(t){return void 0===t?"undefined":_typeof(t)}:function(t){return t&&"function"==typeof _symbol2.default&&t.constructor===_symbol2.default&&t!==_symbol2.default.prototype?"symbol":void 0===t?"undefined":_typeof(t)};
+"use strict";
+
+exports.__esModule = true;
+
+var _iterator = require('./../core-js/symbol/iterator.js');
+
+var _iterator2 = _interopRequireDefault(_iterator);
+
+var _symbol = require('./../core-js/symbol.js');
+
+var _symbol2 = _interopRequireDefault(_symbol);
+
+var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+} : function (obj) {
+  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+};

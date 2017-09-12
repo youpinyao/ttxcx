@@ -1,1 +1,1 @@
-module.exports=require("./../../regenerator-runtime/runtime-module.js");
+module.exports = require('./../../regenerator-runtime/runtime-module.js');

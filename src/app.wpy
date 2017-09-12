@@ -1,5 +1,6 @@
 <style lang="scss">
   @import './scss/_theme.scss';
+
   page {
     background-color: $blackBg;
   }

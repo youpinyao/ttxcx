@@ -1,1 +1,1 @@
-exports.f={}.propertyIsEnumerable;
+exports.f = {}.propertyIsEnumerable;

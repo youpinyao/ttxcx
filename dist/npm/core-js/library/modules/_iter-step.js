@@ -1,1 +1,3 @@
-module.exports=function(e,n){return{value:n,done:!!e}};
+module.exports = function (done, value) {
+  return { value: value, done: !!done };
+};

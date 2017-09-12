@@ -1,1 +1,38 @@
-"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}exports.__esModule=!0;var _promise=require("./../core-js/promise.js"),_promise2=_interopRequireDefault(_promise);exports.default=function(e){return function(){var r=e.apply(this,arguments);return new _promise2.default(function(e,t){function n(u,o){try{var i=r[u](o),s=i.value}catch(e){return void t(e)}if(!i.done)return _promise2.default.resolve(s).then(function(e){n("next",e)},function(e){n("throw",e)});e(s)}return n("next")})}};
+"use strict";
+
+exports.__esModule = true;
+
+var _promise = require('./../core-js/promise.js');
+
+var _promise2 = _interopRequireDefault(_promise);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (fn) {
+  return function () {
+    var gen = fn.apply(this, arguments);
+    return new _promise2.default(function (resolve, reject) {
+      function step(key, arg) {
+        try {
+          var info = gen[key](arg);
+          var value = info.value;
+        } catch (error) {
+          reject(error);
+          return;
+        }
+
+        if (info.done) {
+          resolve(value);
+        } else {
+          return _promise2.default.resolve(value).then(function (value) {
+            step("next", value);
+          }, function (err) {
+            step("throw", err);
+          });
+        }
+      }
+
+      return step("next");
+    });
+  };
+};

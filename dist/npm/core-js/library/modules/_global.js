@@ -1,1 +1,6 @@
-var global=module.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:this;"number"==typeof __g&&(__g=global);
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  // eslint-disable-next-line no-new-func
+  : this;
+if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef

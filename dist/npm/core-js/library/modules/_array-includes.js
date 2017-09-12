@@ -1,1 +1,23 @@
-var toIObject=require("./_to-iobject.js"),toLength=require("./_to-length.js"),toAbsoluteIndex=require("./_to-absolute-index.js");module.exports=function(e){return function(t,o,r){var n,u=toIObject(t),i=toLength(u.length),s=toAbsoluteIndex(r,i);if(e&&o!=o){for(;i>s;)if((n=u[s++])!=n)return!0}else for(;i>s;s++)if((e||s in u)&&u[s]===o)return e||s||0;return!e&&-1}};
+// false -> Array#indexOf
+// true  -> Array#includes
+var toIObject = require('./_to-iobject.js');
+var toLength = require('./_to-length.js');
+var toAbsoluteIndex = require('./_to-absolute-index.js');
+module.exports = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIObject($this);
+    var length = toLength(O.length);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value;
+    // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      // eslint-disable-next-line no-self-compare
+      if (value != value) return true;
+    // Array#indexOf ignores holes, Array#includes - not
+    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
+      if (O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};

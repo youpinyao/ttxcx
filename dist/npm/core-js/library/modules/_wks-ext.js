@@ -1,1 +1,1 @@
-exports.f=require("./_wks.js");
+exports.f = require('./_wks.js');

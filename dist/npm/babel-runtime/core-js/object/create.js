@@ -1,1 +1,1 @@
-module.exports={default:require("./../../../core-js/library/fn/object/create.js"),__esModule:!0};
+module.exports = { "default": require('./../../../core-js/library/fn/object/create.js'), __esModule: true };

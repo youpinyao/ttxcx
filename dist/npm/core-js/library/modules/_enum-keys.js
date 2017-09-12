@@ -1,1 +1,15 @@
-var getKeys=require("./_object-keys.js"),gOPS=require("./_object-gops.js"),pIE=require("./_object-pie.js");module.exports=function(e){var r=getKeys(e),s=gOPS.f;if(s)for(var t,o=s(e),u=pIE.f,g=0;o.length>g;)u.call(e,t=o[g++])&&r.push(t);return r};
+// all enumerable object keys, includes symbols
+var getKeys = require('./_object-keys.js');
+var gOPS = require('./_object-gops.js');
+var pIE = require('./_object-pie.js');
+module.exports = function (it) {
+  var result = getKeys(it);
+  var getSymbols = gOPS.f;
+  if (getSymbols) {
+    var symbols = getSymbols(it);
+    var isEnum = pIE.f;
+    var i = 0;
+    var key;
+    while (symbols.length > i) if (isEnum.call(it, key = symbols[i++])) result.push(key);
+  } return result;
+};
