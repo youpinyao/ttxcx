@@ -557,8 +557,8 @@
                 size: 12,
                 x: dot.x / 2 - 6,
                 y: dot.y / 2 - 6,
-                color: orange,
-                fontColor: orange,
+                color: challengeData.beforePoints ? [white, orange, grey][challengeData.beforePoints[i]] : orange,
+                fontColor: challengeData.beforePoints ? [white, orange, grey][challengeData.beforePoints[i]] : orange,
               };
             } else if (challengeData.checkpointCurrent === i) {
               if (challengeData.status === 2) {

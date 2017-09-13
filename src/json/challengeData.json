@@ -3,6 +3,8 @@
   "result": {
     "isEnd": false,
     "checkpointCount": 20,
+    "beforePoints": [1, 1, 1, 1, 1],
+    "beforePointsIntro": "三个状态：未加入0，已通过1，未通过2",
     "checkpointCurrent": 5,
     "date": "2017-08-10",
     "score": 650000,
