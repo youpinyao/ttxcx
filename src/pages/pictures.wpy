@@ -109,7 +109,7 @@
     .button {
       margin: 0 auto;
       position: static;
-      margin-bottom: 20rpx;
+      margin-bottom: 30rpx;
     }
   }
 

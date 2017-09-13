@@ -55,6 +55,6 @@
     <image src="../images/icon-minus.png" bindtap="doExpand" class="_7865707" data-wepy-params-a="false"/>
   </view>
 
-  <view class="button _7865707"  wx:if="{{challengeData.isEnd}}" bindtap="toPictures">
+  <view class="button _7865707" bindtap="toPictures">
     <image src="../images/icon-pictures.png" class="_7865707"/>
   </view>
