@@ -1,7 +1,1 @@
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
+module.exports=function(r){try{return!!r()}catch(r){return!0}};

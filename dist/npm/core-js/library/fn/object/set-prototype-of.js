@@ -1,2 +1,1 @@
-require('./../../modules/es6.object.set-prototype-of.js');
-module.exports = require('./../../modules/_core.js').Object.setPrototypeOf;
+require("./../../modules/es6.object.set-prototype-of.js"),module.exports=require("./../../modules/_core.js").Object.setPrototypeOf;

@@ -1,1 +1,1 @@
-require('./_wks-define.js')('observable');
+require("./_wks-define.js")("observable");

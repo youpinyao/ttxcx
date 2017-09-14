@@ -1,5 +1,1 @@
-var toString = {}.toString;
-
-module.exports = function (it) {
-  return toString.call(it).slice(8, -1);
-};
+var toString={}.toString;module.exports=function(t){return toString.call(t).slice(8,-1)};

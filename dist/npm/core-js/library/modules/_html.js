@@ -1,1 +1,1 @@
-module.exports = false;
+module.exports=!1;

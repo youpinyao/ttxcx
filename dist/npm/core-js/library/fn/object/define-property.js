@@ -1,5 +1,1 @@
-require('./../../modules/es6.object.define-property.js');
-var $Object = require('./../../modules/_core.js').Object;
-module.exports = function defineProperty(it, key, desc) {
-  return $Object.defineProperty(it, key, desc);
-};
+require("./../../modules/es6.object.define-property.js");var $Object=require("./../../modules/_core.js").Object;module.exports=function(e,r,o){return $Object.defineProperty(e,r,o)};

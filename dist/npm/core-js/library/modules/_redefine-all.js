@@ -1,7 +1,1 @@
-var hide = require('./_hide.js');
-module.exports = function (target, src, safe) {
-  for (var key in src) {
-    if (safe && target[key]) target[key] = src[key];
-    else hide(target, key, src[key]);
-  } return target;
-};
+var hide=require("./_hide.js");module.exports=function(e,r,i){for(var d in r)i&&e[d]?e[d]=r[d]:hide(e,d,r[d]);return e};

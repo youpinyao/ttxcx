@@ -1,10 +1,1 @@
-var getKeys = require('./_object-keys.js');
-var toIObject = require('./_to-iobject.js');
-module.exports = function (object, el) {
-  var O = toIObject(object);
-  var keys = getKeys(O);
-  var length = keys.length;
-  var index = 0;
-  var key;
-  while (length > index) if (O[key = keys[index++]] === el) return key;
-};
+var getKeys=require("./_object-keys.js"),toIObject=require("./_to-iobject.js");module.exports=function(e,t){for(var r,o=toIObject(e),j=getKeys(o),s=j.length,c=0;s>c;)if(o[r=j[c++]]===t)return r};

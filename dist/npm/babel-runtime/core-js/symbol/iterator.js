@@ -1,1 +1,1 @@
-module.exports = { "default": require('./../../../core-js/library/fn/symbol/iterator.js'), __esModule: true };
+module.exports={default:require("./../../../core-js/library/fn/symbol/iterator.js"),__esModule:!0};
