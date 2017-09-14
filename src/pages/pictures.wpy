@@ -131,7 +131,8 @@
         @tap="selectItem({{item.id}})"
         wx:for="{{item.items}}"
         wx:key="index">
-        <image src="{{item.small}}"></image>
+        <image mode="aspectFill"
+          src="{{item.small}}"></image>
         <view class="check"
           hidden="{{status === 'view'}}">
           <image src="../images/icon-check.png"

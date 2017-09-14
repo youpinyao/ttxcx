@@ -1,7 +1,7 @@
 {
   "success": true,
   "result": {
-    "content": [{
+    "list": [{
       "title": "17年9月11日",
       "items": [{
         "id": "123123",
@@ -83,6 +83,6 @@
         "natural": "https://fetribe.cn/ttxcx/src/images/download.gif"
       }]
     }],
-    "totalRecord": 5
+    "nextKey": "NONE"
   }
 }

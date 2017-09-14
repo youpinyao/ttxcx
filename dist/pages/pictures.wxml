@@ -12,7 +12,7 @@
     <view class="item-title _99f35f5" hidden="{{item.title === false}}">{{item.title}}</view>
     <view class="item-content _99f35f5">
       <view class="item _99f35f5" bindtap="selectItem" wx:for="{{item.items}}" wx:key="index" data-wepy-params-a="{{item.id}}">
-        <image src="{{item.small}}" class="_99f35f5"/>
+        <image mode="aspectFill" src="{{item.small}}" class="_99f35f5"/>
         <view class="check _99f35f5" hidden="{{status === 'view'}}">
           <image src="../images/icon-check.png" hidden="{{item.checked !== true}}" class="_99f35f5"/>
           <image src="../images/icon-uncheck.png" hidden="{{item.checked === true}}" class="_99f35f5"/>
