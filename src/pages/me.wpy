@@ -40,7 +40,7 @@
       .nickname {
         font-size: 36rpx;
         line-height: 36rpx;
-        padding-top: 24rpx;
+        padding-top: 54rpx;
       }
       .wechat,
       .phone {
@@ -182,7 +182,6 @@
         <image class="head"
           src="{{userInfo.userInfo.avatarUrl}}"></image>
         <view class="nickname">{{userInfo.userInfo.nickName}}</view>
-        <view class="wechat">绑定微信：{{userData.wechat}}</view>
       </view>
     </view>
 

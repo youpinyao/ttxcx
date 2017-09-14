@@ -5,7 +5,6 @@
       <view class="info _8bc7d50">
         <image class="head _8bc7d50" src="{{userInfo.userInfo.avatarUrl}}"/>
         <view class="nickname _8bc7d50">{{userInfo.userInfo.nickName}}</view>
-        <view class="wechat _8bc7d50">绑定微信：{{userData.wechat}}</view>
       </view>
     </view>
 
