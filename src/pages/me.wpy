@@ -197,7 +197,7 @@
 
   <view class="booking-content"
     hidden="{{type !== 'booking'}}">
-    <null-list wx:if="{{bookingData.length <= 0}}">暂无数据</null-list>
+    <null-list wx:if="{{bookingData.length <= 0}}">暂无预约记录</null-list>
     <view wx:if="{{bookingData.length > 0}}"
       class="me-list">
       <view wx:for="{{bookingData}}"
@@ -229,7 +229,7 @@
   </view>
   <view class="record-content"
     hidden="{{type !== 'record'}}">
-    <null-list wx:if="{{recordData.length <= 0}}">暂无数据</null-list>
+    <null-list wx:if="{{recordData.length <= 0}}">暂无战绩</null-list>
     <view wx:if="{{recordData.length > 0}}"
       class="me-list">
       <view class="me-item"

@@ -20,7 +20,7 @@
     
   <view class="null-list _3e0874d _8bc7d50" wx:if="{{bookingData.length <= 0}}">
     <view class="_3e0874d">
-      暂无数据
+      暂无预约记录
     </view>
   </view>
     <view  wx:if="{{bookingData.length > 0}}" class="me-list _8bc7d50">
@@ -51,7 +51,7 @@
     
   <view class="null-list _3e0874d _8bc7d50" wx:if="{{recordData.length <= 0}}">
     <view class="_3e0874d">
-      暂无数据
+      暂无战绩
     </view>
   </view>
     <view  wx:if="{{recordData.length > 0}}" class="me-list _8bc7d50">
