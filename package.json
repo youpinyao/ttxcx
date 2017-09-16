@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "extend": "3.0.1",
-    "moment": "^2.18.1",
+    "moment": "2.18.1",
     "wepy": "^1.5.8",
     "wepy-async-function": "^1.4.4",
     "wepy-com-toast": "^1.0.2",

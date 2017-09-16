@@ -50,6 +50,21 @@
           maxlength="11" />
       </view>
     </label>
+    <label class="control-group">
+      <view class="control-label">预约时间</view>
+      <view class="controls">
+        <picker class="datepicker"
+          mode="date"
+          value="{{formData.date}}"
+          start="{{formData.startDate}}"
+          end="{{formData.endDate}}"
+          bindchange="bindDateChange">
+          <view class="picker">
+            {{formData.date}}
+          </view>
+        </picker>
+      </view>
+    </label>
     <label class="control-group"
       wx:if="{{hasMeal}}"
       @tap="toMealList">
@@ -95,6 +110,7 @@
   import request from '../services/request.js';
   import is from '../services/is.js';
   import global from '../services/global.js';
+  import moment from 'moment';
 
   export default class Booking extends wepy.page {
     config = {
@@ -113,6 +129,9 @@
       formData: {
         place: '',
         phone: '',
+        date: '',
+        startDate: moment().format('YYYY-MM-DD'),
+        endDate: moment().add('day', 6).format('YYYY-MM-DD'),
         meals: [],
         number: 0,
       }
@@ -169,6 +188,13 @@
           return;
         }
 
+        if (is.empty(this.formData.date)) {
+          this.$invoke('toast', 'show', {
+            title: '请选择预约时间'
+          });
+          return;
+        }
+
         loading.show('预约中');
 
         request.post(urls.bookingAdd, {
@@ -176,6 +202,7 @@
           phone: this.formData.phone,
           number: this.formData.number,
           meals: JSON.stringify(this.formData.meals),
+          date: this.formData.date,
         }).then(d => {
           wepy.showToast({
             title: d.msg,
@@ -201,6 +228,9 @@
         }).finally(() => {
           loading.hide();
         });
+      },
+      bindDateChange: (e) => {
+        this.formData.date = e.detail.value;
       },
       setNumber: (e) => {
         this.formData.number = parseInt(e.detail.value, 10);
