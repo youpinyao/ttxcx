@@ -185,11 +185,17 @@
     }
 
     onPullDownRefresh() {
-      this.methods.doRefresh();
+      if (this.challengeId) {
+        this.methods.getChallengePictures();
+      } else {
+        this.methods.doRefresh();
+      }
     }
 
     onReachBottom() {
-      this.methods.loadMore();
+      if (!this.challengeId) {
+        this.methods.loadMore();
+      }
     }
 
     components = {
