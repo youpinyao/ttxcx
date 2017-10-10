@@ -11,6 +11,7 @@
     display: -ms-flexbox;
     display: flex;
     margin-bottom: 20rpx;
+    align-items: center;
     color: $white;
     &.vertical {
       display: block;
@@ -20,6 +21,14 @@
         text:last-child {
           float: right;
           color: $white;
+        }
+        text:first-child {
+          float: none;
+        }
+        text:first-child {
+          text {
+            color: $orange;
+          }
         }
       }
     }
@@ -41,11 +50,16 @@
         min-height: 66rpx;
         color: $white;
         font-size: 30rpx;
+        text-align: right;
       }
       .select,
       .text {
         text-align: right;
         line-height: 66rpx;
+        @include clearfix();
+      }
+      picker {
+        @include clearfix();
       }
       image.arrow-right {
         width: 20rpx;

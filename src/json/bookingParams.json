@@ -3,6 +3,7 @@
   "result": {
     "minNumber": 1,
     "maxNumber": 10,
+    "bookingText": "（每人159元）",
     "meals": [{
       "id": "1231231",
       "picture": "https://fetribe.cn/ttxcx/src/images/meal-item.jpg",

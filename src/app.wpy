@@ -25,9 +25,12 @@
     config = {
       pages: [
         'pages/home',
+        'pages/booking-detail',
+        'pages/booking-refund-success',
+        'pages/booking-pay-success',
+        'pages/booking',
         'pages/pictures',
         'pages/question',
-        'pages/booking',
         'pages/booking-meal',
         'pages/rank',
         'pages/challenge',

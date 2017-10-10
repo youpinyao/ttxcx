@@ -1,4 +1,7 @@
 {
   "success": true,
-  "msg": "预订成功"
+  "msg": "预订成功",
+  "result": {
+    "bookingId": "66666"
+  }
 }

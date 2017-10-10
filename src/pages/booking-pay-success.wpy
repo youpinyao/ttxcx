@@ -1,0 +1,128 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  @import '../scss/_form.scss';
+
+  .icon {
+    text-align: center;
+    padding: 100rpx 0 120rpx 0;
+    image {
+      width: 180rpx;
+      height: 180rpx;
+    }
+    .text {
+      font-size: 34rpx;
+      margin: 10rpx 0;
+      color: $orange;
+    }
+  }
+  .t1 {
+    font-size: 28rpx;
+    text-align: center;
+    color: $grey;
+  }
+  .t2 {
+    font-size: 70rpx;
+    color: $orange;
+    text-align: center;
+    padding: 30rpx 0 20rpx 0;
+  }
+  .t3 {
+    padding: 0 80rpx 0 80rpx;
+    font-size: 24rpx;
+    line-height: 36rpx;
+    text-indent: 2em;
+    color: $grey;
+    padding-bottom: 120rpx;
+  }
+  .home {
+    font-size: 24rpx;
+    color: $c6;
+    text-decoration: underline;
+    margin: 40rpx 0;
+    text-align: center;
+  }
+
+</style>
+<template lang="wxml">
+  <view>
+    <view class="icon">
+      <image src="../images/pay-success-icon.png"></image>
+      <view class="text">付款成功</view>
+    </view>
+    <view class="t1"
+      wx:if="{{detail.selectedPayWay.type === 'ONLINE'}}">入场验证码</view>
+    <view class="t2"
+      wx:if="{{detail.selectedPayWay.type === 'ONLINE'}}">{{detail.code}}</view>
+    <view class="t3"
+      wx:if="{{detail.selectedPayWay.type === 'ONLINE'}}">恭喜您！付款成功，您可凭借此验证码至预约的塔拓游乐场进行游戏。祝您游戏愉快！</view>
+    <view class="t3"
+      wx:if="{{detail.selectedPayWay.type !== 'ONLINE'}}">恭喜您！预约成功。您可直接到塔拓游乐场向工作人员展示手机号购票入场。祝您游戏愉快！</view>
+    <view class="submit-button"
+      @tap="toMe">我的预约</view>
+    <view class="home" @tap="toHome">返回首页</view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import request from '../services/request.js';
+  import loading from '../services/loading.js';
+  import urls from '../services/urls.js';
+
+  export default class BookingPaySuccess extends wepy.page {
+    config = {
+      navigationBarTitleText: '结果',
+    }
+
+    components = {
+
+    }
+
+    data = {
+      detail: null,
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      toMe: () => {
+        wepy.redirectTo({
+          url: `/pages/me`,
+        })
+      },
+      toHome: () => {
+        wepy.reLaunch({
+          url: '/pages/home',
+        });
+      },
+      loadData: () => {
+        loading.show();
+        request.get(urls.bookingDetail, {
+          bookingId: this.id,
+        }).then(data => {
+          this.detail = data.result;
+          this.$apply();
+        }).finally(() => {
+          loading.hide();
+        });
+      },
+    }
+
+    events = {
+
+    }
+
+    onShow() {
+      this.methods.loadData();
+    }
+
+    onLoad(option) {
+      console.log('booking pay success on load');
+      this.id = option.id;
+    }
+  }
+
+</script>

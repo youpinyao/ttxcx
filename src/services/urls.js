@@ -22,6 +22,9 @@ const path = 'https://cs.zhanzhibin.com/';
 //   questionUpload: 'json/questionUpload.json',
 //   picturesData: 'json/picturesData.json',
 //   picturesDataOfMy: 'json/picturesDataOfMy.json',
+//   bookingDetail: 'json/bookingDetail.json',
+//   bookingPay: 'json/bookingPay.json',
+//   bookingRefund: 'json/bookingRefund.json',
 // }
 
 const urls = {

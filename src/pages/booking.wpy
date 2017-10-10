@@ -53,16 +53,18 @@
     <label class="control-group">
       <view class="control-label">预约时间</view>
       <view class="controls">
-        <picker class="datepicker"
-          mode="date"
-          value="{{formData.date}}"
-          start="{{formData.startDate}}"
-          end="{{formData.endDate}}"
-          bindchange="bindDateChange">
-          <view class="picker">
-            {{formData.date}}
-          </view>
-        </picker>
+        <view class="select">
+          <picker class="datepicker"
+            mode="date"
+            value="{{formData.date}}"
+            start="{{formData.startDate}}"
+            end="{{formData.endDate}}"
+            bindchange="bindDateChange">
+            <text>{{formData.date || '请选择'}}</text>
+            <image class="arrow-right"
+              src="../images/icon-arrow-right.png"></image>
+          </picker>
+        </view>
       </view>
     </label>
     <label class="control-group"
@@ -83,7 +85,9 @@
     </label>
     <label class="control-group vertical">
       <view class="control-label">
-        <text>游戏人数</text>
+        <text>预约人数
+          <text>{{bookingText}}</text>
+        </text>
         <text>{{formData.number}}人</text>
       </view>
       <view class="controls">
@@ -126,6 +130,7 @@
       placeData: null,
       maxNumber: null,
       minNumber: null,
+      bookingText: null,
       formData: {
         place: '',
         phone: '',
@@ -204,11 +209,11 @@
           meals: JSON.stringify(this.formData.meals),
           date: this.formData.date,
         }).then(d => {
-          wepy.showToast({
-            title: d.msg,
-            icon: 'success',
-            duration: 2000
-          });
+          // wepy.showToast({
+          //   title: d.msg,
+          //   icon: 'success',
+          //   duration: 2000
+          // });
 
           this.formData = {
             place: null,
@@ -219,12 +224,12 @@
 
           this.$apply();
 
-          setTimeout(function() {
-            wepy.reLaunch({
-              url: '/pages/home',
-            });
-            // wepy.navigateBack();
-          }, 2000);
+          // setTimeout(function() {
+          wepy.redirectTo({
+            url: `/pages/booking-detail?id=${d.result.bookingId}`,
+          });
+          // wepy.navigateBack();
+          // }, 2000);
         }).finally(() => {
           loading.hide();
         });
@@ -248,6 +253,7 @@
           this.placeData = result.placeList;
           this.maxNumber = result.maxNumber;
           this.minNumber = result.minNumber;
+          this.bookingText = result.bookingText;
           this.formData.number = result.minNumber;
           this.formData.meals = result.meals;
 

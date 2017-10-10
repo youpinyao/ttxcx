@@ -20,11 +20,12 @@
     <label class="control-group _9f13706">
       <view class="control-label _9f13706">预约时间</view>
       <view class="controls _9f13706">
-        <picker class="datepicker _9f13706" mode="date" value="{{formData.date}}" start="{{formData.startDate}}" end="{{formData.endDate}}" bindchange="bindDateChange">
-          <view class="picker _9f13706">
-            {{formData.date}}
-          </view>
-        </picker>
+        <view class="select _9f13706">
+          <picker class="datepicker _9f13706" mode="date" value="{{formData.date}}" start="{{formData.startDate}}" end="{{formData.endDate}}" bindchange="bindDateChange">
+            <text class="_9f13706">{{formData.date || '请选择'}}</text>
+            <image class="arrow-right _9f13706" src="../images/icon-arrow-right.png"/>
+          </picker>
+        </view>
       </view>
     </label>
     <label class="control-group _9f13706"  wx:if="{{hasMeal}}" bindtap="toMealList">
@@ -40,7 +41,9 @@
     </label>
     <label class="control-group vertical _9f13706">
       <view class="control-label _9f13706">
-        <text class="_9f13706">游戏人数</text>
+        <text class="_9f13706">预约人数
+          <text class="_9f13706">{{bookingText}}</text>
+        </text>
         <text class="_9f13706">{{formData.number}}人</text>
       </view>
       <view class="controls _9f13706">

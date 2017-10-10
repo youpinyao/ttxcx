@@ -1,0 +1,470 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  @import '../scss/_form.scss';
+  $modalBg: #161719;
+  .list {
+    font-size: 30rpx;
+    color: $grey;
+    line-height: 40rpx;
+    .fr {
+      float: right;
+    }
+    .discount {
+      font-size: 18rpx;
+      color: $orange;
+      border: 1rpx solid $orange;
+      line-height: 28rpx;
+      padding: 0 8rpx;
+      border-radius: 4px;
+    }
+    .title {
+      padding: 20rpx 0 10rpx 30rpx;
+    }
+    .content {
+      border-top: 2rpx solid $bordercolor;
+      border-bottom: 2rpx solid $bordercolor;
+      background-color: $blackBar;
+      margin-bottom: 20rpx;
+      &.last {
+        border-bottom: 0;
+        margin-bottom: 0;
+      }
+      .item {
+        border-bottom: 1rpx solid $bordercolor;
+        padding: 25rpx 0rpx 25rpx 0rpx;
+        @include clearfix();
+        &:last-child {
+          border-bottom: 0;
+        }
+        &.border0 {
+          border-bottom: 0;
+          position: relative;
+          top: 10rpx;
+        }
+        .orange {
+          color: $orange;
+        }
+        .symbol {
+          font-size: 24rpx;
+        }
+        .left,
+        .right {
+          width: 50%;
+          float: left;
+        }
+        .right {
+          text-align: right;
+          padding-right: 30rpx;
+        }
+        .left {
+          padding-left: 30rpx;
+        }
+      }
+      .submit-button {
+        margin-top: 40rpx;
+        margin-bottom: 60rpx;
+      }
+      .form-container {
+        padding: 0;
+        .control-group {
+          margin-bottom: 0;
+          border: 0;
+          min-height: 48rpx;
+          .control-label {
+            line-height: 40rpx;
+          }
+          .controls {
+            .select {
+              line-height: 40rpx;
+              .arrow-right {
+                margin-left: 10rpx;
+              }
+              .line2 {
+                padding-top: 15rpx;
+              }
+              &.pointernone {
+                pointer-events: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .code-text {
+    font-size: 53rpx;
+    text-align: center;
+    color: $orange;
+    padding: 80rpx 0 80rpx 0;
+    & + .submit-button {
+      margin-top: 10rpx !important;
+    }
+  }
+
+  .booking-tip-box {
+    @include center();
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($modalBg, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    @include transition();
+    &.show {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  .booking-tip {
+    width: 640rpx;
+    background-color: $modalBg;
+    border-radius: 10rpx;
+    border: 3rpx solid $orange;
+    @include center();
+    z-index: 1;
+    text-align: center;
+    top: 250rpx;
+    bottom: auto;
+    padding-bottom: 70rpx;
+    &.center {
+      top: 0;
+      bottom: 0;
+      height: 860rpx;
+    }
+    .tip {
+      width: 440rpx;
+      height: 540rpx;
+      margin-top: 60rpx;
+    }
+    .close {
+      position: absolute;
+      width: 50rpx;
+      height: 50rpx;
+      top: -14rpx;
+      right: -14rpx;
+    }
+    .submit-button {
+      margin-top: 40rpx;
+    }
+    .refund-tip-image {
+      width: 440rpx;
+      height: 550rpx;
+    }
+    .quit {
+      font-size: 20rpx;
+      color: $grey;
+      text-align: center;
+      margin: 20rpx 0;
+      text-decoration: underline;
+      line-height: 20rpx;
+    }
+    .text {
+      font-size: 34rpx;
+      line-height: 50rpx;
+      color: $white;
+      padding: 90rpx 40rpx 50rpx 40rpx;
+      text-align: left;
+      text-indent: 2em;
+    }
+    .buttons {
+      .submit-button {
+        width: 250rpx;
+        margin: 0 15rpx;
+        display: inline-block;
+        &.black {
+          border: 4rpx solid $orange;
+          color: $orange;
+          background-color: $modalBg;
+          line-height: 72rpx;
+        }
+      }
+    }
+  }
+
+</style>
+<template lang="wxml">
+  <view class="list">
+    <view class="title">订单详情</view>
+    <view class="content">
+      <view class="item">
+        <view class="left">{{detail.bookingName}}</view>
+        <view class="right">
+          <text class="orange">
+            <text class="symbol">￥</text>{{detail.bookingPrice}}</text>
+        </view>
+      </view>
+      <view class="item">
+        <view class="left">数量</view>
+        <view class="right">
+          <text>
+            <text class="symbol">x</text> {{detail.bookingCount}}</text>
+        </view>
+      </view>
+      <view class="item">
+        <view class="left">游戏地点</view>
+        <view class="right">{{detail.place}}</view>
+      </view>
+
+      <view class="item">
+        <view class="left">预约时间</view>
+        <view class="right">{{detail.date}}</view>
+      </view>
+
+    </view>
+
+    <view class="content"
+      wx:for="{{detail.meals}}"
+      wx:key="index">
+      <view class="item">
+        <view class="left">{{item.name}}</view>
+        <view class="right">
+          <text class="orange">
+            <text class="symbol">￥</text>{{item.price}}</text>
+        </view>
+      </view>
+      <view class="item">
+        <view class="left">数量</view>
+        <view class="right">
+          <text>
+            <text class="symbol">x</text> {{item.count}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="content">
+      <view class="item">
+        <view class="left">联系电话</view>
+        <view class="right">{{detail.phone}}</view>
+      </view>
+    </view>
+
+    <view class="content">
+      <view class="form-container">
+        <label class="control-group">
+          <view class="control-label">付款方式</view>
+          <view class="controls">
+            <view class="select {{detail.statusText !== '未支付' ? 'pointernone': ''}}">
+              <picker bindchange="setPayWay"
+                value="{{selectedPayWayIndex}}"
+                range-key="name"
+                range="{{detail.payWays}}">
+
+                <view wx:if="{{detail.statusText === '未支付'}}"
+                  class="fr {{selectedPayWay.discount ? 'line2' : ''}}">
+                  <image class="arrow-right"
+                    src="../images/icon-arrow-right.png"></image>
+                </view>
+                <view class="fr">
+                  <text>{{selectedPayWay.name || '请选择'}}</text>
+                  <view class="discount"
+                    wx:if="{{selectedPayWay.discount}}">{{selectedPayWay.discount}}</view>
+                </view>
+              </picker>
+            </view>
+          </view>
+        </label>
+      </view>
+    </view>
+
+    <view class="content last"
+      hidden="{{detail.selectedPayWay && detail.selectedPayWay.type === 'OFFLINE'}}">
+
+      <view class="item border0"
+        wx:if="{{selectedPayWay.type === 'ONLINE'}}">
+        <view class="left">在线支付折后</view>
+        <view class="right">{{detail.statusText === '未支付' ? '应付' : '已支付'}}:
+          <text class="orange">
+            <text class="symbol">￥</text>{{detail.totalPrice}}</text>
+        </view>
+      </view>
+
+      <view class="code-text"
+        wx:if="{{detail.statusText === '已支付'}}">
+        验证码：{{detail.code}}
+      </view>
+
+      <view class="code-text"
+        wx:if="{{detail.statusText === '申请退款' || detail.statusText === '退款中' || detail.statusText === '退款完成'}}">
+        {{detail.statusText}}
+      </view>
+
+      <view class="submit-button"
+        wx:if="{{detail.statusText === '未支付'}}"
+        @tap="doSubmit">{{selectedPayWay.type == 'ONLINE' ? '立即付款' : '提交订单'}}</view>
+
+      <view class="submit-button"
+        wx:if="{{detail.statusText === '已支付'}}"
+        @tap="showRefund">申请退款</view>
+    </view>
+  </view>
+
+  <!-- 线下支付提示 -->
+  <view class="booking-tip-box {{isHidePayTip ? '' : 'show'}}">
+    <view class="booking-tip">
+      <view class="text">选择线下付款系统将只做预约，无法享受折扣价哦~建议您选择在线支付进行预约。</view>
+      <image class="close"
+        @tap="hidePayTip"
+        src="../images/question-close.png"></image>
+      <view class="submit-button small"
+        @tap="hidePayTip">知道了</view>
+    </view>
+  </view>
+  <!-- 退款提示 -->
+  <view class="booking-tip-box {{isHideRefundTip ? '' : 'show'}}">
+    <view class="booking-tip center">
+      <view class="text">
+        <image class="refund-tip-image"
+          src="../images/refund-tip.png"></image>
+      </view>
+      <image class="close"
+        @tap="hideRefundTip"
+        src="../images/question-close.png"></image>
+      <view class="buttons">
+
+        <view class="submit-button small"
+          @tap="hideRefundTip">我点错了</view>
+
+        <view class="submit-button small black"
+          @tap="doRefund">继续退款</view>
+      </view>
+    </view>
+  </view>
+  <toast/>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import request from '../services/request.js';
+  import loading from '../services/loading.js';
+  import urls from '../services/urls.js';
+  import pay from '../services/pay.js';
+  import defer from '../services/defer.js';
+  import Toast from 'wepy-com-toast'
+
+  // 未支付，已支付，申请退款，退款中，退款完成，完成预约
+
+  export default class BookingDetail extends wepy.page {
+    config = {
+      navigationBarTitleText: '',
+    }
+
+    components = {
+      toast: Toast
+    }
+
+    data = {
+      id: '',
+      type: '',
+      selectedPayWay: null,
+      selectedPayWayIndex: null,
+      detail: null,
+      isHidePayTip: true,
+      isHideRefundTip: true,
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      hidePayTip: () => {
+        this.isHidePayTip = true;
+      },
+      hideRefundTip: () => {
+        this.isHideRefundTip = true;
+      },
+      setPayWay: (e) => {
+        this.selectedPayWayIndex = parseInt(e.detail.value, 10);
+        this.selectedPayWay = this.detail.payWays[this.selectedPayWayIndex];
+
+        if (this.selectedPayWay.type === 'OFFLINE') {
+          this.isHidePayTip = false;
+        }
+      },
+      doSubmit: () => {
+        request.post(urls.bookingPay, {
+          bookingId: this.id,
+          payWay: this.selectedPayWay.type,
+        }).then(data => {
+          if (this.selectedPayWay.type !== 'ONLINE') {
+            const deferred = defer();
+            setTimeout(function() {
+              deferred.resolve();
+            }, 50);
+            return deferred.promise;
+          } else {
+            return pay.doPay(data.result);
+          }
+        }).then(data => {
+          // 支付成功
+          wepy.redirectTo({
+            url: `/pages/booking-pay-success?id=${this.id}`,
+          })
+        }, data => {
+          this.$invoke('toast', 'show', {
+            title: JSON.stringify(data),
+          });
+        });
+      },
+      doRefund: () => {
+        request.post(urls.bookingRefund, {
+          bookingId: this.id,
+        }).then(data => {
+          wepy.redirectTo({
+            url: `/pages/booking-refund-success?id=${this.id}`,
+          })
+        });
+      },
+      showRefund: () => {
+        this.isHideRefundTip = false;
+      },
+      loadData: () => {
+        loading.show();
+        request.get(urls.bookingDetail, {
+          bookingId: this.id,
+        }).then(data => {
+          this.detail = data.result;
+
+          this.detail.payWays.forEach((v, i) => {
+            if (this.detail.selectedPayWay && v.type === this.detail.selectedPayWay.type) {
+              this.selectedPayWayIndex = i;
+            }
+          });
+
+          if (this.selectedPayWayIndex === null) {
+            this.selectedPayWayIndex = 0;
+          }
+
+          this.selectedPayWay = this.detail.payWays[this.selectedPayWayIndex];
+
+          this.$apply();
+        }).finally(() => {
+          loading.hide();
+        });
+      },
+    }
+
+    events = {
+
+    }
+
+    onShow() {
+      this.methods.loadData();
+    }
+
+    onLoad(option) {
+      console.log('booking detail on load');
+
+      wepy.setNavigationBarTitle({
+        title: option.type === 'settle' ? '确定订单' : '预约记录'
+      });
+
+      this.type = option.type;
+      this.id = option.id;
+    }
+  }
+
+</script>

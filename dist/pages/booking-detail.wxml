@@ -1,0 +1,137 @@
+
+  <view class="list _55396f6">
+    <view class="title _55396f6">订单详情</view>
+    <view class="content _55396f6">
+      <view class="item _55396f6">
+        <view class="left _55396f6">{{detail.bookingName}}</view>
+        <view class="right _55396f6">
+          <text class="orange _55396f6">
+            <text class="symbol _55396f6">￥</text>{{detail.bookingPrice}}</text>
+        </view>
+      </view>
+      <view class="item _55396f6">
+        <view class="left _55396f6">数量</view>
+        <view class="right _55396f6">
+          <text class="_55396f6">
+            <text class="symbol _55396f6">x</text> {{detail.bookingCount}}</text>
+        </view>
+      </view>
+      <view class="item _55396f6">
+        <view class="left _55396f6">游戏地点</view>
+        <view class="right _55396f6">{{detail.place}}</view>
+      </view>
+
+      <view class="item _55396f6">
+        <view class="left _55396f6">预约时间</view>
+        <view class="right _55396f6">{{detail.date}}</view>
+      </view>
+
+    </view>
+
+    <view class="content _55396f6"  wx:for="{{detail.meals}}" wx:key="index">
+      <view class="item _55396f6">
+        <view class="left _55396f6">{{item.name}}</view>
+        <view class="right _55396f6">
+          <text class="orange _55396f6">
+            <text class="symbol _55396f6">￥</text>{{item.price}}</text>
+        </view>
+      </view>
+      <view class="item _55396f6">
+        <view class="left _55396f6">数量</view>
+        <view class="right _55396f6">
+          <text class="_55396f6">
+            <text class="symbol _55396f6">x</text> {{item.count}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="content _55396f6">
+      <view class="item _55396f6">
+        <view class="left _55396f6">联系电话</view>
+        <view class="right _55396f6">{{detail.phone}}</view>
+      </view>
+    </view>
+
+    <view class="content _55396f6">
+      <view class="form-container _55396f6">
+        <label class="control-group _55396f6">
+          <view class="control-label _55396f6">付款方式</view>
+          <view class="controls _55396f6">
+            <view class="select {{detail.statusText !== '未支付' ? 'pointernone': ''}} _55396f6">
+              <picker bindchange="setPayWay" value="{{selectedPayWayIndex}}" range-key="name" range="{{detail.payWays}}" class="_55396f6">
+
+                <view  wx:if="{{detail.statusText === '未支付'}}" class="fr {{selectedPayWay.discount ? 'line2' : ''}} _55396f6">
+                  <image class="arrow-right _55396f6" src="../images/icon-arrow-right.png"/>
+                </view>
+                <view class="fr _55396f6">
+                  <text class="_55396f6">{{selectedPayWay.name || '请选择'}}</text>
+                  <view class="discount _55396f6"  wx:if="{{selectedPayWay.discount}}">{{selectedPayWay.discount}}</view>
+                </view>
+              </picker>
+            </view>
+          </view>
+        </label>
+      </view>
+    </view>
+
+    <view class="content last _55396f6" hidden="{{detail.selectedPayWay && detail.selectedPayWay.type === 'OFFLINE'}}">
+
+      <view class="item border0 _55396f6" wx:if="{{selectedPayWay.type === 'ONLINE'}}">
+        <view class="left _55396f6">在线支付折后</view>
+        <view class="right _55396f6">{{detail.statusText === '未支付' ? '应付' : '已支付'}}:
+          <text class="orange _55396f6">
+            <text class="symbol _55396f6">￥</text>{{detail.totalPrice}}</text>
+        </view>
+      </view>
+
+      <view class="code-text _55396f6" wx:if="{{detail.statusText === '已支付'}}">
+        验证码：{{detail.code}}
+      </view>
+
+      <view class="code-text _55396f6" wx:if="{{detail.statusText === '申请退款' || detail.statusText === '退款中' || detail.statusText === '退款完成'}}">
+        {{detail.statusText}}
+      </view>
+
+      <view class="submit-button _55396f6" wx:if="{{detail.statusText === '未支付'}}" bindtap="doSubmit">{{selectedPayWay.type == 'ONLINE' ? '立即付款' : '提交订单'}}</view>
+
+      <view class="submit-button _55396f6" wx:if="{{detail.statusText === '已支付'}}" bindtap="showRefund">申请退款</view>
+    </view>
+  </view>
+
+  <!-- 线下支付提示 -->
+  <view class="booking-tip-box {{isHidePayTip ? '' : 'show'}} _55396f6">
+    <view class="booking-tip _55396f6">
+      <view class="text _55396f6">选择线下付款系统将只做预约，无法享受折扣价哦~建议您选择在线支付进行预约。</view>
+      <image class="close _55396f6" bindtap="hidePayTip" src="../images/question-close.png"/>
+      <view class="submit-button small _55396f6" bindtap="hidePayTip">知道了</view>
+    </view>
+  </view>
+  <!-- 退款提示 -->
+  <view class="booking-tip-box {{isHideRefundTip ? '' : 'show'}} _55396f6">
+    <view class="booking-tip center _55396f6">
+      <view class="text _55396f6">
+        <image class="refund-tip-image _55396f6" src="../images/refund-tip.png"/>
+      </view>
+      <image class="close _55396f6" bindtap="hideRefundTip" src="../images/question-close.png"/>
+      <view class="buttons _55396f6">
+
+        <view class="submit-button small _55396f6" bindtap="hideRefundTip">我点错了</view>
+
+        <view class="submit-button small black _55396f6" bindtap="doRefund">继续退款</view>
+      </view>
+    </view>
+  </view>
+  
+    <view class="wetoast {{$toast$reveal ? 'wetoast_show' : ''}} _55396f6">
+        <view class="wetoast__mask"/>
+        <view class="wetoast__bd" animation="{{$toast$animationData}}">
+            <block  wx:if="{{$toast$img}}">
+                <view class="wetoast__bd__img {{$toast$imgClassName || ''}}">
+                    <image class="wetoast__bd__img_desc" src="{{$toast$img}}" mode="{{$toast$imgMode || 'scaleToFill'}}"/>
+                </view>
+            </block>
+            <block  wx:if="{{$toast$title}}">
+                <view class="wetoast__bd__title {{$toast$titleClassName || ''}}">{{$toast$title}}</view>
+            </block>
+        </view>
+    </view>

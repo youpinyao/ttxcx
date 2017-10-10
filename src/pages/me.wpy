@@ -109,7 +109,7 @@
           line-height: 110rpx;
         }
         &:nth-child(4) {
-          width: 330rpx;
+          width: 265rpx;
           view:nth-child(1) {
             padding-top: 20rpx;
           }
@@ -122,15 +122,21 @@
           }
         }
         &:nth-child(5) {
-          width: 95rpx;
+          width: 160rpx;
           line-height: 110rpx;
           color: $grey;
+          text-align: right;
           .arrow {
             width: 20rpx;
             height: 40rpx;
             vertical-align: middle;
             position: relative;
             top: -1px;
+            margin-right: 20rpx;
+            margin-left: 10rpx;
+          }
+          text {
+            font-size: 24rpx;
           }
         }
         &:nth-child(6) {
@@ -201,6 +207,7 @@
     <view wx:if="{{bookingData.length > 0}}"
       class="me-list">
       <view wx:for="{{bookingData}}"
+        @tap="toBooking({{item.id}})"
         class="me-item {{item.completed ? 'completed': ''}}"
         wx:key="index">
         <view class="item-item">
@@ -215,8 +222,13 @@
           <view>{{item.city}}</view>
           <view>{{item.address}}</view>
         </view>
-        <view class="item-item">
+        <!-- <view class="item-item">
           {{item.number}}人
+        </view> -->
+        <view class="item-item">
+          <text>{{item.statusText}}</text>
+          <image class="arrow"
+            src="../images/icon-arrow-right.png"></image>
         </view>
         <view class="item-item">
           <image src="../images/me-item-split-2.jpg"></image>
@@ -294,6 +306,12 @@
     }
 
     methods = {
+      toBooking: (bookingId) => {
+        console.log('to booking page', bookingId);
+        wepy.navigateTo({
+          url: `/pages/booking-detail?id=${bookingId}&type=detail`
+        })
+      },
       toChallenge: (challengeId) => {
         console.log('to challenge page', challengeId);
         wepy.navigateTo({

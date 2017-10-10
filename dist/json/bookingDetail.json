@@ -1,0 +1,36 @@
+{
+  "success": true,
+  "result": {
+    "code": "2377",
+    "bookingName": "塔拓户外活动入场券",
+    "bookingPrice": "25.3",
+    "bookingCount": 3,
+    "place": "成都万达",
+    "date": "2017-08-09",
+    "meals": [{
+      "name": "超级无敌豪华宇宙至尊白手套1只",
+      "price": "25.3",
+      "count": 2
+    }, {
+      "name": "超级无敌豪华宇宙至尊白手套1只",
+      "price": "25.3",
+      "count": 2
+    }],
+    "phone": "1572294578",
+    "payWays": [{
+      "name": "在线支付",
+      "type": "ONLINE",
+      "discount": "支付享7折优惠"
+    }, {
+      "name": "线下付款",
+      "type": "OFFLINE"
+    }],
+    "selectedPayWay": {
+      "name": "在线支付",
+      "type": "ONLINE",
+      "discount": "支付享7折优惠"
+    },
+    "statusText": "未支付",
+    "totalPrice": "180.0"
+  }
+}

@@ -1,0 +1,13 @@
+
+  <view class="_90b490e">
+    <view class="icon _90b490e">
+      <image src="../images/pay-success-icon.png" class="_90b490e"/>
+      <view class="text _90b490e">付款成功</view>
+    </view>
+    <view class="t1 _90b490e"  wx:if="{{detail.selectedPayWay.type === 'ONLINE'}}">入场验证码</view>
+    <view class="t2 _90b490e"  wx:if="{{detail.selectedPayWay.type === 'ONLINE'}}">{{detail.code}}</view>
+    <view class="t3 _90b490e"  wx:if="{{detail.selectedPayWay.type === 'ONLINE'}}">恭喜您！付款成功，您可凭借此验证码至预约的塔拓游乐场进行游戏。祝您游戏愉快！</view>
+    <view class="t3 _90b490e" wx:if="{{detail.selectedPayWay.type !== 'ONLINE'}}">恭喜您！预约成功。您可直接到塔拓游乐场向工作人员展示手机号购票入场。祝您游戏愉快！</view>
+    <view class="submit-button _90b490e" bindtap="toMe">我的预约</view>
+    <view class="home _90b490e" bindtap="toHome">返回首页</view>
+  </view>

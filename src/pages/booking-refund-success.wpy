@@ -1,0 +1,101 @@
+<style lang="scss"
+  scoped>
+  @import '../scss/_theme.scss';
+  @import '../scss/_form.scss';
+
+  .icon {
+    text-align: center;
+    padding: 100rpx 0 120rpx 0;
+    image {
+      width: 180rpx;
+      height: 180rpx;
+    }
+    .text {
+      font-size: 34rpx;
+      margin: 10rpx 0;
+      color: $orange;
+    }
+  }
+  .t1 {
+    font-size: 28rpx;
+    text-align: center;
+    color: $grey;
+  }
+  .t2 {
+    font-size: 70rpx;
+    color: $orange;
+    text-align: center;
+    padding: 30rpx 0 20rpx 0;
+  }
+  .t3 {
+    padding: 0 80rpx 0 80rpx;
+    font-size: 24rpx;
+    line-height: 36rpx;
+    text-indent: 2em;
+    color: $grey;
+    padding-bottom: 120rpx;
+  }
+  .home {
+    font-size: 24rpx;
+    color: $c6;
+    text-decoration: underline;
+    margin: 40rpx 0;
+    text-align: center;
+  }
+
+</style>
+<template lang="wxml">
+  <view>
+    <view class="icon">
+      <image src="../images/pay-success-icon.png"></image>
+      <view class="text">申请退款成功</view>
+    </view>
+    <view class="t3">申请退款成功，款项将于24小时内退回原支付账号，请耐心等待。</view>
+    <view class="submit-button"
+      @tap="toHome">返回首页</view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+
+  export default class BookingPaySuccess extends wepy.page {
+    config = {
+      navigationBarTitleText: '结果',
+    }
+
+    components = {
+
+    }
+
+    data = {
+      detail: null,
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      toHome: () => {
+        wepy.reLaunch({
+          url: '/pages/home',
+        });
+      },
+    }
+
+    events = {
+
+    }
+
+    onShow() {
+
+    }
+
+    onLoad(option) {
+      console.log('booking refund success on load');
+      this.id = option.id;
+    }
+  }
+
+</script>

@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "result": {
+    "timeStamp": "",
+    "nonceStr": "",
+    "package": "",
+    "signType": "",
+    "paySign": ""
+  }
+}

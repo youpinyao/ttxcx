@@ -24,7 +24,7 @@
     </view>
   </view>
     <view  wx:if="{{bookingData.length > 0}}" class="me-list _8bc7d50">
-      <view wx:for="{{bookingData}}" class="me-item {{item.completed ? 'completed': ''}} _8bc7d50" wx:key="index">
+      <view wx:for="{{bookingData}}" bindtap="toBooking" class="me-item {{item.completed ? 'completed': ''}} _8bc7d50" wx:key="index" data-wepy-params-a="{{item.id}}">
         <view class="item-item _8bc7d50">
           <view class="_8bc7d50">{{item.date2}}</view>
           <view class="_8bc7d50">{{item.date1}}</view>
@@ -37,8 +37,12 @@
           <view class="_8bc7d50">{{item.city}}</view>
           <view class="_8bc7d50">{{item.address}}</view>
         </view>
-        <view class="item-item _8bc7d50">
+        <!-- <view class="item-item">
           {{item.number}}人
+        </view> -->
+        <view class="item-item _8bc7d50">
+          <text class="_8bc7d50">{{item.statusText}}</text>
+          <image class="arrow _8bc7d50" src="../images/icon-arrow-right.png"/>
         </view>
         <view class="item-item _8bc7d50">
           <image src="../images/me-item-split-2.jpg" class="_8bc7d50"/>
