@@ -41,9 +41,10 @@
     </label>
     <label class="control-group vertical _9f13706">
       <view class="control-label _9f13706">
-        <text class="_9f13706">预约人数
+        <view class="inline _9f13706">
+          <text class="_9f13706">预约人数</text>
           <text class="_9f13706">{{bookingText}}</text>
-        </text>
+        </view>
         <text class="_9f13706">{{formData.number}}人</text>
       </view>
       <view class="controls _9f13706">

@@ -18,16 +18,17 @@
       .control-label {
         line-height: normal;
         padding: 10rpx 0;
+        .inline {
+          display: inline;
+        }
         text:last-child {
           float: right;
           color: $white;
         }
-        text:first-child {
-          float: none;
-        }
-        text:first-child {
-          text {
+        .inline {
+          text:last-child {
             color: $orange;
+            float: none;
           }
         }
       }
