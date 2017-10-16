@@ -44,7 +44,10 @@ const urls = {
   questionList: 'app/main/queryQuestion.do',
   questionUpload: 'app/main/questionUpload.do',
   picturesData: 'app/main/picturesData.do',
-  picturesDataOfMy: 'app/main/picturesDataOfMy.do'
+  picturesDataOfMy: 'app/main/picturesDataOfMy.do',
+  bookingDetail: 'app/main/bookingDetail.do',
+  bookingPay: 'app/main/submitOrder.do',
+  bookingRefund: 'app/main/requestRefund.do'
 };
 
 function convert(urls) {
