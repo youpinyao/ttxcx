@@ -207,7 +207,12 @@
           place: this.placeData[this.formData.place].id,
           phone: this.formData.phone,
           number: this.formData.number,
-          meals: JSON.stringify(this.formData.meals),
+          meals: JSON.stringify(this.formData.meals.filter(meal => meal.amount > 0).map(meal => {
+            return {
+              id: meal.id,
+              amount: meal.amount,
+            };
+          })),
           date: this.formData.date,
         }).then(d => {
           // wepy.showToast({
