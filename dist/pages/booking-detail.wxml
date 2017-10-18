@@ -74,6 +74,8 @@
       </view>
     </view>
 
+    <view class="space {{detail.statusText === '已支付' ? 's470' : ( detail.statusText === '未支付' ? 's300' : 's292')}} _55396f6"/>
+
     <view class="content last _55396f6" hidden="{{detail.selectedPayWay && detail.selectedPayWay.type === 'OFFLINE'}}">
 
       <view class="item border0 _55396f6" wx:if="{{selectedPayWay.type === 'ONLINE'}}">
@@ -82,6 +84,10 @@
           <text class="orange _55396f6">
             <text class="symbol _55396f6">￥</text>{{detail.totalPrice}}</text>
         </view>
+      </view>
+
+      <view class="code-text _55396f6" wx:if="{{detail.statusText === '完成预约'}}">
+        已完成
       </view>
 
       <view class="code-text _55396f6" wx:if="{{detail.statusText === '已支付'}}">
@@ -99,7 +105,7 @@
   </view>
 
   <!-- 线下支付提示 -->
-  <view class="booking-tip-box {{isHidePayTip ? '' : 'show'}} _55396f6">
+  <view  wx:if="{{isLoaded}}" class="booking-tip-box {{isHidePayTip ? '' : 'show'}} _55396f6">
     <view class="booking-tip _55396f6">
       <view class="text _55396f6">选择线下付款系统将只做预约，无法享受折扣价哦~建议您选择在线支付进行预约。</view>
       <image class="close _55396f6" bindtap="hidePayTip" src="../images/question-close.png"/>
@@ -107,7 +113,7 @@
     </view>
   </view>
   <!-- 退款提示 -->
-  <view class="booking-tip-box {{isHideRefundTip ? '' : 'show'}} _55396f6">
+  <view  wx:if="{{isLoaded}}" class="booking-tip-box {{isHideRefundTip ? '' : 'show'}} _55396f6">
     <view class="booking-tip center _55396f6">
       <view class="text _55396f6">
         <image class="refund-tip-image _55396f6" src="../images/refund-tip.png"/>

@@ -29,6 +29,10 @@
       &.last {
         border-bottom: 0;
         margin-bottom: 0;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
       }
       .item {
         border-bottom: 1rpx solid $bordercolor;
@@ -184,6 +188,16 @@
     }
   }
 
+  .space {
+    height: 470rpx;
+    &.s292 {
+      height: 292rpx;
+    }
+    &.s300 {
+      height: 302rpx;
+    }
+  }
+
 </style>
 <template lang="wxml">
   <view class="list">
@@ -269,6 +283,8 @@
       </view>
     </view>
 
+    <view class="space {{detail.statusText === '已支付' ? 's470' : ( detail.statusText === '未支付' ? 's300' : 's292')}}"></view>
+
     <view class="content last"
       hidden="{{detail.selectedPayWay && detail.selectedPayWay.type === 'OFFLINE'}}">
 
@@ -279,6 +295,11 @@
           <text class="orange">
             <text class="symbol">￥</text>{{detail.totalPrice}}</text>
         </view>
+      </view>
+
+      <view class="code-text"
+        wx:if="{{detail.statusText === '完成预约'}}">
+        已完成
       </view>
 
       <view class="code-text"
@@ -302,7 +323,7 @@
   </view>
 
   <!-- 线下支付提示 -->
-  <view class="booking-tip-box {{isHidePayTip ? '' : 'show'}}">
+  <view wx:if="{{isLoaded}}" class="booking-tip-box {{isHidePayTip ? '' : 'show'}}">
     <view class="booking-tip">
       <view class="text">选择线下付款系统将只做预约，无法享受折扣价哦~建议您选择在线支付进行预约。</view>
       <image class="close"
@@ -313,7 +334,7 @@
     </view>
   </view>
   <!-- 退款提示 -->
-  <view class="booking-tip-box {{isHideRefundTip ? '' : 'show'}}">
+  <view wx:if="{{isLoaded}}" class="booking-tip-box {{isHideRefundTip ? '' : 'show'}}">
     <view class="booking-tip center">
       <view class="text">
         <image class="refund-tip-image"
@@ -363,6 +384,7 @@
       detail: null,
       isHidePayTip: true,
       isHideRefundTip: true,
+      isLoaded: false,
     }
 
     computed = {
@@ -457,6 +479,8 @@
 
     onLoad(option) {
       console.log('booking detail on load');
+
+      this.isLoaded = true;
 
       wepy.setNavigationBarTitle({
         title: option.type === 'settle' ? '确定订单' : '预约记录'
