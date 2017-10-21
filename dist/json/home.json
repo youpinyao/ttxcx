@@ -2,10 +2,6 @@
   "success": true,
   "result": {
     "challengeId": "12312312",
-    "bestScore": {
-      "date": "2017-08-10",
-      "score": 650000
-    },
     "joinTime": 2
   }
 }
