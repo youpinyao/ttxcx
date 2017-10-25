@@ -25,6 +25,7 @@ const path = 'https://ttgame-liunx.zhanzhibin.com/';
 //   bookingDetail: 'json/bookingDetail.json',
 //   bookingPay: 'json/bookingPay.json',
 //   bookingRefund: 'json/bookingRefund.json',
+//   setProtocolReaded: 'json/setProtocolReaded.json',
 // }
 
 const urls = {

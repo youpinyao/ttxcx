@@ -12,9 +12,7 @@
       </view>
     </view>
   </view>
-
   <view class="space {{homeData.challengeId ? '' : 'no-has-challenge'}} _3962cc2"/>
-
   <view class="best-score _3962cc2"  wx:if="{{homeData.bestScore}}">
     <view class="_3962cc2">
       <view class="title _3962cc2">
@@ -39,7 +37,6 @@
       </view>
     </view>
   </view>
-
   <view class="user-info _3962cc2">
     <view class="_3962cc2">
       <view class="flex _3962cc2">
@@ -54,7 +51,6 @@
       </view>
     </view>
   </view>
-
   <view class="info-item _3962cc2">
     <view class="info-item-title _3962cc2">马上预约</view>
     <view class="info-item-desc _3962cc2">预约一步走，不用等待，合理安排您的塔拓时间。</view>
@@ -69,12 +65,33 @@
       <view class="button-text _3962cc2" bindtap="toQrcode">前往绑定手环 ></view>
     </view>
   </view>
-
   <view class="confirm-mask {{showConfirmMask ? 'show' : ''}} _3962cc2">
     <image src="../images/game-bg.jpg" mode="aspectFill" class="_3962cc2"/>
     <view class="mask-content _3962cc2">
       <view class="text _3962cc2">你确认要开始该挑战吗？</view>
       <view class="button orange _3962cc2" bindtap="confirmOk">确认</view>
       <view class="button grey _3962cc2" bindtap="confirmCancel">取消</view>
+      <view class="protocol _3962cc2" bindtap="toggleProtocolCheckbox">
+        
+  <view class="checkbox _2d5b56a _3962cc2" bindtap="$checkbox$toggleCheck">
+    <image  wx:if="{{$checkbox$isLoaded}}" hidden="{{$checkbox$checked}}" src="../images/checkbox-uncheck.png" class="_2d5b56a"/>
+    <image  wx:if="{{$checkbox$isLoaded}}" hidden="{{!$checkbox$checked}}" src="../images/checkbox-checked.png" class="_2d5b56a"/>
+  </view>
+        我已阅读并同意《<text catchtap="toProtocol" class="_3962cc2">塔拓安全协议书</text>》
+      </view>
     </view>
   </view>
+  
+    <view class="wetoast {{$toast$reveal ? 'wetoast_show' : ''}} _3962cc2">
+        <view class="wetoast__mask"/>
+        <view class="wetoast__bd" animation="{{$toast$animationData}}">
+            <block  wx:if="{{$toast$img}}">
+                <view class="wetoast__bd__img {{$toast$imgClassName || ''}}">
+                    <image class="wetoast__bd__img_desc" src="{{$toast$img}}" mode="{{$toast$imgMode || 'scaleToFill'}}"/>
+                </view>
+            </block>
+            <block  wx:if="{{$toast$title}}">
+                <view class="wetoast__bd__title {{$toast$titleClassName || ''}}">{{$toast$title}}</view>
+            </block>
+        </view>
+    </view>

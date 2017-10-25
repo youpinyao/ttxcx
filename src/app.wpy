@@ -25,6 +25,7 @@
     config = {
       pages: [
         'pages/home',
+        'pages/protocol',
         'pages/booking-detail',
         'pages/booking-refund-success',
         'pages/booking-pay-success',

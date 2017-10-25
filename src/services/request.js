@@ -282,11 +282,11 @@ function doLogin() {
           console.log('微信登录成功')
           global.userId = res.data.result.userId;
           global.appToken = res.data.result.sessionId;
+          global.protocolIsReaded = res.data.result.protocolIsReaded;
 
           deferred.resolve({
             success: true,
-            userInfo: global.userInfo,
-            userId: global.userId
+            ...global,
           })
         } else {
           wepy.showModal({
@@ -344,16 +344,14 @@ function getUserInfo() {
   if (global.userInfo && global.userId) {
     setTimeout(() => {
       deferred.resolve({
-        userInfo: global.userInfo,
-        userId: global.userId,
+        ...global,
       })
     });
   } else {
     doLogin().then(data => {
       if (data.success) {
         deferred.resolve({
-          userInfo: data.userInfo,
-          userId: data.userId,
+          ...data
         })
       } else {
         // TODO 失败现在没有回调

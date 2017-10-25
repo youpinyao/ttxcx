@@ -1,7 +1,8 @@
 {
 	"result": {
 		"userId": "123123123",
-		"sessionId": "12312312312"
+    "sessionId": "12312312312",
+    "protocolIsReaded": false
 	},
 	"success": true,
 	"msg": "登录成功"

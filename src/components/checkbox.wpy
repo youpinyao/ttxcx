@@ -1,0 +1,41 @@
+<style lang="scss" scoped>
+  .checkbox {
+    display: inline-block;
+    vertical-align: middle;
+    image {
+      width: 28rpx;
+      height: 28rpx;
+    }
+  }
+</style>
+
+<template>
+  <view class="checkbox" @tap="toggleCheck">
+    <image wx:if="{{isLoaded}}" hidden="{{checked}}" src="../images/checkbox-uncheck.png"></image>
+    <image wx:if="{{isLoaded}}" hidden="{{!checked}}" src="../images/checkbox-checked.png"></image>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class CheckBox extends wepy.component {
+    props = {
+      checked: {
+        type: Boolean,
+        default: false,
+        twoWay: true
+      },
+    };
+    data = {
+      isLoaded: false,
+    };
+    methods = {
+      toggleCheck: () => {
+        this.checked = !this.checked;
+      },
+    };
+    onLoad() {
+      this.isLoaded = true;
+    };
+  }
+</script>

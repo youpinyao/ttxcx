@@ -1,5 +1,4 @@
-<style lang="scss"
-  scoped>
+<style lang="scss" scoped>
   @import '../scss/_theme.scss';
   $bordercolor: #474848;
   .fixed {
@@ -43,7 +42,6 @@
       }
     }
   }
-
   .ing {
     background-color: $blackBar;
     line-height: 73rpx;
@@ -55,20 +53,18 @@
       color: $orange;
     }
   }
-
   .space {
     height: 74rpx;
     &.no-has-challenge {
       height: 50rpx;
     }
   }
-
   .best-score {
     color: $orange;
     text-align: center;
     padding: 40rpx 0 40rpx 0;
     margin: 0 auto;
-    > view {
+    >view {
       position: relative;
       display: inline-block;
       min-width: 400rpx;
@@ -119,10 +115,9 @@
       }
     }
   }
-
   .user-info {
     padding: 40rpx 30rpx 50rpx 30rpx;
-    > view {
+    >view {
       display: flex;
     }
     view.flex {
@@ -163,7 +158,6 @@
       }
     }
   }
-
   .info-item {
     margin: 0 26rpx 30rpx 26rpx;
     border: 1px solid rgba($orange, 0.2);
@@ -207,7 +201,6 @@
       }
     }
   }
-
   .confirm-mask {
     opacity: 0;
     visibility: hidden;
@@ -232,7 +225,7 @@
     .mask-content {
       position: absolute;
       z-index: 1;
-      height: 300rpx;
+      height: 380rpx;
       width: 100%;
       text-align: center;
       top: 0;
@@ -244,7 +237,19 @@
         color: $white;
         margin-bottom: 80rpx;
       }
+      .protocol {
+        font-size: 22rpx;
+        color: white;
+        .checkbox {
+          margin-right: 4rpx;
+          pointer-events: none;
+        }
+        text {
+          color: $orange;
+        }
+      }
       .button {
+        font-size: 36rpx;
         margin: 0 auto;
         margin-bottom: 30rpx;
         width: 660rpx;
@@ -265,31 +270,24 @@
       }
     }
   }
-
 </style>
+
 <template lang="wxml">
   <view class="fixed {{homeData.challengeId ? '' : 'no-has-challenge'}}">
-    <view class="ing"
-      @tap="toChallenge('{{homeData.challengeId}}')"
-      wx:if="{{homeData.challengeId}}">您当前有一场挑战在进心中，
+    <view class="ing" @tap="toChallenge('{{homeData.challengeId}}')" wx:if="{{homeData.challengeId}}">您当前有一场挑战在进心中，
       <text>马上进入></text>
     </view>
     <view class="buttons">
-      <view class="button person"
-        @tap="toMe">
+      <view class="button person" @tap="toMe">
         <image src="../images/icon-person.png"></image>
       </view>
-      <view class="button qrcode"
-        @tap="toPictures">
+      <view class="button qrcode" @tap="toPictures">
         <image src="../images/icon-pictures.png"></image>
       </view>
     </view>
   </view>
-
   <view class="space {{homeData.challengeId ? '' : 'no-has-challenge'}}"></view>
-
-  <view class="best-score"
-    wx:if="{{homeData.bestScore}}">
+  <view class="best-score" wx:if="{{homeData.bestScore}}">
     <view>
       <view class="title">
         <view>历史最佳</view>
@@ -313,15 +311,13 @@
       </view>
     </view>
   </view>
-
   <view class="user-info">
     <view>
       <view class="flex">
         <view class="t1">本月参与参数</view>
         <view class="t2">{{homeData.joinTime}}</view>
       </view>
-      <view class="flex"
-        @tap="toRank">
+      <view class="flex" @tap="toRank">
         <view class="t1">本周排名</view>
         <view class="t2">
           <image src="{{userInfo.userInfo.avatarUrl}}"></image>
@@ -329,36 +325,33 @@
       </view>
     </view>
   </view>
-
   <view class="info-item">
     <view class="info-item-title">马上预约</view>
     <view class="info-item-desc">预约一步走，不用等待，合理安排您的塔拓时间。</view>
     <view class="info-item-content">
-      <view class="button"
-        @tap="toBooking">前往预约 ></view>
+      <view class="button" @tap="toBooking">前往预约 ></view>
     </view>
   </view>
-  <view class="info-item"
-    wx:if="{{!homeData.challengeId}}">
+  <view class="info-item" wx:if="{{!homeData.challengeId}}">
     <view class="info-item-title">绑定手环</view>
     <view class="info-item-desc">马上绑定手环，开启你的塔拓之旅!一起来享受极限带来的乐趣！</view>
     <view class="info-item-content">
-      <view class="button-text"
-        @tap="toQrcode">前往绑定手环 ></view>
+      <view class="button-text" @tap="toQrcode">前往绑定手环 ></view>
     </view>
   </view>
-
   <view class="confirm-mask {{showConfirmMask ? 'show' : ''}}">
-    <image src="../images/game-bg.jpg"
-      mode="aspectFill"></image>
+    <image src="../images/game-bg.jpg" mode="aspectFill"></image>
     <view class="mask-content">
       <view class="text">你确认要开始该挑战吗？</view>
-      <view class="button orange"
-        @tap="confirmOk">确认</view>
-      <view class="button grey"
-        @tap="confirmCancel">取消</view>
+      <view class="button orange" @tap="confirmOk">确认</view>
+      <view class="button grey" @tap="confirmCancel">取消</view>
+      <view class="protocol" @tap="toggleProtocolCheckbox">
+        <checkbox :checked.sync="protocolIsRead"></checkbox>
+        我已阅读并同意《<text @tap.stop="toProtocol">塔拓安全协议书</text>》
+      </view>
     </view>
   </view>
+  <toast/>
 </template>
 
 <script>
@@ -369,12 +362,13 @@
   import request from '../services/request.js';
   import loading from '../services/loading.js';
   import question from '../services/question.js';
-
+  import checkbox from '../components/checkbox';
+  import global from '../services/global.js';
+  import Toast from 'wepy-com-toast';
   export default class Home extends wepy.page {
     config = {
       navigationBarTitleText: '塔拓',
     }
-
     onShareAppMessage(res) {
       if (res.from === 'button') {
         // 来自页面内转发按钮
@@ -398,17 +392,17 @@
         }
       }
     }
-
     components = {
-
+      checkbox,
+      toast: Toast
     }
-
     data = {
       userInfo: null,
       homeData: null,
       showConfirmMask: false,
+      protocolIsRead: null,
+      protocolIsReaded: null,
     }
-
     computed = {
       bestScore() {
         if (this.homeData && this.homeData.bestScore) {
@@ -417,8 +411,19 @@
         return {};
       },
     }
-
     methods = {
+      toProtocol: () => {
+        wepy.navigateTo({
+          url: '/pages/protocol',
+        })
+      },
+      toggleProtocolCheckbox: () => {
+        if (!this.protocolIsReaded) {
+          this.methods.toProtocol();
+          return;
+        }
+        this.protocolIsRead = !this.protocolIsRead;
+      },
       toPictures: () => {
         wepy.navigateTo({
           url: '/pages/pictures',
@@ -477,6 +482,15 @@
         })
       },
       confirmOk: () => {
+        if (!this.protocolIsRead) {
+          // this.$invoke('toast', 'show', {
+          //   title: '请勾选并阅读安全协议书',
+          // });
+          wepy.showAlert({
+            content: '请勾选并阅读安全协议书',
+          });
+          return;
+        }
         this.confirmMaskDeferred.resolve();
         this.showConfirmMask = false;
       },
@@ -485,10 +499,8 @@
       },
       confirmChallenge: () => {
         const deferred = defer();
-
         this.showConfirmMask = true;
         this.confirmMaskDeferred = deferred;
-
         return deferred.promise;
       },
       updateHome: () => {
@@ -501,24 +513,26 @@
         });
       }
     }
-
-    events = {
-
-    }
-
+    events = {}
     onShow() {
       console.log('home on show');
       request.getUserInfo().then(d => {
         this.userInfo = d;
+        // 协议是否已经读过
+        if (global.isOkFromProtocol) {
+          delete global.isOkFromProtocol;
+          this.protocolIsRead = true
+        }
+        this.protocolIsReaded = d.protocolIsReaded;
         this.methods.updateHome();
         question.check();
+        this.$apply();
       });
+      // this.methods.confirmChallenge();
     }
-
     onLoad() {
       console.log('home on load');
       loading.show();
     }
   }
-
 </script>
