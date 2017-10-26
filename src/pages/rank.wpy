@@ -322,7 +322,7 @@
         }
 
         request.get(urls.rank, {
-          type: this.data.type,
+          type: this.type,
         }).then(({
           result,
         }) => {
