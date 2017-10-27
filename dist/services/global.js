@@ -1,14 +1,1 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var golbal = {
-  appToken: null,
-  userInfo: null,
-  userId: null,
-  protocolIsReaded: null
-};
-
-exports.default = golbal;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImdsb2JhbC5qcyJdLCJuYW1lcyI6WyJnb2xiYWwiLCJhcHBUb2tlbiIsInVzZXJJbmZvIiwidXNlcklkIiwicHJvdG9jb2xJc1JlYWRlZCJdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSxJQUFNQSxTQUFTO0FBQ2JDLFlBQVUsSUFERztBQUViQyxZQUFVLElBRkc7QUFHYkMsVUFBUSxJQUhLO0FBSWJDLG9CQUFrQjtBQUpMLENBQWY7O2tCQU9lSixNIiwiZmlsZSI6Imdsb2JhbC5qcyIsInNvdXJjZXNDb250ZW50IjpbImNvbnN0IGdvbGJhbCA9IHtcbiAgYXBwVG9rZW46IG51bGwsXG4gIHVzZXJJbmZvOiBudWxsLFxuICB1c2VySWQ6IG51bGwsXG4gIHByb3RvY29sSXNSZWFkZWQ6IG51bGwsXG59XG5cbmV4cG9ydCBkZWZhdWx0IGdvbGJhbDtcbiJdfQ==
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var golbal={appToken:null,userInfo:null,userId:null,protocolIsReaded:null};exports.default=golbal;

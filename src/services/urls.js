@@ -48,7 +48,8 @@ const urls = {
   picturesDataOfMy: 'app/main/picturesDataOfMy.do',
   bookingDetail: 'app/main/bookingDetail.do',
   bookingPay: 'app/main/submitOrder.do',
-  bookingRefund: 'app/main/requestRefund.do'
+  bookingRefund: 'app/main/requestRefund.do',
+  setProtocolReaded: 'app/main/setProtocolReaded.do',
 };
 
 function convert(urls) {
