@@ -2,7 +2,6 @@
   scoped>
   @import '../scss/_theme.scss';
   @import '../scss/_form.scss';
-
   .icon {
     text-align: center;
     padding: 100rpx 0 120rpx 0;
@@ -16,17 +15,20 @@
       color: $orange;
     }
   }
+
   .t1 {
     font-size: 28rpx;
     text-align: center;
     color: $grey;
   }
+
   .t2 {
     font-size: 70rpx;
     color: $orange;
     text-align: center;
     padding: 30rpx 0 20rpx 0;
   }
+
   .t3 {
     padding: 0 80rpx 0 80rpx;
     font-size: 24rpx;
@@ -35,6 +37,7 @@
     color: $grey;
     padding-bottom: 120rpx;
   }
+
   .home {
     font-size: 24rpx;
     color: $c6;
@@ -48,8 +51,10 @@
   <view>
     <view class="icon">
       <image src="../images/pay-success-icon.png"></image>
-      <view wx:if="{{detail.selectedPayWay.type === 'ONLINE'}}" class="text">付款成功</view>
-      <view wx:if="{{detail.selectedPayWay.type !== 'ONLINE'}}" class="text">预约成功</view>
+      <view wx:if="{{detail.selectedPayWay.type === 'ONLINE'}}"
+        class="text">付款成功</view>
+      <view wx:if="{{detail.selectedPayWay.type !== 'ONLINE'}}"
+        class="text">预约成功</view>
     </view>
     <view class="t1"
       wx:if="{{detail.selectedPayWay.type === 'ONLINE'}}">入场验证码</view>
@@ -61,7 +66,8 @@
       wx:if="{{detail.selectedPayWay.type !== 'ONLINE'}}">恭喜您！预约成功。您可直接到塔拓游乐场向工作人员展示手机号购票入场。祝您游戏愉快！</view>
     <view class="submit-button"
       @tap="toMe">我的预约</view>
-    <view class="home" @tap="toHome">返回首页</view>
+    <view class="home"
+      @tap="toHome">返回首页</view>
   </view>
 </template>
 
@@ -106,7 +112,8 @@
         }).then(data => {
           this.detail = data.result;
           this.$apply();
-        }).finally(() => {
+          loading.hide();
+        }, () => {
           loading.hide();
         });
       },

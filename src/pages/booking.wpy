@@ -236,7 +236,8 @@
           });
           // wepy.navigateBack();
           // }, 2000);
-        }).finally(() => {
+          loading.hide();
+        }, () => {
           loading.hide();
         });
       },

@@ -411,7 +411,8 @@
           id: this.id,
         }).then(() => {
           wepy.navigateBack();
-        }).finally(() => {
+          loading.hide();
+        }, () => {
           loading.hide();
         });
       },
@@ -423,7 +424,8 @@
           this.hideTip = true;
           this.methods.nextQuestion(true);
           this.$apply();
-        }).finally(() => {
+          loading.hide();
+        }, () => {
           loading.hide();
         });
       },
@@ -503,7 +505,8 @@
           this.isEnd = true;
           deferred.resolve();
           this.$apply();
-        }).finally(() => {
+          loading.hide();
+        }, () => {
           loading.hide();
         });
 

@@ -125,7 +125,8 @@
           wepy.navigateBack({
             delta: 1
           });
-        }).finally(() => {
+          loading.hide();
+        }, () => {
           loading.hide();
         });
       },
