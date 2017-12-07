@@ -48,7 +48,8 @@
   <view>
     <view class="icon">
       <image src="../images/pay-success-icon.png"></image>
-      <view class="text">付款成功</view>
+      <view wx:if="{{detail.selectedPayWay.type === 'ONLINE'}}" class="text">付款成功</view>
+      <view wx:if="{{detail.selectedPayWay.type !== 'ONLINE'}}" class="text">预约成功</view>
     </view>
     <view class="t1"
       wx:if="{{detail.selectedPayWay.type === 'ONLINE'}}">入场验证码</view>
