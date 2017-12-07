@@ -1,1 +1,0 @@
-var $export=require("./_export.js");$export($export.S+$export.F,"Object",{assign:require("./_object-assign.js")});

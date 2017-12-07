@@ -1,63 +1,63 @@
 
-  <view class="fixed _a72d26c">
-    <view class="banner _a72d26c">
-      <image class="bg _a72d26c" src="../images/banner-header.jpg"/>
-      <view class="info _a72d26c"  wx:if="{{rankData.list.length}}">
-        <view class="head _a72d26c">
-          <image src="{{rankData.list[0].headimgurl}}" class="_a72d26c"/>
-          <view class="crown _a72d26c">
-            <image src="../images/icon-crown.png" class="_a72d26c"/>
+  <view class="fixed _eebf76b">
+    <view class="banner _eebf76b">
+      <image class="bg _eebf76b" src="../images/banner-header.jpg"/>
+      <view class="info _eebf76b"  wx:if="{{rankData.list.length}}">
+        <view class="head _eebf76b">
+          <image src="{{rankData.list[0].headimgurl}}" class="_eebf76b"/>
+          <view class="crown _eebf76b">
+            <image src="../images/icon-crown.png" class="_eebf76b"/>
           </view>
         </view>
-        <view class="nickname _a72d26c">{{rankData.list[0].nickname}}</view>
-        <view class="score _a72d26c">{{rankData.list[0].score}}</view>
+        <view class="nickname _eebf76b">{{rankData.list[0].nickname}}</view>
+        <view class="score _eebf76b">{{rankData.list[0].score}}</view>
       </view>
     </view>
 
-    <view class="tabs _a72d26c">
-      <view class="tab {{type == 'week' ? 'active' : ''}} _a72d26c" bindtap="selectTab" data-wepy-params-a="week">本周</view>
-      <view class="tab {{type == 'month' ? 'active' : ''}} _a72d26c" bindtap="selectTab" data-wepy-params-a="month">本月</view>
-      <view class="tab {{type == 'total' ? 'active' : ''}} _a72d26c" bindtap="selectTab" data-wepy-params-a="total">总排行</view>
+    <view class="tabs _eebf76b">
+      <view class="tab {{type == 'week' ? 'active' : ''}} _eebf76b" bindtap="selectTab" data-wpyselecttab-a="week">本周</view>
+      <view class="tab {{type == 'month' ? 'active' : ''}} _eebf76b" bindtap="selectTab" data-wpyselecttab-a="month">本月</view>
+      <view class="tab {{type == 'total' ? 'active' : ''}} _eebf76b" bindtap="selectTab" data-wpyselecttab-a="total">总排行</view>
     </view>
   </view>
 
   <!-- <view class="space"></view> -->
 
   
-  <view class="null-list _3e0874d _a72d26c" wx:if="{{rankData.list.length <= 0}}">
-    <view class="_3e0874d">
+  <view class="null-list _097912e _eebf76b" wx:if="{{rankData.list.length <= 0}}">
+    <view class="_097912e">
       暂无数据
     </view>
   </view>
-  <view class="my-rank _a72d26c"  wx:if="{{rankData.rank}}">
-    <view class="_a72d26c">
-      <image src="{{userInfo.userInfo.avatarUrl}}" class="_a72d26c"/>
+  <view class="my-rank _eebf76b"  wx:if="{{rankData.rank}}">
+    <view class="_eebf76b">
+      <image src="{{userInfo.userInfo.avatarUrl}}" class="_eebf76b"/>
     </view>
-    <view class="_a72d26c">
-      <view class="_a72d26c">{{userInfo.userInfo.nickName}}</view>
-      <view class="_a72d26c">第{{rankData.rank}}名</view>
+    <view class="_eebf76b">
+      <view class="_eebf76b">{{userInfo.userInfo.nickName}}</view>
+      <view class="_eebf76b">第{{rankData.rank}}名</view>
     </view>
-    <view class="_a72d26c">{{myScore}}</view>
+    <view class="_eebf76b">{{myScore}}</view>
   </view>
 
-  <view class="my-rank-split _a72d26c"  wx:if="{{rankData.rank}}"/>
+  <view class="my-rank-split _eebf76b"  wx:if="{{rankData.rank}}"/>
 
-  <view  wx:if="{{rankData.list.length > 0}}" class="rank-list _a72d26c">
-    <view class="rank-item _a72d26c" wx:for="{{rankData.list}}" wx:key="index">
-      <view wx:if="{{index == 0}}" class="_a72d26c">
-        <image src="../images/icon-rank-first.png" class="_a72d26c"/>
+  <view  wx:if="{{rankData.list.length > 0}}" class="rank-list _eebf76b">
+    <view class="rank-item _eebf76b" wx:for="{{rankData.list}}" wx:key="index">
+      <view wx:if="{{index == 0}}" class="_eebf76b">
+        <image src="../images/icon-rank-first.png" class="_eebf76b"/>
       </view>
-      <view wx:if="{{index == 1}}" class="_a72d26c">
-        <image src="../images/icon-rank-second.png" class="_a72d26c"/>
+      <view wx:if="{{index == 1}}" class="_eebf76b">
+        <image src="../images/icon-rank-second.png" class="_eebf76b"/>
       </view>
-      <view wx:if="{{index == 2}}" class="_a72d26c">
-        <image src="../images/icon-rank-third.png" class="_a72d26c"/>
+      <view wx:if="{{index == 2}}" class="_eebf76b">
+        <image src="../images/icon-rank-third.png" class="_eebf76b"/>
       </view>
-      <view wx:if="{{index > 2}}" class="_a72d26c">{{index + 1}}</view>
-      <view class="_a72d26c">
-        <image src="{{item.headimgurl}}" class="_a72d26c"/>
+      <view wx:if="{{index > 2}}" class="_eebf76b">{{index + 1}}</view>
+      <view class="_eebf76b">
+        <image src="{{item.headimgurl}}" class="_eebf76b"/>
       </view>
-      <view class="_a72d26c">{{item.nickname}}</view>
-      <view class="_a72d26c">{{item.score}}</view>
+      <view class="_eebf76b">{{item.nickname}}</view>
+      <view class="_eebf76b">{{item.score}}</view>
     </view>
   </view>

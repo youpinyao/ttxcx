@@ -1,26 +1,26 @@
 
-  <view  wx:if="{{meals.length}}" class="title _1371112">超值套餐</view>
+  <view  wx:if="{{meals.length}}" class="title _aa42d76">超值套餐</view>
   
-  <view class="null-list _3e0874d _1371112" wx:if="{{!meals.length}}">
-    <view class="_3e0874d">
+  <view class="null-list _097912e _aa42d76" wx:if="{{!meals.length}}">
+    <view class="_097912e">
       暂无数据
     </view>
   </view>
-  <block class="_1371112" wx:for="{{meals}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+  <block class="_aa42d76" wx:for="{{meals}}" wx:for-index="index" wx:for-item="item" wx:key="index">
     
-  <view class="meal-item _31a23b9 _1371112">
-    <image src="{{item.picture}}" bindtap="$mealItem$preview" class="_31a23b9" data-com-index="{{index}}"/>
-    <view class="t1 _31a23b9">{{item.name}}</view>
-    <view class="t2 _31a23b9">
-      <view class="price _31a23b9">
-        <text class="_31a23b9">￥</text>{{item.price}}
+  <view class="meal-item _d4455f8 _aa42d76">
+    <image src="{{item.picture}}" bindtap="$mealItem$preview" class="_d4455f8" data-com-index="{{index}}"/>
+    <view class="t1 _d4455f8">{{item.name}}</view>
+    <view class="t2 _d4455f8">
+      <view class="price _d4455f8">
+        <text class="_d4455f8">￥</text>{{item.price}}
       </view>
-      <view class="control _31a23b9">
-        <view class="item _31a23b9" bindtap="$mealItem$minus" data-com-index="{{index}}">-</view>
-        <view class="input _31a23b9">{{item.amount || 0}}</view>
-        <view class="item _31a23b9" bindtap="$mealItem$plus" data-com-index="{{index}}">+</view>
+      <view class="control _d4455f8">
+        <view class="item _d4455f8" bindtap="$mealItem$minus" data-com-index="{{index}}">-</view>
+        <view class="input _d4455f8">{{item.amount || 0}}</view>
+        <view class="item _d4455f8" bindtap="$mealItem$plus" data-com-index="{{index}}">+</view>
       </view>
     </view>
   </view>
   </block>
-  <view class="submit-button _1371112" bindtap="doSave">保存</view>
+  <view class="submit-button _aa42d76" bindtap="doSave">保存</view>

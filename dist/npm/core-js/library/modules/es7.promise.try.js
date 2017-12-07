@@ -1,1 +1,0 @@
-"use strict";var $export=require("./_export.js"),newPromiseCapability=require("./_new-promise-capability.js"),perform=require("./_perform.js");$export($export.S,"Promise",{try:function(r){var e=newPromiseCapability.f(this),i=perform(r);return(i.e?e.reject:e.resolve)(i.v),e.promise}});

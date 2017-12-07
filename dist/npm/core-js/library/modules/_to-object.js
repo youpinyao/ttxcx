@@ -1,1 +1,0 @@
-var defined=require("./_defined.js");module.exports=function(e){return Object(defined(e))};

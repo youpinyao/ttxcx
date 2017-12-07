@@ -1,1 +1,0 @@
-var toInteger=require("./_to-integer.js"),min=Math.min;module.exports=function(e){return e>0?min(toInteger(e),9007199254740991):0};

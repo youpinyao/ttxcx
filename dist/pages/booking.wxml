@@ -1,60 +1,60 @@
 
-  <view class="form-container _9f13706">
-    <label class="control-group _9f13706">
-      <view class="control-label _9f13706">游戏地点</view>
-      <view class="controls _9f13706">
-        <view class="select _9f13706">
-          <picker bindchange="setPlace" value="{{formData.place}}" range-key="content" range="{{placeData}}" class="_9f13706">
-            <text class="_9f13706">{{placeData[formData.place].content || '请选择'}}</text>
-            <image class="arrow-right _9f13706" src="../images/icon-arrow-right.png"/>
+  <view class="form-container _8bfab1e">
+    <label class="control-group _8bfab1e">
+      <view class="control-label _8bfab1e">游戏地点</view>
+      <view class="controls _8bfab1e">
+        <view class="select _8bfab1e">
+          <picker bindchange="setPlace" value="{{formData.place}}" range-key="content" range="{{placeData}}" class="_8bfab1e">
+            <text class="_8bfab1e">{{placeData[formData.place].content || '请选择'}}</text>
+            <image class="arrow-right _8bfab1e" src="../images/icon-arrow-right.png"/>
           </picker>
         </view>
       </view>
     </label>
-    <label class="control-group _9f13706">
-      <view class="control-label _9f13706">联系电话</view>
-      <view class="controls _9f13706">
-        <input type="number" bindinput="setPhone" value="{{formData.phone}}" maxlength="11" class="_9f13706"/>
+    <label class="control-group _8bfab1e">
+      <view class="control-label _8bfab1e">联系电话</view>
+      <view class="controls _8bfab1e">
+        <input type="number" bindinput="setPhone" value="{{formData.phone}}" maxlength="11" class="_8bfab1e"/>
       </view>
     </label>
-    <label class="control-group _9f13706">
-      <view class="control-label _9f13706">预约时间</view>
-      <view class="controls _9f13706">
-        <view class="select _9f13706">
-          <picker class="datepicker _9f13706" mode="date" value="{{formData.date}}" start="{{formData.startDate}}" end="{{formData.endDate}}" bindchange="bindDateChange">
-            <text class="_9f13706">{{formData.date || '请选择'}}</text>
-            <image class="arrow-right _9f13706" src="../images/icon-arrow-right.png"/>
+    <label class="control-group _8bfab1e">
+      <view class="control-label _8bfab1e">预约时间</view>
+      <view class="controls _8bfab1e">
+        <view class="select _8bfab1e">
+          <picker class="datepicker _8bfab1e" mode="date" value="{{formData.date}}" start="{{formData.startDate}}" end="{{formData.endDate}}" bindchange="bindDateChange">
+            <text class="_8bfab1e">{{formData.date || '请选择'}}</text>
+            <image class="arrow-right _8bfab1e" src="../images/icon-arrow-right.png"/>
           </picker>
         </view>
       </view>
     </label>
-    <label class="control-group _9f13706"  wx:if="{{hasMeal}}" bindtap="toMealList">
-      <view class="control-label _9f13706">超值套餐</view>
-      <view class="controls _9f13706">
-        <view class="text _9f13706">
-          <view wx:if="{{mealData.amount}}" class="meal-text _9f13706">{{mealData.name}}</view>
-          <view wx:if="{{mealData.amount}}" class="meal-amount _9f13706">
-            <text class="_9f13706">x</text>{{mealData.amount}}</view>
-          <image class="arrow-right _9f13706" src="../images/icon-arrow-right.png"/>
+    <label class="control-group _8bfab1e"  wx:if="{{hasMeal}}" bindtap="toMealList">
+      <view class="control-label _8bfab1e">超值套餐</view>
+      <view class="controls _8bfab1e">
+        <view class="text _8bfab1e">
+          <view wx:if="{{mealData.amount}}" class="meal-text _8bfab1e">{{mealData.name}}</view>
+          <view wx:if="{{mealData.amount}}" class="meal-amount _8bfab1e">
+            <text class="_8bfab1e">x</text>{{mealData.amount}}</view>
+          <image class="arrow-right _8bfab1e" src="../images/icon-arrow-right.png"/>
         </view>
       </view>
     </label>
-    <label class="control-group vertical _9f13706">
-      <view class="control-label _9f13706">
-        <view class="inline _9f13706">
-          <text class="_9f13706">预约人数</text>
-          <text class="_9f13706">{{bookingText}}</text>
+    <label class="control-group vertical _8bfab1e">
+      <view class="control-label _8bfab1e">
+        <view class="inline _8bfab1e">
+          <text class="_8bfab1e">预约人数</text>
+          <text class="_8bfab1e">{{bookingText}}</text>
         </view>
-        <text class="_9f13706">{{formData.number}}人</text>
+        <text class="_8bfab1e">{{formData.number}}人</text>
       </view>
-      <view class="controls _9f13706">
-        <slider bindchange="setNumber" value="{{formData.number}}" color="#ffffff" activeColor="#ea5504" min="{{minNumber}}" max="{{maxNumber}}" class="_9f13706"/>
+      <view class="controls _8bfab1e">
+        <slider bindchange="setNumber" value="{{formData.number}}" color="#ffffff" activeColor="#ea5504" min="{{minNumber}}" max="{{maxNumber}}" class="_8bfab1e"/>
       </view>
     </label>
   </view>
-  <view class="submit-button _9f13706" bindtap="doSubmit">马上预约</view>
+  <view class="submit-button _8bfab1e" bindtap="doSubmit">马上预约</view>
   
-    <view class="wetoast {{$toast$reveal ? 'wetoast_show' : ''}} _9f13706">
+    <view class="wetoast {{$toast$reveal ? 'wetoast_show' : ''}} _8bfab1e">
         <view class="wetoast__mask"/>
         <view class="wetoast__bd" animation="{{$toast$animationData}}">
             <block  wx:if="{{$toast$img}}">

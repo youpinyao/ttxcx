@@ -1,82 +1,82 @@
 
-  <view class="fixed _8bc7d50">
-    <view class="banner _8bc7d50">
-      <image class="bg _8bc7d50" src="../images/me-header.jpg"/>
-      <view class="info _8bc7d50">
-        <image class="head _8bc7d50" src="{{userInfo.userInfo.avatarUrl}}"/>
-        <view class="nickname _8bc7d50">{{userInfo.userInfo.nickName}}</view>
+  <view class="fixed _c63cbd2">
+    <view class="banner _c63cbd2">
+      <image class="bg _c63cbd2" src="../images/me-header.jpg"/>
+      <view class="info _c63cbd2">
+        <image class="head _c63cbd2" src="{{userInfo.userInfo.avatarUrl}}"/>
+        <view class="nickname _c63cbd2">{{userInfo.userInfo.nickName}}</view>
       </view>
     </view>
 
-    <view class="tabs _8bc7d50">
-      <view class="tab {{type == 'booking' ? 'active' : ''}} _8bc7d50" bindtap="selectTab" data-wepy-params-a="booking">预约记录</view>
-      <view class="tab {{type == 'record' ? 'active' : ''}} _8bc7d50" bindtap="selectTab" data-wepy-params-a="record">我的战绩</view>
+    <view class="tabs _c63cbd2">
+      <view class="tab {{type == 'booking' ? 'active' : ''}} _c63cbd2" bindtap="selectTab" data-wpyselecttab-a="booking">预约记录</view>
+      <view class="tab {{type == 'record' ? 'active' : ''}} _c63cbd2" bindtap="selectTab" data-wpyselecttab-a="record">我的战绩</view>
     </view>
   </view>
 
   <!-- <view class="space"></view> -->
 
-  <view class="booking-content _8bc7d50" hidden="{{type !== 'booking'}}">
+  <view class="booking-content _c63cbd2" hidden="{{type !== 'booking'}}">
     
-  <view class="null-list _3e0874d _8bc7d50" wx:if="{{bookingData.length <= 0}}">
-    <view class="_3e0874d">
+  <view class="null-list _097912e _c63cbd2" wx:if="{{bookingData.length <= 0}}">
+    <view class="_097912e">
       暂无预约记录
     </view>
   </view>
-    <view  wx:if="{{bookingData.length > 0}}" class="me-list _8bc7d50">
-      <view wx:for="{{bookingData}}" bindtap="toBooking" class="me-item {{item.completed ? 'completed': ''}} _8bc7d50" wx:key="index" data-wepy-params-a="{{item.id}}">
-        <view class="item-item _8bc7d50">
-          <view class="_8bc7d50">{{item.date2}}</view>
-          <view class="_8bc7d50">{{item.date1}}</view>
+    <view  wx:if="{{bookingData.length > 0}}" class="me-list _c63cbd2">
+      <view wx:for="{{bookingData}}" bindtap="toBooking" class="me-item {{item.completed ? 'completed': ''}} _c63cbd2" wx:key="index" data-wpytobooking-a="{{item.id}}">
+        <view class="item-item _c63cbd2">
+          <view class="_c63cbd2">{{item.date2}}</view>
+          <view class="_c63cbd2">{{item.date1}}</view>
         </view>
-        <view class="item-item _8bc7d50">
-          <image src="../images/me-item-split-1.jpg" class="_8bc7d50"/>
+        <view class="item-item _c63cbd2">
+          <image src="../images/me-item-split-1.jpg" class="_c63cbd2"/>
         </view>
-        <view class="item-item _8bc7d50">{{item.date3}}</view>
-        <view class="item-item _8bc7d50">
-          <view class="_8bc7d50">{{item.city}}</view>
-          <view class="_8bc7d50">{{item.address}}</view>
+        <view class="item-item _c63cbd2">{{item.date3}}</view>
+        <view class="item-item _c63cbd2">
+          <view class="_c63cbd2">{{item.city}}</view>
+          <view class="_c63cbd2">{{item.address}}</view>
         </view>
         <!-- <view class="item-item">
           {{item.number}}人
         </view> -->
-        <view class="item-item _8bc7d50">
-          <text class="_8bc7d50">{{item.statusText}}</text>
-          <image class="arrow _8bc7d50" src="../images/icon-arrow-right.png"/>
+        <view class="item-item _c63cbd2">
+          <text class="_c63cbd2">{{item.statusText}}</text>
+          <image class="arrow _c63cbd2" src="../images/icon-arrow-right.png"/>
         </view>
-        <view class="item-item _8bc7d50">
-          <image src="../images/me-item-split-2.jpg" class="_8bc7d50"/>
+        <view class="item-item _c63cbd2">
+          <image src="../images/me-item-split-2.jpg" class="_c63cbd2"/>
         </view>
-        <image class="completed-mask _8bc7d50" src="../images/complete-mask.jpg" wx:if="{{item.completed}}"/>
+        <image class="completed-mask _c63cbd2" src="../images/complete-mask.jpg" wx:if="{{item.completed}}"/>
       </view>
     </view>
   </view>
-  <view class="record-content _8bc7d50" hidden="{{type !== 'record'}}">
+  <view class="record-content _c63cbd2" hidden="{{type !== 'record'}}">
     
-  <view class="null-list _3e0874d _8bc7d50" wx:if="{{recordData.length <= 0}}">
-    <view class="_3e0874d">
+  <view class="null-list _097912e _c63cbd2" wx:if="{{recordData.length <= 0}}">
+    <view class="_097912e">
       暂无战绩
     </view>
   </view>
-    <view  wx:if="{{recordData.length > 0}}" class="me-list _8bc7d50">
-      <view class="me-item _8bc7d50" bindtap="toChallenge" wx:for="{{recordData}}" wx:key="index" data-wepy-params-a="{{item.challengeId}}">
-        <view class="item-item _8bc7d50">
-          <view class="_8bc7d50">{{item.date2}}</view>
-          <view class="_8bc7d50">{{item.date1}}</view>
+    <view  wx:if="{{recordData.length > 0}}" class="me-list _c63cbd2">
+      <view class="me-item _c63cbd2" bindtap="toChallenge" wx:for="{{recordData}}" wx:key="index" data-wpytochallenge-a="{{item.challengeId}}">
+        <view class="item-item _c63cbd2">
+          <view class="_c63cbd2">{{item.date2}}</view>
+          <view class="_c63cbd2">{{item.date1}}</view>
         </view>
-        <view class="item-item _8bc7d50">
-          <image src="../images/me-item-split-1.jpg" class="_8bc7d50"/>
+        <view class="item-item _c63cbd2">
+          <image src="../images/me-item-split-1.jpg" class="_c63cbd2"/>
         </view>
-        <view class="item-item _8bc7d50">{{item.date3}}</view>
-        <view class="item-item _8bc7d50">
-          <view class="_8bc7d50">{{item.city}}</view>
-          <view class="_8bc7d50">{{item.address}}</view>
+        <view class="item-item _c63cbd2">{{item.date3}}</view>
+        <view class="item-item _c63cbd2">
+          <view class="_c63cbd2">{{item.city}}</view>
+          <view class="_c63cbd2">{{item.address}}</view>
         </view>
-        <view class="item-item _8bc7d50">
-          <image class="arrow _8bc7d50" src="../images/icon-arrow-right.png"/>
+        <view class="item-item _c63cbd2">
+          <image class="arrow _c63cbd2" src="../images/icon-arrow-right.png"/>
         </view>
-        <view class="item-item _8bc7d50">
-          <image src="../images/me-item-split-2.jpg" class="_8bc7d50"/>
+        <view class="item-item _c63cbd2">
+          <image src="../images/me-item-split-2.jpg" class="_c63cbd2"/>
         </view>
       </view>
     </view>

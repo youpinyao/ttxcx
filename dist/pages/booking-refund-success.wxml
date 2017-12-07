@@ -1,9 +1,9 @@
 
-  <view class="_8a6a33c">
-    <view class="icon _8a6a33c">
-      <image src="../images/pay-success-icon.png" class="_8a6a33c"/>
-      <view class="text _8a6a33c">申请退款成功</view>
+  <view class="_3479cbe">
+    <view class="icon _3479cbe">
+      <image src="../images/pay-success-icon.png" class="_3479cbe"/>
+      <view class="text _3479cbe">申请退款成功</view>
     </view>
-    <view class="t3 _8a6a33c">申请退款成功，款项将于24小时内退回原支付账号，请耐心等待。</view>
-    <view class="submit-button _8a6a33c" bindtap="toHome">返回首页</view>
+    <view class="t3 _3479cbe">申请退款成功，款项将于24小时内退回原支付账号，请耐心等待。</view>
+    <view class="submit-button _3479cbe" bindtap="toHome">返回首页</view>
   </view>

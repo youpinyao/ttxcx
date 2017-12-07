@@ -1,41 +1,41 @@
 
   
-  <view class="null-list _3e0874d _99f35f5" wx:if="{{pictureList.length <= 0}}">
-    <view class="_3e0874d">
+  <view class="null-list _097912e _2efc374" wx:if="{{pictureList.length <= 0}}">
+    <view class="_097912e">
       暂无数据
     </view>
   </view>
 
-  <view style="height: 10rpx" hidden="{{!challengeId}}" class="_99f35f5"/>
+  <view style="height: 10rpx" hidden="{{!challengeId}}" class="_2efc374"/>
 
-  <view class="list _99f35f5"  wx:for="{{pictureList}}" wx:key="index" wx:if="{{pictureList.length > 0}}">
-    <view class="item-title _99f35f5" hidden="{{item.title === false}}">{{item.title}}</view>
-    <view class="item-content _99f35f5">
-      <view class="item _99f35f5" bindtap="selectItem" wx:for="{{item.items}}" wx:key="index" data-wepy-params-a="{{item.id}}">
-        <image mode="aspectFill" src="{{item.small}}" class="_99f35f5"/>
-        <view class="check _99f35f5" hidden="{{status === 'view'}}">
-          <image src="../images/icon-check.png" hidden="{{item.checked !== true}}" class="_99f35f5"/>
-          <image src="../images/icon-uncheck.png" hidden="{{item.checked === true}}" class="_99f35f5"/>
+  <view class="list _2efc374"  wx:for="{{pictureList}}" wx:key="index" wx:if="{{pictureList.length > 0}}">
+    <view class="item-title _2efc374" hidden="{{item.title === false}}">{{item.title}}</view>
+    <view class="item-content _2efc374">
+      <view class="item _2efc374" bindtap="selectItem" wx:for="{{item.items}}" wx:key="index" data-wpyselectitem-a="{{item.id}}">
+        <image mode="aspectFill" src="{{item.small}}" class="_2efc374"/>
+        <view class="check _2efc374" hidden="{{status === 'view'}}">
+          <image src="../images/icon-check.png" hidden="{{item.checked !== true}}" class="_2efc374"/>
+          <image src="../images/icon-uncheck.png" hidden="{{item.checked === true}}" class="_2efc374"/>
         </view>
       </view>
     </view>
   </view>
-  <view class="space _99f35f5"/>
-  <view class="button _99f35f5" bindtap="setStatus"  wx:if="{{status === 'view'}}" data-wepy-params-a="save">下载照片</view>
-  <view class="button _99f35f5" bindtap="saveToPhoto"  wx:if="{{status === 'save'}}">保存至相册</view>
+  <view class="space _2efc374"/>
+  <view class="button _2efc374" bindtap="setStatus"  wx:if="{{status === 'view'}}" data-wpysetstatus-a="save">下载照片</view>
+  <view class="button _2efc374" bindtap="saveToPhoto"  wx:if="{{status === 'save'}}">保存至相册</view>
 
-  <view class="button-back _99f35f5" bindtap="setStatus"  wx:if="{{status === 'save'}}" data-wepy-params-a="view">
-    <image src="../images/icon-arrow-back.png" class="_99f35f5"/>
+  <view class="button-back _2efc374" bindtap="setStatus"  wx:if="{{status === 'save'}}" data-wpysetstatus-a="view">
+    <image src="../images/icon-arrow-back.png" class="_2efc374"/>
   </view>
 
-  <view class="download-modal-mask _99f35f5" hidden="{{showDownloadModal !== true}}"/>
-  <view class="download-modal _99f35f5" hidden="{{showDownloadModal !== true}}">
-    <view class="content _99f35f5">下载中（{{downloadCount}}/{{downloadLen}}）</view>
-    <view class="button _99f35f5" bindtap="cancelDownload">取消</view>
+  <view class="download-modal-mask _2efc374" hidden="{{showDownloadModal !== true}}"/>
+  <view class="download-modal _2efc374" hidden="{{showDownloadModal !== true}}">
+    <view class="content _2efc374">下载中（{{downloadCount}}/{{downloadLen}}）</view>
+    <view class="button _2efc374" bindtap="cancelDownload">取消</view>
   </view>
 
   
-    <view class="wetoast {{$toast$reveal ? 'wetoast_show' : ''}} _99f35f5">
+    <view class="wetoast {{$toast$reveal ? 'wetoast_show' : ''}} _2efc374">
         <view class="wetoast__mask"/>
         <view class="wetoast__bd" animation="{{$toast$animationData}}">
             <block  wx:if="{{$toast$img}}">

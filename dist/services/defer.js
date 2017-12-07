@@ -1,1 +1,1 @@
-"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function defer(){var e={},r=new _promise2.default(function(r,t){e.resolve=r,e.reject=t});return e.promise=r,e}Object.defineProperty(exports,"__esModule",{value:!0});var _promise=require("./../npm/babel-runtime/core-js/promise.js"),_promise2=_interopRequireDefault(_promise);exports.default=defer;
+"use strict";function defer(){var e={},r=new Promise(function(r,t){e.resolve=r,e.reject=t});return e.promise=r,e}Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=defer;

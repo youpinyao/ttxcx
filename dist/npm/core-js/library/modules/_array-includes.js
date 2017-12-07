@@ -1,1 +1,0 @@
-var toIObject=require("./_to-iobject.js"),toLength=require("./_to-length.js"),toAbsoluteIndex=require("./_to-absolute-index.js");module.exports=function(e){return function(t,o,r){var n,u=toIObject(t),i=toLength(u.length),s=toAbsoluteIndex(r,i);if(e&&o!=o){for(;i>s;)if((n=u[s++])!=n)return!0}else for(;i>s;s++)if((e||s in u)&&u[s]===o)return e||s||0;return!e&&-1}};
