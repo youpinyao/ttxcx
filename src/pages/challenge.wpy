@@ -406,6 +406,9 @@
         if (is.empty(this.challengeData)) {
           return true;
         }
+        if (data && data.beforePoints && this.challengeData && this.challengeData.beforePoints && this.challengeData.beforePoints.join(',') !== data.beforePoints.join(',')) {
+          return true;
+        }
 
         let count = 0;
 
@@ -614,12 +617,12 @@
 
     }
 
-    onShow() {
-      if (this.isReady) {
-        clearTimeout(this.timer);
-        this.methods.updateChallege();
-      }
-    }
+    // onShow() {
+    //   if (this.isReady) {
+    //     clearTimeout(this.timer);
+    //     this.methods.updateChallege();
+    //   }
+    // }
 
     onHide() {
       clearTimeout(this.timer);
@@ -631,13 +634,13 @@
       loading.show();
     }
 
-    onReady() {
+    onShow() {
       const self = this;
       const systemInfo = wepy.getSystemInfoSync();
       const scale = 375 / systemInfo.windowWidth;
-      this.isReady = true;
+      // this.isReady = true;
       this.systemInfo = systemInfo;
-      this.context = wepy.createCanvasContext('dotsCanvas');
+      // this.context = wepy.createCanvasContext('dotsCanvas');
       this.screenScale = scale;
       this.dots = initDots.map(d => {
         return {
