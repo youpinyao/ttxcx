@@ -319,10 +319,10 @@
         })
       },
       selectTab: (type) => {
-        wepy.pageScrollTo({
+        this.type = type;
+        wepy.pageScrollTo && wepy.pageScrollTo({
           scrollTop: 0
         })
-        this.type = type;
       },
       updateRecord: () => {
         request.get(urls.record).then(({

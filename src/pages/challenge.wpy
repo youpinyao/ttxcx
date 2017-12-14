@@ -32,6 +32,7 @@
         height: 1rpx;
         position: absolute;
         transform-origin: left center;
+        -webkit-transform-origin: left center;
       }
       .text {
         font-size: 32rpx;
@@ -272,7 +273,7 @@
       <view wx:for="{{drawLines}}"
         wx:key="index"
         class="line"
-        style="left:{{item.x}}px; top:{{item.y}}px; background-color:{{item.color}}; width: {{item.width}}px; transform:rotate({{item.rotate}}deg);"></view>
+        style="left:{{item.x}}px; top:{{item.y}}px; background-color:{{item.color}}; width: {{item.width}}px; transform:rotate({{item.rotate}}deg); -webkit-transform:rotate({{item.rotate}}deg);"></view>
       <view wx:for="{{drawDots}}"
         wx:key="index"
         class="dot"

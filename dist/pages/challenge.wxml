@@ -2,7 +2,7 @@
   <image class="bg _8477968" src="../images/game-bg.jpg"/>
   <scroll-view class="dots _8477968" scroll-y="true" bindscrolltoupper="doExpand" scroll-top="{{scrollTop}}" data-wpydoexpand-a="false">
     <view class="canvas _8477968" style="height: {{canvasHeight}}px; width: {{canvasWidth}}px">
-      <view  wx:for="{{drawLines}}" wx:key="index" class="line _8477968" style="left:{{item.x}}px; top:{{item.y}}px; background-color:{{item.color}}; width: {{item.width}}px; transform:rotate({{item.rotate}}deg);"/>
+      <view  wx:for="{{drawLines}}" wx:key="index" class="line _8477968" style="left:{{item.x}}px; top:{{item.y}}px; background-color:{{item.color}}; width: {{item.width}}px; transform:rotate({{item.rotate}}deg); -webkit-transform:rotate({{item.rotate}}deg);"/>
       <view  wx:for="{{drawDots}}" wx:key="index" class="dot _8477968" style="left:{{item.x}}px; top: {{item.y}}px; background-color:{{item.color}}; width:{{item.size}}px; height:{{item.size}}px;">
         <view class="text {{item.ing ? 'ing' : ''}} {{item.fail ? 'fail' : ''}} _8477968" style="color: {{item.fontColor}}">{{item.text}}</view>
       </view>

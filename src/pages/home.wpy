@@ -118,9 +118,13 @@
   .user-info {
     padding: 40rpx 30rpx 50rpx 30rpx;
     >view {
-      display: flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     }
     view.flex {
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
       flex: 1;
       text-align: center;
       position: relative;

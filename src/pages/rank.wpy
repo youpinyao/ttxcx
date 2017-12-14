@@ -311,10 +311,10 @@
 
     methods = {
       selectTab: (type) => {
-        wepy.pageScrollTo({
+        this.methods.updateRank(type);
+        wepy.pageScrollTo && wepy.pageScrollTo({
           scrollTop: 0
         })
-        this.methods.updateRank(type);
       },
       updateRank: (type) => {
         if (type) {
